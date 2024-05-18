@@ -1,0 +1,129 @@
+﻿@model HMS.Models.UserMasterModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @id = "formSubmit" }))
+{
+
+    <!-- main-signin-wrapper -->
+
+    <div class="icon-content" style="margin-top:5.5rem">
+        <div class="section">
+            <div class="row">
+                <div class="col-xl-9 justify-content-center mx-auto text-center">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-7 pr-0 d-none d-lg-block">
+                                <img src="../assets/images/photos/login.jpg" alt="img" class="br-tl-2 br-bl-2 ">
+                               @*  <div class="text-center" style="margin:100px 50px 0px 50px">
+                                    <h5 class="mb-4 mt-5">We are `HMS</h5>
+                                    <p class="mb-5">We are one of the leading suppliers of systems in the field of web guiding, web tension control, and web inspection. We develop cutting-edge technology for the production of today and tomorrow. In the process, highly-qualified and motivated employees, satisfied customers that drive our work.</p>
+                                </div> *@
+                            </div>
+                            <div class="col-md-12 col-lg-5 pl-0 ">
+                                <div class="card-body p-6 about-con pabout">
+                                    <div class="card-title text-center  mb-4">Welcome back!</div>
+                                    <div class="card-title text-center  mb-4">Please sign in to continue</div>
+                                    <form action="#">
+                                        <div class="form-group">                                            
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "Email", @placeholder = "Email", @autocomplete = "off", @tabIndex = "1" })
+                                        </div>
+                                        <div class="form-group">                                            
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", @id = "Password", @autocomplete = "off", @tabIndex = "2" })
+                                        </div>
+                                        <button type="submit" id="btnlogin" class="btn btn-success btn-block">Sign In</button>                                    
+                                    </form>
+                                    <div class="form-group">
+                                        <label class="custom-control custom-checkbox">
+                                            <a href="@Url.Action("ForgotPassword", "Account")" class="float-right small text-info">Forgot password?</a>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+@*<div id="ModelQP" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btnclose">&times;</button>
+
+            </div>
+            <div class="modal-body">
+
+                <img src="~/assets/img/Quality Policy1.jpg" alt="QP" class="img-thumbnail" height="900" width="500" />
+
+
+            </div>
+        </div>
+
+    </div>
+</div>*@
+<script src="~/assets/js/aes.js"></script>
+<script src="~/assets/js/Encryption.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#formSubmit").submit(function () {
+            $("#btnlogin", this).attr("disabled", "disabled");
+        });
+    });
+</script>
+
+@* <script>
+    function vaidateLogin() {
+        var txtUserId = document.getElementById("UserId").value.trim();
+        var txtPassword = document.getElementById("Password").value.trim();
+        if (txtUserId == "") {
+            alert('Please enter UserId');
+            return false;
+        }
+        else if (txtPassword == "") {
+            alert('Please enter Password');
+            return false;
+        }
+        else {
+            var r = Array.from(Array(16), () => Math.floor(Math.random() * 36).toString(36)).join('');
+            $("#HasencryptKey").val(r);
+
+            var key = CryptoJS.enc.Utf8.parse(r);
+            var iv = CryptoJS.enc.Utf8.parse(r);
+
+            var encryptedpassword = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(txtPassword), key,
+                {
+                    keySize: 128 / 8,
+                    iv: iv,
+                    mode: CryptoJS.mode.CBC,
+                    padding: CryptoJS.pad.Pkcs7
+                });
+
+            document.getElementById("Password").value = encryptedpassword;
+            document.getElementById("HasencryptKey").value = r;
+            return true;
+        }
+    }
+    function ClearLoginCtrl() {
+        document.getElementById("UserId").value = "";
+        document.getElementById("Password").value = "";
+    };
+    //$(document).ready(function () {
+    //    ShowPopupQP();
+    //});
+    //function ShowPopupQP() {
+    //    $("#ModelQP").modal("show");
+    //}
+    //$("#btnclose").on("click", function (event) {
+    //    $("#ModelQP").modal("hide");
+    //});
+</script> *@

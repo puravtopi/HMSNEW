@@ -1,0 +1,202 @@
+﻿@model HMS.Models.ServiceMasterModel
+@{
+
+    Layout = "~/Views/Shared/_ClinicLayout.cshtml";
+    HMS.Common.EncryptDecrypt encryptDecrypt = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+@if (TempData["Temp_Error"] != null)
+{
+
+}
+
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">Services</h4>
+    </div>
+    <div class="page-rightheader">
+        <div class="ml-3 ml-auto d-flex">
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+                <a href="@Url.Action("Index","ServiceMaster")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                    <i class="fa fa-arrow-left "></i>
+                    Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm(Action, Controller, FormMethod.Post, new { area = Model.Area, id = "AddEditForm" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+            <!--div-->
+            <div class="card">
+                <div class="card-body">
+                    <div class="main-content-label mg-b-5">
+                        Services
+                    </div>
+                    <p class="mg-b-20"></p>
+                    <div class="row row-sm">
+                        @Html.HiddenFor(Model => Model.Id)
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                @Html.LabelFor(Model => Model.Departments, new { @class = "form-label" })
+                                @Html.DropDownListFor(Model => Model.Departments, new SelectList(Model.departmentList, "Value", "Text", Model.Department_Id), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwon" })                                
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                @Html.LabelFor(Model => Model.ServiceHead, "Service Head", new { @class = "form - label" })
+                                @Html.DropDownListFor(Model => Model.ServiceHead, new SelectList(Model.ServiceHeadList, "Value", "Text", Model.ServiceHead_Id), new { @class = "form-control select2-list dropdown-validation", @id = "serviceheaddropdown", onchange = "getConsultantCharges()" })                                
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.ServiceName, "Service Name", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.ServiceName, new { @class = "form-control", @id = "ServiceName", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.ServiceName)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Charges, "Charges", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.Charges, new { @class = "form-control", @id = "Charges", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Charges)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Lab_Legend, "Lab_Legend", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Lab_Legend, new { @class = "form-control", @id = "Lab_Legend", @type = "Lab_Legend" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Lab_Legend)</p>
+                            </div>
+                        </div>                       
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
+                                @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-sm">
+                        <div class="col-lg-12 justify-content-center">
+                            <a href="@Url.Action("Index","ServiceMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+
+                            <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+
+                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+            
+        </div>
+        <!--/div-->
+    </div>
+}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<!-- jQuery Unobtrusive Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+    $("#btnReset").click(function () {
+        // Reset the form fields
+        document.getElementById("AddEditForm").reset();
+
+        // Clear validation messages
+        $(".text-danger").text("");
+
+
+    });
+
+    document.getElementById('btnSubmit').addEventListener('click', function (event) {
+        var ServiceName = document.getElementById('ServiceName').value.trim();
+        if (ServiceName === '') {
+            document.getElementById('ServiceNameError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('ServiceNameError').style.display = 'none';
+        }
+        var Charges = document.getElementById('Charges').value.trim();
+        if (Charges === '') {
+            document.getElementById('ChargesError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('ChargesError').style.display = 'none';
+        }
+        var Lab_Legend = document.getElementById('Lab_Legend').value.trim();
+        if (Lab_Legend === '') {
+            document.getElementById('Lab_LegendError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('Lab_LegendError').style.display = 'none';
+        }       
+    });
+
+    $(document).ready(function () {
+        $('#DepartmentDropdwon').change(function () {
+
+            debugger
+            var Department_Id = $(this).val();
+            console.log("Selected department ID: " + Department_Id);
+            // Your AJAX call or other logic here
+            $.ajax({
+                url: '/ServiceMaster/GetBYDepartmentIdWiseServicedData',
+                type: 'GET',
+                data: { Department_Id: Department_Id },
+                success: function (data) {
+                    debugger
+                    PopulateSubProductDropDown("#serviceheaddropdown", data)
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                }
+            });
+        });
+    });
+
+    function PopulateSubProductDropDown(dropDownId, list, selectedId) {
+        $(dropDownId).empty();
+        $(dropDownId).append("<option value='0'>Select</option>")
+        $.each(list, function (index, row) {
+            debugger
+            $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
+        });
+    }
+
+    // function getConsultantCharges() {
+
+    //     var userId = $("#userdropdown").val();
+
+    //     // Your AJAX call or other logic here
+    //     $.ajax({
+    //         url: '/UserMaster/GetChargesByUserId',
+    //         type: 'GET',
+    //         data: { User_Id: userId },
+    //         success: function (data) {
+    //             debugger
+
+
+    //             $("#Consultant_Charges").val(data.opD_Charge)
+    //             $("#TotalAmount").val(data.opD_Charge)
+
+
+    //         },
+    //         error: function (xhr, status, error) {
+    //             // Handle errors
+    //         }
+    //     });
+    // }
+
+</script>

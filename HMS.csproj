@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\preview.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\dependabot.yml" />
+    <None Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\ISSUE_TEMPLATE\icon-request.md" />
+    <None Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\release-drafter.yml" />
+    <None Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\workflows\codeql.yml" />
+    <None Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\workflows\deploy.yml" />
+    <None Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\workflows\release-notes.yml" />
+    <None Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\workflows\test.yml" />
+    <None Include="wwwroot\assets\plugins\fontawesome-free\.github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include="wwwroot\assets\plugins\fontawesome-free\.github\ISSUE_TEMPLATE\feature_request.md" />
+    <None Include="wwwroot\assets\plugins\fontawesome-free\.github\ISSUE_TEMPLATE\icon-request.md" />
+    <None Include="wwwroot\assets\plugins\fontawesome-free\.github\PULL_REQUEST_TEMPLATE.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.143" />
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
+    <PackageReference Include="JW.Pager" Version="1.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DownloadPDF\" />
+  </ItemGroup>
+
+</Project>

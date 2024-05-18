@@ -1,0 +1,391 @@
+﻿@model HMS.Models.ConsultantMasterModel
+@{
+
+    Layout = "~/Views/Shared/_ClinicLayout.cshtml";
+    HMS.Common.EncryptDecrypt encryptDecrypt = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+@if (TempData["Temp_Error"] != null)
+{
+
+}
+
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">Consultantion Details</h4>
+    </div>
+    <div class="page-rightheader">
+        <div class="ml-3 ml-auto d-flex">
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+                <a href="@Url.Action("Index","ConsultantMaster")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                    <i class="fa fa-arrow-left "></i>
+                    Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Forms</div>
+                <div class="card-options ">
+                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                    <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                </div>
+            </div>
+        
+        <div class="card-body">
+
+            @using (Html.BeginForm(Action, Controller, FormMethod.Post, new { area = Model.Area, id = "AddEditForm" }))
+            {
+                <div class="row">
+                    <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                        <!--div-->
+                        <div class="card">
+                            <div class="card-body">
+                                
+                                <div class="row row-sm">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.HiddenFor(Model => Model.Id)
+                                            @Html.LabelFor(Model => Model.ConsultantName, "Consultant Name", new { @class = "form-label required-label" })
+                                            @Html.TextBoxFor(Model => Model.ConsultantName, new { @class = "form-control", @id = "ConsultantName" })
+                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.ConsultantName)</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.Consultant_Code, "Consultant Code", new { @class = "form-label" })
+                                            @Html.TextBoxFor(Model => Model.Consultant_Code, new { @class = "form-control", @id = "Consultant_Code", disabled = "true" })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Code)</p> *@
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.Speciality_in, "Speciality in", new { @class = "form-label" })
+                                            @Html.TextBoxFor(Model => Model.Speciality_in, new { @class = "form-control", @id = "Speciality_in" })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Speciality_in)</p> *@
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4"
+                                         style="display:none">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.ConsultantName_in, "Consultant Name in", new { @class = "form-label" })
+                                            @Html.TextBoxFor(Model => Model.ConsultantName_in, new { @class = "form-control", @id = "ConsultantName_in" })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.ConsultantName_in)</p> *@
+                                        </div>
+                                    </div>
+                                    @* <div class="col-lg-4" style="display:none">
+                                <div class="form-group">
+                                @Html.LabelFor(Model => Model.Sub_Deptt, "Sub-Deptt", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Sub_Deptt, new { @class = "form-control", @id = "Sub_Deptt" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Sub_Deptt)</p>
+                                </div>
+                                </div> *@
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.Departments, "Department", new { @class = "form-label" })
+                                            @Html.DropDownListFor(Model => Model.Departments, new SelectList(Model.departmentList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
+                                            @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                @*  <div class="row row-sm">
+                            <div class="col-lg-12 justify-content-center">
+                            <a href="@Url.Action("Index","ConsultantMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+
+                            <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+
+                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                            </div>
+                            </div> *@
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="main-content-label mg-b-5">
+                                    Address Details
+                                </div>
+                                <p class="mg-b-20"></p>
+                                <div class="row row-sm">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.HouseNo, "House No", new { @class = "form-label" })
+                                            @Html.TextBoxFor(Model => Model.HouseNo, new { @class = "form-control", @id = "HouseNo " })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.HouseNo)</p> *@
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.City, new { @class = "form-label" })
+                                            @Html.TextBoxFor(Model => Model.City, new { @class = "form-control" })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.City)</p> *@
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.State, new { @class = "form-label" })
+                                            @Html.TextBoxFor(Model => Model.State, new { @class = "form-control" })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.State)</p> *@
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.Pincode, new { @class = "form-label" })
+                                            @Html.TextBoxFor(Model => Model.Pincode, new { @class = "form-control" })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Pincode)</p> *@
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.Phone, "Phone ", new { @class = "form-label" })
+                                            @Html.TextBoxFor(Model => Model.Phone, new { @class = "form-control", @id = "Phone " })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Phone)</p> *@
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.Mobile, "Mobile ", new { @class = "form-label" })
+                                            @Html.TextBoxFor(Model => Model.Mobile, new { @class = "form-control", @id = "Mobile " })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Mobile)</p> *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="main-content-label mg-b-5">
+                                    Charges Details
+                                </div>
+                                <p class="mg-b-20"></p>
+                                <div class="row row-sm">
+                                    <table class="table" style="width:70%">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th style="color:black;text-align:center">Consultant Charges</th>
+                                                @* <th style="color:black;text-align:center">Hospital Charges</th> *@
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>OPD Charges</td>
+                                                <td>
+                                                    @Html.TextBoxFor(Model => Model.Consultant_OPD_Charge, new { @class = "form-control", @id = "Consultant_OPD_Charge" })
+                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_OPD_Charge)</p> *@
+                                                </td>
+                                                @* <td>
+                                            @Html.TextBoxFor(Model => Model.Hospital_OPD_Charge, new { @class = "form-control", @id = "Hospital_OPD_Charge" })
+                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Hospital_OPD_Charge)</p>
+                                            </td> *@
+                                            </tr>
+                                            <tr>
+                                                <td>Night Charges</td>
+                                                <td>
+                                                    @Html.TextBoxFor(Model => Model.Consultant_Night_Charge, new { @class = "form-control", @id = "Consultant_Night_Charge" })
+                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Night_Charge)</p> *@
+                                                </td>
+                                                @* <td>
+                                            @Html.TextBoxFor(Model => Model.Hospital_Night_Charge, new { @class = "form-control", @id = "Hospital_Night_Charge" })
+                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Hospital_Night_Charge)</p>
+                                            </td> *@
+                                            </tr>
+                                            <tr>
+                                                <td>Emergency Charge</td>
+                                                <td>
+                                                    @Html.TextBoxFor(Model => Model.Consultant_Emergency_Charge, new { @class = "form-control", @id = "Consultant_Emergency_Charge" })
+                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Emergency_Charge)</p> *@
+                                                </td>
+                                                @*  <td>
+                                            @Html.TextBoxFor(Model => Model.Hospital_Emergency_Charge, new { @class = "form-control", @id = "Hospital_Emergency_Charge" })
+                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Hospital_Emergency_Charge)</p>
+                                            </td> *@
+                                            </tr>
+                                            @*  <tr>
+                                        <td>Revisit Charges For OPD</td>
+                                        <td>
+                                        @Html.TextBoxFor(Model => Model.Consultant_Revisit_ChargesForOPD, new { @class = "form-control", @id = "Consultant_Revisit_ChargesForOPD" })
+                                        <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Revisit_ChargesForOPD)</p>
+                                        </td>
+                                        <td>
+                                        @Html.TextBoxFor(Model => Model.Hospital_Revisit_ChargesForOPD, new { @class = "form-control", @id = "Hospital_Revisit_ChargesForOPD" })
+                                        <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Hospital_Revisit_ChargesForOPD)</p>
+                                        </td>
+                                        </tr>
+                                        <tr>
+                                        <td>Revisit Charges For IP</td>
+                                        <td>
+                                        @Html.TextBoxFor(Model => Model.Consultant_Revisit_ChargesForIP, new { @class = "form-control", @id = "Consultant_Revisit_ChargesForIP" })
+                                        <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Revisit_ChargesForIP)</p>
+                                        </td>
+                                        <td>
+                                        @Html.TextBoxFor(Model => Model.Hospital_Revisit_ChargesForIP, new { @class = "form-control", @id = "Hospital_Revisit_ChargesForIP" })
+                                        <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Hospital_Revisit_ChargesForIP)</p>
+                                        </td>
+                                        </tr> *@
+                                            <tr>
+                                                <td>Specify Revisit(In Day):</td>
+                                                <td>
+                                                    @Html.TextBoxFor(Model => Model.SpecifyRevisit, new { @class = "form-control", @id = "SpecifyRevisit" })
+                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.SpecifyRevisit)</p> *@
+                                                </td>
+                                                @* <td>
+                                            @Html.CheckBoxFor(Model => Model.DifferentReceiptForHospitalCharges) Different Receipt For
+                                            Hospital Charges
+                                            </td> *@
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="display:none">
+                            <div class="card-body">
+                                <div class="main-content-label mg-b-5">
+                                    Room-Wise Visiting  Details
+                                </div>
+                                <p class="mg-b-20"></p>
+                                <div class="row row-sm">
+                                    <table class="table" style="width:60%">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th style="color:black;text-align:center">Consultant Charges</th>
+                                                @*  <th style="color:black;text-align:center">Hospital Charges</th> *@
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Deluxe Charges</td>
+                                                <td>
+                                                    @Html.TextBoxFor(Model => Model.Consultant_Deluxe_Charges, new { @class = "form-control", @id = "Consultant_Deluxe_Charges" })
+                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Deluxe_Charges)</p> *@
+                                                </td>
+                                                @*  <td>
+                                            @Html.TextBoxFor(Model => Model.Hospital_Deluxe_Charges, new { @class = "form-control", @id = "Hospital_Deluxe_Charges" })
+                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Hospital_Deluxe_Charges)</p>
+                                            </td> *@
+                                            </tr>
+                                            <tr>
+                                                <td>Others Charges</td>
+                                                <td>
+                                                    @Html.TextBoxFor(Model => Model.Consultant_Others_Charges, new { @class = "form-control", @id = "Consultant_Others_Charges" })
+                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Others_Charges)</p> *@
+                                                </td>
+                                                @* <td>
+                                            @Html.TextBoxFor(Model => Model.Hospital_Others_Charges, new { @class = "form-control", @id = "Hospital_Others_Charges" })
+                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Hospital_Others_Charges)</p>
+                                            </td> *@
+                                            </tr>
+                                            <tr>
+                                                <td>Private Charge</td>
+                                                <td>
+                                                    @Html.TextBoxFor(Model => Model.Consultant_Private_Charge, new { @class = "form-control", @id = "Consultant_Private_Charge" })
+                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Private_Charge)</p> *@
+                                                </td>
+                                                @* <td>
+                                            @Html.TextBoxFor(Model => Model.Hospital_Private_Charge, new { @class = "form-control", @id = "Hospital_Private_Charge" })
+                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Hospital_Private_Charge)</p>
+                                            </td> *@
+                                            </tr>
+                                            <tr>
+                                                <td>Semi-Private Charge</td>
+                                                <td>
+                                                    @Html.TextBoxFor(Model => Model.Consultant_Semi_Private_Charge, new { @class = "form-control", @id = "Consultant_Semi_Private_Charge" })
+                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Semi_Private_Charge)</p> *@
+                                                </td>
+                                                @* <td>
+                                            @Html.TextBoxFor(Model => Model.Hospital_Semi_Private_Charge, new { @class = "form-control", @id = "Hospital_Semi_Private_Charge" })
+                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Hospital_Semi_Private_Charge)</p>
+                                            </td> *@
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                @* <div class="main-content-label mg-b-5">
+                            Address Details
+                            </div> *@
+                                <div class="row row-sm">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.FormelInfo, "FormelInfo", new { @class = "form-label" })
+                                            @Html.TextAreaFor(Model => Model.FormelInfo, new { @class = "form-control", @id = "FormelInfo " })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.FormelInfo)</p> *@
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            @Html.LabelFor(Model => Model.Specifications, "Specifications", new { @class = "form-label" })
+                                            @Html.TextAreaFor(Model => Model.Specifications, new { @class = "form-control", @id = "Specifications" })
+                                            @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Specifications)</p> *@
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row row-sm">
+                                    <div class="col-lg-12 justify-content-center">
+                                        <a href="@Url.Action("Index","ConsultantMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+
+                                        <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+
+                                        <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/div-->
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<!-- jQuery Unobtrusive Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $("#btnReset").click(function () {
+        // Reset the form fields
+        document.getElementById("AddEditForm").reset();
+
+        // Clear validation messages
+        $(".text-danger").text("");
+
+
+    });
+
+    document.getElementById('btnSubmit').addEventListener('click', function (event) {
+        var ConsultantName = document.getElementById('ConsultantName').value.trim();
+        if (ConsultantName === '') {
+            document.getElementById('ConsultantNameError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('ConsultantNameError').style.display = 'none';
+        }
+    });
+</script>

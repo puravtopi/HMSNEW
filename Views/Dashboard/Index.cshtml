@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+</head>
+<body>
+    <div class="row row-sm">
+        <div class="col-md-12 col-xl-12 mg-t-20">
+            <div class="card card-dashboard-audience-metrics ht-md-100p">
+                <div class="card-header card-title-line">
+                    <h6 class="card-title">Dashboard</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

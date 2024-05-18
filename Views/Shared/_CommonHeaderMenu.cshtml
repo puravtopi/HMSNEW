@@ -1,0 +1,306 @@
+﻿@using HMS.Common;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor _httpContextAccessor
+@{
+	var userSession = _httpContextAccessor.HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+    // ErhardtLeimer.Common.EncryptDecrypt encDecr = new ErhardtLeimer.Common.EncryptDecrypt();
+	var SessionEmailId = _httpContextAccessor.HttpContext.Session.GetString(SessionHelper.SessionEmailId);
+	var SessionUserName = _httpContextAccessor.HttpContext.Session.GetString(SessionHelper.SessionUserName);
+	var SessionClinicDepartment = _httpContextAccessor.HttpContext.Session.GetString(SessionHelper.SessionClinicDepartment);
+}
+
+
+
+<div class="header-main header sticky">
+	<div class="app-header header top-header navbar-collapse ">
+		<div class="container-fluid">
+			<div class="d-flex">
+				<a class="header-brand" href="index.html">
+					<img src="../assets/images/brand/logo.png" class="header-brand-img desktop-logo " alt="Dashlot logo">
+					<img src="../assets/images/brand/logo1.png" class="header-brand-img desktop-logo-1 " alt="Dashlot logo">
+					<img src="../assets/images/brand/favicon.png" class="mobile-logo" alt="Dashlot logo">
+					<img src="../assets/images/brand/favicon1.png" class="mobile-logo-1" alt="Dashlot logo">
+				</a>
+				<a href="#" data-toggle="sidebar" class="nav-link icon toggle"><i class="fe fe-align-justify fs-20"></i></a>
+				<div class="d-flex header-left left-header">
+					<div class="d-none d-lg-block horizontal">
+						<ul class="nav">
+							<li class="">
+								<div class="dropdown d-none d-md-flex">
+									<a href="#" class="d-flex nav-link pr-0  pt-2 mt-3 country-flag1" data-toggle="dropdown">
+										<div>
+											<span class="d-flex fs-14 mr-3 mt-0">HR<span><i class="mdi mdi-chevron-down"></i></span></span>
+										</div>
+									</a>
+									<div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
+										<a href="http://elindia:808/COSEC/Login" class="dropdown-item d-flex align-items-center mt-2">
+											<div>
+												<span>Attendance Recording System</span>
+											</div>
+										</a>
+										<a href="http://elindia/ssm/Staff_Service_Manual.pdf" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>Staff Service Manual</span>
+											</div>
+										</a>
+										<a href="@Url.Action("ExtensionList","HR",new { area="Website"})" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>Extension List</span>
+											</div>
+										</a>										
+									</div>
+								</div>
+							</li>
+							<li class="">
+								<div class="dropdown d-none d-md-flex">
+									<a href="#" class="d-flex nav-link pr-0  pt-2 mt-3 country-flag1" data-toggle="dropdown">
+										<div>
+											<span class="d-flex fs-14 mr-3 mt-0">Register<span><i class="mdi mdi-chevron-down"></i></span></span>
+										</div>
+									</a>
+									<div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
+										<a href="@Url.Action("MaterialInwardRegister","Register",new { area = "Website"})" class="dropdown-item d-flex align-items-center mt-2">
+											<div>
+												<span>Material Inward Register</span>
+											</div>
+										</a>
+										<a href="@Url.Action("MaterialOutwardRegister","Register",new { area = "Website"})" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>Material Outward Register</span>
+											</div>
+										</a>
+										<a href="@Url.Action("DocumentInwardRegister","Register",new { area = "Website"})" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>Document Inward Register</span>
+											</div>
+										</a>
+										<a href="@Url.Action("DocumentOutwardRegister","Register",new { area = "Website"})" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>Document Outward Register</span>
+											</div>
+										</a>
+										<a href="@Url.Action("QCRRegister","Register",new { area = "Website"})" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>QCR Tracking Register</span>
+											</div>
+										</a>
+									</div>
+								</div>
+							</li>
+							<li class="">
+								<div class="dropdown d-none d-md-flex">
+									<a href="#" class="d-flex nav-link pr-0  pt-2 mt-3 country-flag1" data-toggle="dropdown">
+										<div>
+											<span class="d-flex fs-14 mr-3 mt-0">IT<span><i class="mdi mdi-chevron-down"></i></span></span>
+										</div>
+									</a>
+									<div class="dropdown-menu dropdown-menu-left dropdown-menu-arrow">
+										<a href="http://elindia/ssm/IT%20Policy.pdf" target="_blank" class="dropdown-item d-flex align-items-center mt-2">
+											<div>
+												<span>IT Policy</span>
+											</div>
+										</a>
+										<a href="http://elindia/ssm/IT%20Guide%20Line.pdf" target="_blank" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>IT Do's & Dont's Guideline</span>
+											</div>
+										</a>
+										<a href="http://elindia/ssm/IMA--211833-EN-02.pdf" target="_blank" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>Corporate Identity Template</span>
+											</div>
+										</a>
+										<a href="http://eli1/ssm/E+L_CD_MANUAL_EN_PRINT.pdf" target="_blank" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>Corporate Principle Rule</span>
+											</div>
+										</a>
+										<a href="@Url.Action("QCRRegister","Register",new { area = "Website"})" class="dropdown-item d-flex align-items-center">
+											<div>
+												<span>QCR Tracking Register</span>
+											</div>
+										</a>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="d-flex header-right ml-auto">
+					<div class="dropdown header-fullscreen">
+						<a class="nav-link icon full-screen-link" id="fullscreen-button">
+							<i class="mdi mdi-arrow-collapse fs-20"></i>
+						</a>
+					</div>
+					@if (userSession == null)
+					{
+						<div class="dropdown drop-profile">
+							<a class="dropdown-item mb-1" href="@Url.Action("Login", "Home")">
+								<i class="dropdown-icon mdi  mdi-logout-variant"></i> Login
+							</a>
+						</div>
+					}
+					else
+					{
+						<div class="dropdown drop-profile">
+							<a class="nav-link pr-0 leading-none" href="#" data-toggle="dropdown" aria-expanded="false">
+								<div class="profile-details mt-1">
+									<span class="mr-3 mb-0  fs-15 font-weight-semibold">@SessionUserName</span>
+									<small class="text-muted mr-3">@SessionClinicDepartment</small>
+								</div>
+								<img class="avatar avatar-md brround" src="../assets/images/users/2.jpg" alt="image">
+							</a>
+							<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated bounceInDown w-250">
+								<div class="user-profile bg-header-image border-bottom p-3">
+									<div class="user-image text-center">
+										<img class="user-images" src="../assets/images/users/2.jpg" alt="image">
+									</div>
+									<div class="user-details text-center">
+										<h4 class="mb-0">@SessionUserName</h4>
+										<p class="mb-1 fs-13 text-white-50">@SessionEmailId</p>
+									</div>
+								</div>
+								<a class="dropdown-item" href="#">
+									<i class="dropdown-icon mdi mdi-account-outline "></i> Profile
+								</a>
+								<a class="dropdown-item" href="#">
+									<i class="dropdown-icon  mdi mdi-settings"></i> Settings
+								</a>
+								<a class="dropdown-item" href="#">
+									<span class="float-right"><span class="badge badge-success">6</span></span>
+									<i class="dropdown-icon mdi  mdi-message-outline"></i> Inbox
+								</a>
+								<a class="dropdown-item" href="#">
+									<i class="dropdown-icon mdi mdi-comment-check-outline"></i> Message
+								</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">
+									<i class="dropdown-icon mdi mdi-compass"></i> Need help?
+								</a>
+								<a class="dropdown-item mb-1" href="@Url.Action("Login", "Home")">
+									<i class="dropdown-icon mdi  mdi-logout-variant"></i> Sign out
+								</a>
+							</div>
+						</div>
+					}
+
+					<!-- Profile -->
+					@* <div class="sidebar-link">
+						<a href="#" class="nav-link icon" data-toggle="sidebar-right" data-target=".sidebar-right">
+							<i class="fe fe-align-right"></i>
+						</a>
+					</div><!-- Right-side-toggle --> *@
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+   
+<div class="main-header-left " style="display:none">
+    <ul class="header-megamenu-dropdown  nav">
+        <li class="nav-item">
+            <div class="dropdown-menu-rounded btn-group dropdown">
+                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle" id="dropdownMenuButton3"><span> HR </span></button>
+                <div class="dropdown-menu" x-placement="bottom-left">
+                    <a class="dropdown-item  mt-2" href="http://elindia:808/COSEC/Login"><i class="dropdown-icon"></i>Attendance Recording System</a>
+                    @*<a class="dropdown-item" href="javascript:void(0);"><i class="dropdown-icon" ></i>OLD Attendance Recording System</a>*@
+                    <a class="dropdown-item" href="http://elindia/ssm/Staff_Service_Manual.pdf" target="_blank"><i class="dropdown-icon"></i>Staff Service Manual</a>
+
+                    @*<a href="@Url.RouteUrl(new { controller = "HR", action = "ExtensionList" })" class="nav-link @(controllerName=="HR")"> <i class="dropdown-icon"></i>Extension List</a>*@
+                    <a class="dropdown-item" href="@Url.Action("ExtensionList","HR",new { area="Website"})"><i class="dropdown-icon"></i>Extension List</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <div class="dropdown-menu-rounded btn-group dropdown">
+                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle" id="dropdownMenuButton3"><span> Register </span></button>
+                <div class="dropdown-menu" x-placement="bottom-left">
+                    <a class="dropdown-item mt-2" href="@Url.Action("MaterialInwardRegister","Register",new { area = "Website"})">Material Inward Register</a>
+                    <a class="dropdown-item" href="@Url.Action("MaterialOutwardRegister","Register",new { area = "Website"})"> Material Outward Register</a>
+                    <a class="dropdown-item" href="@Url.Action("DocumentInwardRegister","Register",new { area = "Website"})">Document Inward Register</a>
+                    <a class="dropdown-item" href="@Url.Action("DocumentOutwardRegister","Register",new { area = "Website"})">Document Outward Register</a>
+                    <a class="dropdown-item" href="@Url.Action("QCRRegister","Register",new { area = "Website"})">QCR Tracking Register</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+
+            <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle">
+                <span> IT</span>
+            </button>
+            <div class="dropdown-menu" x-placement="bottom-left" style="line-height: 0.5">
+                <a class="dropdown-item mt-2" href="http://elindia/ssm/IT%20Policy.pdf" target="_blank"><i class="dropdown-icon"></i>IT Policy</a>
+                <a class="dropdown-item mt-2" href="http://elindia/ssm/IT%20Guide%20Line.pdf" target="_blank"><i class="dropdown-icon"></i>IT Do's & Dont's Guideline</a>
+                <div class="dropdown">
+                    <button class="dropdown-item mt-2 dropdown-toggle toggle-sub" aria-haspopup="true" aria-expanded="false">
+                        <i class="dropdown-icon"></i>Corporate Guidelines
+                    </button>
+                    <ul class="dropdown-menu droped">
+                        <li><a class="dropdown-item" href="http://elindia/ssm/IMA--211833-EN-02.pdf" target="_blank" ">Corporate Identity Template</a></li>
+                        <li><a class="dropdown-item" href="http://eli1/ssm/E+L_CD_MANUAL_EN_PRINT.pdf" target="_blank" ">Corporate Principle Rule</a></li>
+                    </ul>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-item mt-2 dropdown-toggle toggle-sub" aria-haspopup="true" aria-expanded="false">
+                        <i class="dropdown-icon"></i>SAP
+                    </button>
+                    <ul class="dropdown-menu droped">
+                        <li><a class="dropdown-item" href="http://elindia/SAP_Project/" target="_blank" ">Project ECC6</a></li>
+                        <li><a class="dropdown-item" href="http://elindia/sap/" target="_blank" ">Project SAPPHIRE</a></li>
+                        <li><a class="dropdown-item" href="http://elindia/Userdocs/default.htm" target="_blank">User Documentation</a></li>
+                        <li><a class="dropdown-item" href="http://elindia/SAP%20User%20Manuals/" target="_blank">User Manuals</a></li>
+                    </ul>
+                </div>
+                <a class="dropdown-item mt-2" href="http://elindia/SAP/SAP%20New%20Item%20Code%20Form.pdf" target="_blank"><i class="dropdown-icon"></i>New Item Code From</a>
+                <a class="dropdown-item mt-2" href="http://elindia/SAP/Asset%20Code%20Form.pdf" target="_blank"><i class="dropdown-icon"></i>Asset Code From</a>
+                <a class="dropdown-item mt-2" href="http://elindia/SAP/Change%20Request%20Format.pdf" target="_blank"><i class="dropdown-icon"></i>Change Request Format</a>
+                <div class="dropdown">
+                    <button class="dropdown-item mt-2 dropdown-toggle toggle-sub" aria-haspopup="true" aria-expanded="false">
+                        <i class="dropdown-icon"></i>Supplier Registration Form
+                    </button>
+                    <ul class="dropdown-menu droped">
+                        <li><a class="dropdown-item" href="http://elindia/SAP/Supplier%20Registration%20Form%20Ready%20Bought.pdf" target="_blank">Ready Bought Out</a></li>
+                        <li><a class="dropdown-item" href="http://elindia/SAP/Supplier%20Registration%20Form%20Job%20Work%20Sub%20Contract.pdf" target="_blank">Job Work &  Sub Contract</a></li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item" style="display:none;">
+            <div class="dropdown-menu-rounded btn-group dropdown">
+                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link" id="dropdownMenuButton3"><a href="http://elindia/Elect_Prod/" target="_blank" style="color: #fff;"><span> Electronics Production </span> </a></button>
+                <div class="dropdown-menu" x-placement="bottom-left" style="display:none">
+                    <a class="dropdown-item" href="http://elindia/Elect_Prod/" target="_blank"><i class="dropdown-icon"></i>Electronics Production</a>
+                    @*<a class="dropdown-item  mt-2" href="@Url.Action("KPIList","PerformanceIndicator",new { area = "Website",Id = encDecr.EncryptString("KPI")})"><i class="dropdown-icon"></i>KPI</a>
+                    <a class="dropdown-item" href="@Url.Action("CNCList","PerformanceIndicator",new { area = "Website",Id = encDecr.EncryptString("CNC")})"><i class="dropdown-icon"></i>CNC Machine</a>
+                    <a class="dropdown-item" href="@Url.Action("MechAsmList","PerformanceIndicator",new { area = "Website",Id = encDecr.EncryptString("Mech_Asm")})"><i class="dropdown-icon"></i>Mechanical Assembly</a>
+                    <a class="dropdown-item" href="http://elindia/Elect_Prod/" target="_blank"><i class="dropdown-icon"></i>Electronics Production</a>*@
+                </div>
+            </div>
+        </li>
+        @*<li class="nav-item">
+        <div class="dropdown-menu-rounded btn-group dropdown">
+        <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle"  id="dropdownMenuButton3" ><span> Performance Indicator </span></button>
+        <div class="dropdown-menu" x-placement="bottom-left">
+        <a class="dropdown-item  mt-2" href="@Url.Action("KPIList","PerformanceIndicator",new { area = "Website",Id = encDecr.EncryptString("KPI")})" ><i class="dropdown-icon"></i>KPI</a>
+        <a class="dropdown-item" href="@Url.Action("CNCList","PerformanceIndicator",new { area = "Website",Id = encDecr.EncryptString("CNC")})" ><i class="dropdown-icon"></i>CNC Machine</a>
+        <a class="dropdown-item" href="@Url.Action("MechAsmList","PerformanceIndicator",new { area = "Website",Id = encDecr.EncryptString("Mech_Asm")})" ><i class="dropdown-icon"></i>Mechanical Assembly</a>
+        <a class="dropdown-item" href="http://elindia/Elect_Prod/" target="_blank"><i class="dropdown-icon"></i>Electronics Production</a>
+        </div>
+        </div>
+        </li>*@
+        <li class="nav-item">
+            <div class="dropdown-menu-rounded btn-group dropdown">
+                <button aria-expanded="false" aria-haspopup="true" class="btn btn-link dropdown-toggle" id="dropdownMenuButton3"><span> ISO:9001 </span></button>
+                <div class="dropdown-menu" x-placement="bottom-left">
+                    <a class="dropdown-item  mt-2" href="@Url.Action("Index","ISO",new { area="Website"})"><i class="dropdown-icon"></i>Quality System Procedure</a>
+                    <a class="dropdown-item" href="@Url.Action("Index","ISO",new { area="Website"})"><i class="dropdown-icon"></i>Process Flow Diagram</a>
+
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+

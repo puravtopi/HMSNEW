@@ -1,0 +1,115 @@
+/*!
+ * Bootstrap v4.3.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 The Bootstrap Authors
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+
+.elegant-calencar {
+  max-width: 700px;
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 19px 27px -20px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0px 19px 27px -20px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 19px 27px -20px rgba(0, 0, 0, 0.16); }
+
+.wrap-header {
+  position: relative;
+  width: 45%;
+  background: #39cb75; }
+  @media (max-width: 767.98px) {
+    .wrap-header {
+      width: 100%;
+      padding: 20px 0; } }
+
+#header {
+  width: 100%;
+  position: relative; }
+  #header .pre-button, #header .next-button {
+    cursor: pointer;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 18px; }
+    #header .pre-button i, #header .next-button i {
+      color: #fff; }
+
+.pre-button {
+  left: 5px; }
+
+.next-button {
+  right: 5px; }
+
+.head-day {
+  font-size: 8em;
+  line-height: 1;
+  color: #fff; }
+
+.head-month {
+  font-size: 2em;
+  line-height: 1;
+  color: #fff;
+  font-size: 18px;
+  text-transform: uppercase; }
+
+.calendar-wrap {
+  width: 100%;
+  background: #fff;
+  padding: 40px 20px 20px 20px; }
+
+#calendar {
+  width: 100%; }
+
+#calendar tr {
+  height: 3em; }
+
+#today {
+  color: #fff; }
+  #today:after {
+    background: #39cb75; }
+
+#disabled {
+  cursor: default;
+  background: #fff; }
+
+#disabled:hover {
+  background: #fff;
+  color: #c9c9c9; }
+  #disabled:hover:after {
+    background: transparent; }
+
+#reset {
+  display: block;
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+  z-index: 999;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 0 0.5em;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-size: 11px; }
+
+#reset:hover {
+  color: #fff;
+  border-color: #fff; }
+
+#reset:active {
+  -webkit-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8); }

@@ -1,0 +1,69 @@
+﻿@using HMS.Common;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor _httpContextAccessor
+@{
+    // ErhardtLeimer.Common.EncryptDecrypt encDecr = new ErhardtLeimer.Common.EncryptDecrypt();
+    var userSession = _httpContextAccessor.HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+    var name = _httpContextAccessor.HttpContext.Session.GetString(SessionHelper.SessionUserName);
+}
+<div class="mb-0 navbar navbar-expand-lg navbar-nav-right responsive-navbar navbar-dark p-0  mg-lg-s-auto" style="display:none">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+        <div class="main-header-right">
+            @if (userSession == null)
+            {
+                <div class="nav-item full-screen">
+                    <a class="new nav-link " href="@Url.Action("Login", "Home")"> <span class="login_text">Login</span> <i class="fas fa-sign-in-alt"></i></a>
+                </div>
+            }
+            else
+            {
+                if (name == "Admin")
+                {
+                    <div class="dropdown main-profile-menu nav nav-item nav-link">
+                        <a class="profile-user d-flex" href=""><img src="data:image/png;base64,@_httpContextAccessor.HttpContext.Session.GetString("userphoto")" alt="user-img" class="rounded-circle mCS_img_loaded"><span></span></a>
+
+                        <div class="dropdown-menu">
+                            <div class="main-header-profile header-img">
+                                <h6>@_httpContextAccessor.HttpContext.Session.GetInt32(SessionHelper.SessionUserId)</h6>
+                                @* <span class="text-muted app-sidebar__user-name text-sm" style="color:#fff"> @_httpContextAccessor.HttpContext.Session.GetString("desination")</span>
+                        <span class="text-muted app-sidebar__user-name text-sm" style="color:#fff">@_httpContextAccessor.HttpContext.Session.GetString("department")</span> *@
+                            </div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Dashboard", new { area = "Admin" })"><i class="fas fa-tachometer-alt"></i>Dashboard</a>                            
+                            @* <a class="dropdown-item" href="@Url.Action("Index", "Home", new { area = "Admin" })" style="display:none"><i class="far fa-user"></i> My Profile</a> *@
+                            <a class="dropdown-item" href="@Url.Action("Login", "Home", new { area = "Admin" })"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="dropdown main-profile-menu nav nav-item nav-link">
+                        <a class="profile-user d-flex" href=""><img src="data:image/png;base64,@_httpContextAccessor.HttpContext.Session.GetString("userphoto")" alt="user-img" class="rounded-circle mCS_img_loaded"><span></span></a>
+
+                        <div class="dropdown-menu">
+                            <div class="main-header-profile header-img">
+                                <h6>@_httpContextAccessor.HttpContext.Session.GetInt32(SessionHelper.SessionUserId)</h6>
+                                @* <span class="text-muted app-sidebar__user-name text-sm" style="color:#fff"> @_httpContextAccessor.HttpContext.Session.GetString("desination")</span>
+                        <span class="text-muted app-sidebar__user-name text-sm" style="color:#fff">@_httpContextAccessor.HttpContext.Session.GetString("department")</span> *@
+                            </div>
+                            <a class="dropdown-item" href="@Url.Action("Index", "ClinicDashboard")"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                            <a class="dropdown-item" href="@Url.Action("ChangePassword","UserMaster")"><i class="fas fa-tachometer-alt"></i>Change Password</a>
+                            @* <a class="dropdown-item" href="@Url.Action("Index", "Home", new { area = "Admin" })" style="display:none"><i class="far fa-user"></i> My Profile</a> *@
+                            <a class="dropdown-item" href="@Url.Action("Login", "Home")"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .login_text {
+        color: #fff;
+        font-size: 15px;
+        left: -55px;
+        position: relative;
+    }
+</style>
+

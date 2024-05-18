@@ -1,0 +1,16 @@
+﻿@{
+    Layout = "~/Views/Shared/_ClinicLayout.cshtml";
+    HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+<div class="page-header">
+	<div class="page-leftheader">
+		<h4 class="page-title mb-0">Clinic Dashboard</h4> 
+	</div>
+	<div class="page-rightheader">
+		<div class="ml-3 ml-auto d-flex">
+
+		</div>
+	</div>
+</div>

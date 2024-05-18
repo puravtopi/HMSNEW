@@ -1,0 +1,233 @@
+﻿@model HMS.Models.ClinicMasterModel
+@{
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    HMS.Common.EncryptDecrypt encryptDecrypt = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+@if (TempData["Temp_Error"] != null)
+{
+
+}
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">Clinic</h4>
+    </div>
+    <div class="page-rightheader">
+        <div class="ml-3 ml-auto d-flex">
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+                <a href="@Url.Action("Index","ClinicMaster")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                    <i class="fa fa-arrow-left "></i>
+                    Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm(Action, Controller, FormMethod.Post, new { area = Model.Area, id = "AddEditForm", enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+            <!--div-->
+            <div class="card">
+                <div class="card-body">
+                    <div class="main-content-label mg-b-5">
+                        Clinic
+                    </div>
+                    <p class="mg-b-20"></p>
+                    <div class="row row-sm">
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.HiddenFor(Model => Model.Id)
+                                @Html.LabelFor(Model => Model.ClinicName,"Clinic Name", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.ClinicName, new { @class = "form-control", @id = "ClinicName" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.ClinicName)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.OwnerName, "Owner Name", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.OwnerName, new { @class = "form-control", @id = "OwnerName" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.OwnerName)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                @Html.LabelFor(Model => Model.Address,"Address", new { @class = "form-label" })
+                                @Html.TextAreaFor(Model => Model.Address, new { @class = "form-control" })
+                               
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                @Html.LabelFor(Model => Model.CityName, "City", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.CityName, new { @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                @Html.LabelFor(Model => Model.StateName,"State", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.StateName, new { @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                @Html.LabelFor(Model => Model.Pincode, "Pincode", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Pincode, new { @class = "form-control" })
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                @Html.LabelFor(Model => Model.EmailId, "Email", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.EmailId, new { @class = "form-control", @id = "EmailId",@type="email",@placeholder="example:aaa@gmail.com" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.EmailId)</p>
+                                
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+
+                                @Html.LabelFor(Model => Model.Mobile, "Mobile", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Mobile, new { @class = "form-control" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Mobile)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
+                                @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })                               
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Logo,"Logo", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Logo, new { type = "file" })
+                                @* @Html.ValidationMessageFor(Model => Model.Logo) *@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-sm">
+                        <div class="col-lg-12 justify-content-center">
+                            <a href="@Url.Action("Index","ClinicMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+
+                            <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+
+                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-deck">
+                @if (Model.departmentList != null && Model.departmentList.Count > 0)
+                {
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <table id="example1" class="table table-striped table-dashboard-two mg-b-0" role="grid">
+                                <thead>
+                                    <tr>
+                                        <th class="wd-lg-10p">DepartMent Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.departmentList.Count; i++)
+                                    {  
+                                        <tr>
+                                            <td>
+                                                @Model.departmentList[i].DepartmentName
+                                            </td>
+                                        </tr>                                    
+                                    }
+                                </tbody>
+                            </table>                        
+                        </div>
+                    </div>
+                }
+                @if (Model.designationList != null && Model.designationList.Count > 0)
+                {
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                   
+                            <table id="example1" class="table table-striped table-dashboard-two mg-b-0" role="grid">
+                                <thead>
+                                    <tr>
+                                        <th class="wd-lg-10p">Designation Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.designationList.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Model.designationList[i].DesignationName
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                    
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!--/div-->
+    </div>
+}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<!-- jQuery Unobtrusive Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $("#btnReset").click(function () {
+        // Reset the form fields
+        document.getElementById("AddEditForm").reset();
+
+        // Clear validation messages
+        $(".text-danger").text("");
+
+
+    });
+
+   
+        document.getElementById('btnSubmit').addEventListener('click', function (event) {
+            var ClinicName = document.getElementById('ClinicName').value.trim();
+            if (ClinicName === '') {
+                document.getElementById('ClinicNameError').style.display = 'block';
+                    event.preventDefault(); // Prevent form submission
+                } else {
+                document.getElementById('ClinicNameError').style.display = 'none';
+                }
+
+            var OwnerName = document.getElementById('OwnerNameName').value.trim();
+            if (OwnerName === '') {
+                 document.getElementById('OwnerNameError').style.display = 'block';
+                event.preventDefault(); // Prevent form submission
+            } else {
+                 document.getElementById('OwnerNameError').style.display = 'none';
+            }
+        var EmailId = document.getElementById('EmailId').value.trim();
+        if (EmailId === '') {
+            document.getElementById('EmailIdError').style.display = 'block';
+                event.preventDefault(); // Prevent form submission
+            } else {
+            document.getElementById('EmailIdError').style.display = 'none';
+            }
+        });
+</script>
+

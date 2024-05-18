@@ -1,0 +1,129 @@
+﻿@model HMS.Models.UserMasterModel
+@{
+    Layout = "~/Views/Shared/_ClinicLayout.cshtml";
+    HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">User List</h4>
+    </div>
+    <div class="page-rightheader">
+        <div class="ml-3 ml-auto d-flex">
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+                <a href="@Url.Action("AddEdit","ClinicUserMaster")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                    <i class="fa fa-plus "></i>
+                    Add New
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            @using (Html.BeginForm(Action, Controller, null, FormMethod.Post))
+            {
+                <div class="card-header">
+                    <h4 class="card-title mr-5">Basic tables</h4>
+                    <div class="row row-sm pd-20">
+                        <div class="col-lg-3">
+                            @Html.DropDownListFor(Model => Model.PageSizeId, new SelectList(Model.lstPageSizeDdl, "PageSizeId", "PageSizeValue"), new { @class = "form-control select2-list", @onchange = @"form.submit();" })
+                        </div><!-- col -->
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                @Html.TextBoxFor(Model => Model.SearchString, new { @class = "form-control select2-no-search clearsearch", @placeholder = "Search..." })
+                            </div>
+                        </div><!-- col -->
+                        <div class="col-lg-5">
+                            <button id="btnSearch" class="btn btn-primary ">
+                                Search
+                            </button>
+                            &nbsp;
+                            <a href="@Url.Action("Index","ClinicUserMaster")" class="btn btn-secondary">
+                                Clear
+                            </a>
+                        </div><!-- col -->
+                    </div>
+                </div>
+            }
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example1" class="table table-striped table-dashboard-two mg-b-0" role="grid">
+                        <thead>
+                            <tr>
+                                <th class="wd-lg-10p">Action</th>
+                                <th class="wd-lg-10p">Sr No.</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("First Name", "Index", "ClinicUserMaster", new { sortField = "FirstName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "ClinicUserMaster", new { sortField = "LastName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Email", "Index", "ClinicUserMaster", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Status", "Index", "ClinicUserMaster", new { sortField = "Active", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                @*<th class="wd-lg-25p">Is Deleted </th>*@
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.userMasterList != null && Model.userMasterList.Count > 0)
+                            {
+                                for (int i = 0; i < Model.userMasterList.Count; i++)
+                                {
+                                    var id = "deleteUser" + @Model.userMasterList[i].Id;
+                                    var hrefid = "#deleteUser" + @Model.userMasterList[i].Id;
+                                    var closeId = "UserModalLabel" + @Model.userMasterList[i].Id;
+                                    <tr>
+                                        <td class="btn-icon-list">
+                                            <a class="btn btn-info btn-sm text-white" href="@Url.Action("AddEdit","ClinicUserMaster",new { Userid = encDecr.EncryptString(@Model.userMasterList[i].Id.ToString()) })"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target=@hrefid><i class="fa fa-trash-o"></i></a>                                            
+                                        </td>
+                                        <td>@Model.userMasterList[i].RowNum</td>
+                                        <td>@Model.userMasterList[i].FirstName</td>
+                                        <td>@Model.userMasterList[i].LastName</td>
+                                        <td>@Model.userMasterList[i].Email</td>
+                                        <td>@Model.userMasterList[i].Active</td>
+                                        @*<td>@(Model.userMasterList[i].IsDelete? "Yes" : "No")</td>*@
+                                    </tr>
+
+                                    <div class="modal fade" id=@id tabindex="-1" role="dialog" aria-labelledby=@closeId aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id=@closeId>User</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="modal-body">
+                                                        <div class="py-3 text-center">
+                                                            <i class="fa fa-exclamation-circle fa-5x"></i>
+                                                            <h4 class="heading mt-4">Are you sure you want to delete User!</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                    <a href="@Url.Action("Delete","ClinicUserMaster",new { deleteId = encDecr.EncryptString(@Model.userMasterList[i].Id.ToString()) })" type="button" class="btn btn-primary">Yes</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <tr class="odd">
+                                    <td valign="top" colspan="10" class="dataTables_empty"><div class="card mg-b-20 text-center"><div class="card-body h-100"><img src="~/assets/img/svgicons/no-data.svg" alt="" class="wd-10p"><h5 class="mg-b-10 mg-t-15 tx-18">Its Empty In Here</h5><a href="javascript:void(0);" class="text-dark">@ViewBag.ErroMsg</a></div></div></td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,113 @@
+﻿@model HMS.Models.DesignationMasterModel
+@{
+
+    Layout = "~/Views/Shared/_ClinicLayout.cshtml";
+    HMS.Common.EncryptDecrypt encryptDecrypt = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+@if (TempData["Temp_Error"] != null)
+{
+
+}
+
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">Designation</h4>
+    </div>
+    <div class="page-rightheader">
+        <div class="ml-3 ml-auto d-flex">
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+                <a href="@Url.Action("Index","ClinicDesignationMaster")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                    <i class="fa fa-arrow-left "></i>
+                    Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm(Action, Controller, FormMethod.Post, new { area = Model.Area, id = "AddEditForm" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+            <!--div-->
+            <div class="card">
+                <div class="card-body">
+                    <div class="main-content-label mg-b-5">
+                        Designation
+                    </div>
+                    <p class="mg-b-20"></p>
+                    <div class="row row-sm">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.HiddenFor(Model => Model.Id)
+                                @Html.LabelFor(Model => Model.DesignationCode, "Designation Code", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.DesignationCode, new { @class = "form-control", @id = "DesignationCode" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.DesignationCode)</p>
+                            </div>
+                        </div> 
+                       <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.HiddenFor(Model => Model.Id)
+                                @Html.LabelFor(Model => Model.DesignationName, "Designation Name", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.DesignationName, new { @class = "form-control", @id = "DesignationName" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.DesignationName)</p>
+                            </div>
+                        </div>                                          
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
+                                @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-sm">
+                        <div class="col-lg-12 justify-content-center">
+                            <a href="@Url.Action("Index","ClinicDesignationMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+
+                            <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+
+                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/div-->
+    </div>
+}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<!-- jQuery Unobtrusive Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $("#btnReset").click(function () {
+        // Reset the form fields
+        document.getElementById("AddEditForm").reset();
+
+        // Clear validation messages
+        $(".text-danger").text("");
+
+
+    });
+        document.getElementById('btnSubmit').addEventListener('click', function (event) {
+        var designationCode = document.getElementById('DesignationCode').value.trim();
+        if (designationCode === '') {
+            document.getElementById('designationCodeError').style.display = 'block';
+                event.preventDefault(); // Prevent form submission
+            } else {
+            document.getElementById('designationCodeError').style.display = 'none';
+            }
+        var designationName = document.getElementById('DesignationName').value.trim();
+        if (designationName === '') {
+            document.getElementById('designationNameError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('designationNameError').style.display = 'none';
+        }
+        });
+</script>
