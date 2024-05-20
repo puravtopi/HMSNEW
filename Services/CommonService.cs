@@ -51,6 +51,15 @@ namespace HMS.Services
             }
         }
 
+        public string GenerateReciptNo()
+        {
+            int _min = 10000;
+            int _max = 99999;
+            Random r = new Random();
+            int num = r.Next(_min, _max);
+            return "RCP" + num.ToString();
+        }
+
         public List<SelectListItem> GetStatusList()
         {
             try

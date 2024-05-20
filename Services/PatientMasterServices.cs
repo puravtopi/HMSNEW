@@ -108,7 +108,7 @@ namespace HMS.Services
             dbparams.Add("@Active", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);
             dbparams.Add("@EntryDateTime", model.EntryDateTime, DbType.String);
-            dbparams.Add("@ReceiptNo", model.ReceiptNo, DbType.Int32);
+            dbparams.Add("@ReceiptNo", model.ReceiptNo, DbType.String);
             dbparams.Add("@UHID", model.UHID, DbType.String);
 
             dbparams.Add("@Temperature ", model.Temperature, DbType.Decimal);
@@ -161,8 +161,7 @@ namespace HMS.Services
             dbparams.Add("@Active ", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete ", model.IsDelete, DbType.Boolean);
             dbparams.Add("@UpdatedBy", model.UpdatedBy, DbType.Int32);
-            dbparams.Add("@EntryDateTime", model.EntryDateTime, DbType.String);
-            dbparams.Add("@UHID", model.UHID, DbType.String);
+           
 
             return _dapper.Insert<PatientMasterModel>(CommonSp.updatePatientMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 

@@ -54,7 +54,7 @@ namespace HMS.Controllers
             IRevisitDetailMasterServices revisitDetailMasterServices,
             IPatientConsultantMasterServices patientConsultantMasterServices,
             IClinicMasterServices clinicMasterServices, IUserMasterServices userMasterServices,
-            IWebHostEnvironment webHostEnvironment,IPatientServiceMasterServices patientServiceMasterServices
+            IWebHostEnvironment webHostEnvironment, IPatientServiceMasterServices patientServiceMasterServices
             )
         {
             _patientMasterServices = patientMasterServices;
@@ -65,11 +65,11 @@ namespace HMS.Controllers
             _patientConsultantMasterServices = patientConsultantMasterServices;
             _clinicMasterServices = clinicMasterServices;
             _userMasterServices = userMasterServices;
-            _webHostEnvironment= webHostEnvironment;
-            _patientServiceMasterServices= patientServiceMasterServices;
+            _webHostEnvironment = webHostEnvironment;
+            _patientServiceMasterServices = patientServiceMasterServices;
         }
 
-        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "Id")
+        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
         {
             var breadcrumbs = new List<Breadcrumb>
                 {
@@ -84,7 +84,7 @@ namespace HMS.Controllers
             ViewBag.PageSizeId = PageSizeId;
             if (string.IsNullOrEmpty(sortField))
             {
-                ViewBag.SortField = "Id";
+                ViewBag.SortField = "CI.Id";
                 ViewBag.SortOrder = "Asc";
             }
             else
@@ -136,7 +136,7 @@ namespace HMS.Controllers
 
                 var getpatientService = _patientServiceMasterServices.GetAll(res[i].Id);
                 if (getpatientService != null && getpatientService.Count > 0)
-                {                    
+                {
                     res[i].patientServiceMastersModel = getpatientService;
                     res[i].IsCheckPatient = true;
                 }
@@ -226,7 +226,7 @@ namespace HMS.Controllers
 
 
 
-                    if (patientMasterModel.User_id != null && patientMasterModel.User_id!=0)
+                    if (patientMasterModel.User_id != null && patientMasterModel.User_id != 0)
                     {
                         var dataConsultantMst = _userMasterServices.GetById(patientMasterModel.User_id.Value);
 
@@ -242,8 +242,8 @@ namespace HMS.Controllers
                 patientMasterModel.Active = true;
                 patientMasterModel.User_DesignationList = _commonService.GetUserDepartmentList(0);
             }
-            
-           
+
+
             patientMasterModel.lstStatus = _commonService.GetStatusList();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
             patientMasterModel.GenderList = _commonService.GetGenderList();
@@ -266,7 +266,7 @@ namespace HMS.Controllers
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
-            
+
 
             model.departmentList = _commonService.GetDepartmentList(SclinicId);
             if (model.Consultant_Id != null)
@@ -281,7 +281,7 @@ namespace HMS.Controllers
                 model.consultantList = Desig;
                 //model.c = Desig[0].Text;
             }
-            
+
             if (ModelState.IsValid)
             {
                 if (model.Id == 0)
@@ -289,8 +289,11 @@ namespace HMS.Controllers
 
                     List<PatientMasterModel> patient = new List<PatientMasterModel>();
                     patient = _patientMasterServices.GetPatientData();
-                    int uhid = patient.Max(a=>a.Id);
-                    if(model.PaymentMode=="Due")
+                    int uhid = 0;
+
+                    if (patient.Count > 0)
+                        uhid = patient.Max(a => a.Id);
+                    if (model.PaymentMode == "Due")
                     {
                         model.UHID = null;
                     }
@@ -299,7 +302,7 @@ namespace HMS.Controllers
                         model.UHID = (uhid + 1).ToString();
                     }
 
-                    
+
                     model.DOB = model.DOB.Date;
                     model.CreatedBy = SclinicId;
                     if (model.Active == true)
@@ -312,13 +315,15 @@ namespace HMS.Controllers
                     }
                     model.Clinic_Id = SclinicId;
                     //model.Active = true;
-                    if(!string.IsNullOrEmpty(model.EntryDateTime))
+                    if (!string.IsNullOrEmpty(model.EntryDateTime))
                     {
-                        
-                        var d=model.EntryDateTime.Replace('T', ' ');
+
+                        var d = model.EntryDateTime.Replace('T', ' ');
                         model.EntryDateTime = d;
                     }
-                                       
+
+                    model.ReceiptNo = _commonService.GenerateReciptNo();
+
                     var res = _patientMasterServices.Insert(model);
 
                     if (res.DbCode == 1)
@@ -336,7 +341,7 @@ namespace HMS.Controllers
 
                 }
                 else
-                {                    
+                {
                     model.UpdatedBy = SclinicId;
                     model.Clinic_Id = SclinicId;
                     if (model.Active == true)
@@ -441,7 +446,7 @@ namespace HMS.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult RevisitDetail(int patientId,int Id)
+        public ActionResult RevisitDetail(int patientId, int Id)
         {
             try
             {
@@ -463,29 +468,29 @@ namespace HMS.Controllers
 
                 if (patientMasterModel != null)
                 {
-                    revisitDetailModel.PatientName = patientMasterModel.Fname + " " + patientMasterModel.Lname;                    
+                    revisitDetailModel.PatientName = patientMasterModel.Fname + " " + patientMasterModel.Lname;
                 }
                 var Desig = _commonService.GetDesignationListById((int)user.Desig_Id);
                 //ViewBag.Consultant_Code = dataConsultantMst.Consultant_Code;
                 revisitDetailModel.ConsultantList = Desig;
                 revisitDetailModel.ConsultantName = Desig[0].Text;
                 revisitDetailModel.Patient_Id = patientId;
-                if (Id > 0) 
+                if (Id > 0)
                 {
                     var getAllRevisitData = _revisitDetailMasterServices.GetAllById(Id);
                     revisitDetailModel = getAllRevisitData;
                     revisitDetailModel.ConsultantList = Desig;
                 }
-                else 
+                else
                 {
-                    int _min = 1000;
-                    int _max = 9999;
+                    int _min = 10000;
+                    int _max = 99999;
                     Random r = new Random();
                     int num = r.Next(_min, _max);
                     revisitDetailModel.ReceiptNo = "RCP" + num.ToString();
                     num = r.Next(_min, _max);
                     revisitDetailModel.UHID = patientId;
-                    
+
                     revisitDetailModel.RevisitDate = DateTime.Now.ToString("MM/dd/yyyy");
                     revisitDetailModel.RefReceiptNo = "REF" + num.ToString();
                 }
@@ -568,9 +573,9 @@ namespace HMS.Controllers
                                     return RedirectToAction("AddEdit");
                                 }
                             }
-                            else 
+                            else
                             {
-                                model.UpdatedDate =DateTime.Now;
+                                model.UpdatedDate = DateTime.Now;
                                 model.CreatedBy = 1;
                                 var res = _revisitDetailMasterServices.Update(model);
                                 if (res.DbCode == 1)
@@ -655,7 +660,7 @@ namespace HMS.Controllers
             string webRootPath = _webHostEnvironment.WebRootPath;
             string DownloadPDFPath = Path.Combine(webRootPath, "DownloadPDF");
             if (!Directory.Exists(DownloadPDFPath))
-            {                
+            {
                 Directory.CreateDirectory(DownloadPDFPath);
                 ViewBag.Message = "Directory created successfully.";
             }
@@ -757,12 +762,12 @@ namespace HMS.Controllers
                 }
                 patientServiceMaster.ConsultantName = user.FirstName + " " + user.LastName;
                 patientServiceMaster.Patient_Id = Patient_Id;
-                
+
                 int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
                 patientServiceMaster.departmentList = _commonService.GetDepartmentList(SclinicId);
                 patientServiceMaster.serviceHeadList = _commonService.GetDepartmentwiseServiceheadList(patientServiceMaster.Department_Id);
-                patientServiceMaster.serviceList   = _commonService.GetServiceHeadwiseServiceList(patientServiceMaster.ServiceHead_Id);
-                
+                patientServiceMaster.serviceList = _commonService.GetServiceHeadwiseServiceList(patientServiceMaster.ServiceHead_Id);
+
                 return PartialView("_PatientServiceDetail", patientServiceMaster);
             }
             catch (Exception ex)

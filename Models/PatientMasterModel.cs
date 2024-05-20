@@ -89,7 +89,7 @@ namespace HMS.Models
         public bool EmergencyAdminssion { get; set; }
         public bool FileChargesApplicable { get; set; }
         //public string? Patient_Charges { get; set; }
-        public int ReceiptNo { get; set; }
+        public string ReceiptNo { get; set; }
         public bool Patient_Charges { get; set; }
 
         public List<RevisitDetailModel?>? revisitDetailModel { get; set; }

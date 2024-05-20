@@ -14,6 +14,7 @@ namespace HMS.Interface
         public List<SelectListItem> GetMaritalStatusList();
         public List<SelectListItem> GetGenderList();
         public List<SelectListItem> GetBloodgroupList();
+        public string GenerateReciptNo();
 
         public string GetMd5HashNewMethod(string password);
         public string GetPrefix(int IdString);

@@ -1,4 +1,5 @@
 ﻿using HMS.Models;
+using System;
 
 namespace HMS.Common
 {
@@ -12,6 +13,8 @@ namespace HMS.Common
 
         public const string Temp_Success = "Success";
         public const string Temp_Error = "Error";
+
+       
     }
 
     public static class CommonSp
@@ -75,7 +78,7 @@ namespace HMS.Common
         public const string updatePatientMaster = "usp_PatientMaster_Update";
         public const string deleteByIdPatientMaster = "usp_PatientMaster_DeleteById";
         public const string getByIdPatientMaster = "usp_PatientMaster_GetById";
-        public const string getByIdPatientIdWise_Consultant= "usp_Consultant_GetBy_PatientId";
+        public const string getByIdPatientIdWise_Consultant = "usp_Consultant_GetBy_PatientId";
         // Consultant Master
         public const string getAllConsultantMaster = "usp_ConsultantMaster_GetAll";
         public const string saveConsultantMaster = "usp_ConsultantMaster_Insert";
@@ -83,7 +86,7 @@ namespace HMS.Common
         public const string deleteByIdConsultantMaster = "usp_ConsultantMaster_DeleteById";
         public const string getByIdConsultantMaster = "usp_ConsultantMaster_GetById";
         public const string getAllConsultantMasterList = "usp_ConsultantMaster_GetAllConsultantMaster";
-        public const string updateConsultantMasterCode = "usp_ConsultantMaster_UpdateCode"; 
+        public const string updateConsultantMasterCode = "usp_ConsultantMaster_UpdateCode";
         //Clinic wise Department And Designation Without paging Sorting
         public const string getByClinicIdWiseDEPTList = "usp_DepartmentMaster_GetBy_ClinicIdWise_List";
         public const string getByClinicIdWiseDESIGList = "usp_DesignationMaster_GetBy_ClinicIdWise_List";
@@ -114,7 +117,7 @@ namespace HMS.Common
 
         public const string getByDepartmentIdWise_User = "usp_UserMaster_GetBy_DepartmentIdWise";
         public const string getByDesignationIdWise_User = "usp_UserMaster_GetBy_DesignationIdWise";
-        
+
         // Service Head Master
         public const string getAllServiceHeadMaster = "usp_ServiceHeadMaster_GetAll";
         public const string saveServiceHeadMaster = "usp_ServiceHeadMaster_Insert";
@@ -130,7 +133,7 @@ namespace HMS.Common
 
         public const string getByDepartmentWise_ServiceHead = "usp_ServiceHead_GetBy_DepartmentIdWise";
         public const string getByDepartmentWise_Service = "usp_Service_GetBy_DepartmentIdWise";
-        
+
         public const string GetpatientData = "usp_PatientMaster_MaxValue";
         public const string GetUserWisePatient = "usp_PatientMaster_UserId_Wise";
 
@@ -143,7 +146,7 @@ namespace HMS.Common
         public const string GetPatientWisePatientServiceData = "usp_PatientServiceMaster_GetPatientId_wise";
 
         public const string GetAllService_ServiceHeadWise = "usp_ServiceMaster_GetBy_ServiceHeadIdWise";
-        
+
         //public const string GetPatientWisePatientServiceData = "usp_PatientServiceMaster_GetPatientId_wise";
         //public const string GetPatientWisePatientServiceData = "usp_PatientServiceMaster_GetPatientId_wise";
 
@@ -163,7 +166,7 @@ namespace HMS.Common
     public class ConnStrings
     {
         public const string HMSConnectionstring = "HMSConnection";
-       
+
     }
 
     public class Breadcrumb

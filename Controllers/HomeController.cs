@@ -1,4 +1,4 @@
-﻿    using HMS.Common;
+﻿using HMS.Common;
 using HMS.Interface;
 using HMS.Models;
 using HMS.Security;
@@ -25,7 +25,7 @@ namespace HMS.Controllers
         private readonly IUserMasterServices _userMasterServices;
         private readonly ICommonService _commonService;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, 
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration,
             IHttpContextAccessor httpContextAccessor, IUserMasterServices userMasterServices, ICommonService commonService)
         {
             _logger = logger;
@@ -44,7 +44,7 @@ namespace HMS.Controllers
 
         public IActionResult Login()
         {
-            
+
             UserMasterModel model = new UserMasterModel();
             if (Request.Cookies[".AspNetCore.Session"] != null)
             {
@@ -61,7 +61,7 @@ namespace HMS.Controllers
             try
             {
                 if (HttpContext.Request.Cookies.Keys.Contains(".AspNetCore.Antiforgery.Fac3F_fAMYA"))
-                {                    
+                {
                     return RedirectToAction("Login", "Account");
                 }
                 TempData.Clear();
@@ -108,7 +108,7 @@ namespace HMS.Controllers
                         {
                             return RedirectToAction("Index", "ClinicDashboard");
                         }
-                        
+
                     }
                     else
                     {
@@ -129,7 +129,12 @@ namespace HMS.Controllers
                           .ToList();
 
             }
-            return View(model);
+            UserMasterModel userLoginModel = new UserMasterModel()
+            {
+                Email = model.Email,
+                Password = model.Password
+            };
+            return View(userLoginModel);
         }
 
         public IActionResult Privacy()
@@ -143,7 +148,7 @@ namespace HMS.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
         public IActionResult LogOut()
-        {            
+        {
             return RedirectToAction("Login");
         }
     }
