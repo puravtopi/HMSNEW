@@ -99,6 +99,6 @@ namespace HMS.Models
         public string EntryDateTime { get; set; }
         public string UHID { get; set; }
         public List<PatientServiceMasterModel> patientServiceMastersModel { get; set; }
-        public bool? IsCheckPatient { get; set; }
+
     }
 }

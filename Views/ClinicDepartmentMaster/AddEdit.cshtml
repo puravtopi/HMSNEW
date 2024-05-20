@@ -48,7 +48,7 @@
                                 <div class="form-group">
                                     @Html.HiddenFor(Model => Model.Id)
                                     @Html.LabelFor(Model => Model.DepartmentName, "Deparment Name", new { @class = "form-label required-label" })
-                                    @Html.TextBoxFor(Model => Model.DepartmentName, new { @class = "form-control", @id = "DepartmentName" })
+                                @Html.TextBoxFor(Model => Model.DepartmentName, new { @class = "form-control", @id = "DepartmentName", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
                                     <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.DepartmentName)</p>
                                 </div>
                             </div>
@@ -101,6 +101,5 @@
             document.getElementById('departmentNameError').style.display = 'none';
         }
     });
-
 
 </script>

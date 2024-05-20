@@ -146,11 +146,7 @@ namespace HMS.Common
         public const string GetPatientWisePatientServiceData = "usp_PatientServiceMaster_GetPatientId_wise";
 
         public const string GetAllService_ServiceHeadWise = "usp_ServiceMaster_GetBy_ServiceHeadIdWise";
-
-        //public const string GetPatientWisePatientServiceData = "usp_PatientServiceMaster_GetPatientId_wise";
-        //public const string GetPatientWisePatientServiceData = "usp_PatientServiceMaster_GetPatientId_wise";
-
-
+        public const string GetPatientService = "usp_PatientServiceMaster_MaxValue";
     }
     public class PageSizeDdl : BaseResponseModel
     {

@@ -12,7 +12,7 @@ namespace HMS.Interface
         public UserMasterModel DeleteById(int Id, int DeletedBy);
         public UserMasterModel GetByEmail(string email);
         public UserMasterModel UpdatePassword(UserMasterModel model);
-        public List<UserMasterModel> GetByClinicIdWiseUser(int ClinicId, int TotalCount, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null);
+        public List<UserMasterModel> GetByClinicIdWiseUser(ref int TotalCount, int ClinicId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null);
         public List<UserMasterModel> GetByClinicIdWiseUserList(int ClinicId);
         public List<UserMasterModel> GetByDepartmentIdWiseUserList(int Department_Id);
         public List<UserMasterModel> GetByDesignationIdWiseUserList(int Desig_Id);

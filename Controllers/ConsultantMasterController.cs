@@ -61,7 +61,7 @@ namespace HMS.Controllers
                 searchString = searchString.Trim();
             }
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
-            var res = _consultantMasterServices.GetByClinicIdWiseConsultant(SclinicId, TotalCount, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
+            var res = _consultantMasterServices.GetByClinicIdWiseConsultant(ref TotalCount, SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
             consultantMaster.lstPageSizeDdl = _commonService.GetPageSizeDDL();
             consultantMaster.departmentList = _commonService.GetDepartmentList(SclinicId);
             for (int i = 0;i<res.Count;i++)

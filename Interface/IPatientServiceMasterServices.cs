@@ -11,5 +11,6 @@ namespace HMS.Interface
         public PatientServiceMasterModel Update(PatientServiceMasterModel model);
         public PatientServiceMasterModel DeleteById(int Id, int DeletedBy);
         public List<PatientServiceMasterModel> GetAll(int Patient_Id);
+        public List<PatientServiceMasterModel> GetPatienServiceData();
     }
 }

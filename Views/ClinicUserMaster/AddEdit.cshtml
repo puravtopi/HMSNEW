@@ -49,14 +49,14 @@
                                     <div class="form-group">
                                         @Html.HiddenFor(Model => Model.Id)
                                         @Html.LabelFor(Model => Model.FirstName, "First Name", new { @class = "form-label required-label" })
-                                        @Html.TextBoxFor(Model => Model.FirstName, new { @class = "form-control", @id = "FirstName" })
+                                        @Html.TextBoxFor(Model => Model.FirstName, new { @class = "form-control", @id = "FirstName", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
                                         <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.FirstName)</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         @Html.LabelFor(Model => Model.LastName, "Last Name", new { @class = "form-label required-label" })
-                                        @Html.TextBoxFor(Model => Model.LastName, new { @class = "form-control", @id = "LastName" })
+                                        @Html.TextBoxFor(Model => Model.LastName, new { @class = "form-control", @id = "LastName", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
                                         <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.LastName)</p>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                                                 <tr>
                                                     <td>OPD Charges</td>
                                                     <td>
-                                                        @Html.TextBoxFor(Model => Model.OPD_Charge, new { @class = "form-control", @id = "OPD_Charge" })
+                                                        @Html.TextBoxFor(Model => Model.OPD_Charge, new { @class = "form-control", @id = "OPD_Charge", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
 
                                                     </td>
 
@@ -117,7 +117,7 @@
                                                 <tr>
                                                     <td>Night Charges</td>
                                                     <td>
-                                                        @Html.TextBoxFor(Model => Model.Night_Charge, new { @class = "form-control", @id = "Night_Charge" })
+                                                        @Html.TextBoxFor(Model => Model.Night_Charge, new { @class = "form-control", @id = "Night_Charge", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
 
                                                     </td>
 
@@ -125,7 +125,7 @@
                                                 <tr>
                                                     <td>Emergency Charge</td>
                                                     <td>
-                                                        @Html.TextBoxFor(Model => Model.Emergency_Charge, new { @class = "form-control", @id = "Emergency_Charge" })
+                                                        @Html.TextBoxFor(Model => Model.Emergency_Charge, new { @class = "form-control", @id = "Emergency_Charge", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
 
                                                     </td>
 
@@ -134,7 +134,7 @@
                                                 <tr>
                                                     <td>Specify Revisit(In Day):</td>
                                                     <td>
-                                                        @Html.TextBoxFor(Model => Model.SpecifyRevisit, new { @class = "form-control", @id = "SpecifyRevisit" })
+                                                        @Html.TextBoxFor(Model => Model.SpecifyRevisit, new { @class = "form-control", @id = "SpecifyRevisit", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
 
                                                     </td>
 
@@ -174,7 +174,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
 
-<script>
+    <script>
     $("#btnReset").click(function () {
         // Reset the form fields
         document.getElementById("AddEditForm").reset();
@@ -214,15 +214,25 @@
         } else {
             document.getElementById('PasswordError').style.display = 'none';
         }
-    });.
+    });
 
 
 
-</script>
-<script>
     $(document).ready(function () {
         // Initially hide the card
-        $('#consultantCard').hide(); // Hide the card using its id
+        $('#consultantCard').hide();
+
+        // Check the default selected value of the dropdown
+        var selectedValue = $('#designationDropdown').val();
+
+        // Check if the default value is "11"
+        if (selectedValue === "11") {
+            // If selected, show the card
+            $('#consultantCard').show();
+        }
+
+        // Event listener for dropdown change
+        $('#designationDropdown').change(handleDropdownChange);
     });
 
     function handleDropdownChange() {

@@ -23,7 +23,7 @@
                                             <div class="form-group">
                                                 @Html.HiddenFor(Model => Model.Id)                                                
                                                 @Html.LabelFor(Model => Model.UHID, "UHID", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.UHID, new { @class = "form-control", @id = "UHID", @disabled = "true" })
+                                                @Html.TextBoxFor(Model => Model.UHID, new { @class = "form-control", @id = "UHID", @readonly = "readonly" })
                                                 
                                             </div>
                                         </div>
@@ -49,11 +49,15 @@
                                         <div class="table-responsive">
                                             <table id="example1" class="table table-striped table-dashboard-two mg-b-0" role="grid">
                                                 <thead>
-                                                    <tr>                                                        
-                                                        <th>Deparment Name</th>                                                        
+                                                    <tr>
+                                                        <th>Patient Name</th>
+                                                        <th>Department Name</th>
                                                         <th>Consultant Name</th>
+                                                        <th>Service Head Name</th>
+                                                        <th>Service Name</th>
                                                         <th>Charges</th>
                                                         <th>Discount</th>
+                                                        <th>NetAmount</th>
 
                                                     </tr>
                                                 </thead>
@@ -62,12 +66,15 @@
                                                     {
                                                         for (int i = 0; i < Model.patientServiceMastersList.Count; i++)
                                                         {
-                                                            <tr>                                                                
+                                                            <tr>
+                                                                <td>@Model.patientServiceMastersList[i].PatientName</td>
                                                                 <td>@Model.patientServiceMastersList[i].DepartmentName</td>
                                                                 <td>@Model.patientServiceMastersList[i].ConsultantName</td>
+                                                                <td>@Model.patientServiceMastersList[i].ServiceHeadName</td>
+                                                                <td>@Model.patientServiceMastersList[i].ServiceName</td>
                                                                 <td>@Model.patientServiceMastersList[i].Charges</td>
                                                                 <td>@Model.patientServiceMastersList[i].Discount</td>
-                                                                
+                                                                <td>@Model.patientServiceMastersList[i].NetAmount</td>
                                                             </tr>
                                                         }
                                                     }
@@ -89,27 +96,27 @@
                                     <div class="row row-sm">
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                @Html.LabelFor(Model => Model.DepartmentName,"Department", new { @class = "form-label" })
-                                                @Html.DropDownListFor(Model => Model.DepartmentName, new SelectList(Model.departmentList, "Value", "Text", Model.Department_Id), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwon" })
+                                                @Html.LabelFor(Model => Model.Department,"Department", new { @class = "form-label" })
+                                                @Html.DropDownListFor(Model => Model.Department, new SelectList(Model.departmentList, "Value", "Text", Model.Department_Id), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwon" })
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
 
-                                                @Html.LabelFor(Model => Model.ServiceHeadName, "Service Head", new { @class = "form - label" })
-                                                @Html.DropDownListFor(Model => Model.ServiceHeadName, new SelectList(Model.serviceHeadList, "Value", "Text", Model.ServiceHead_Id), new { @class = "form-control select2-list dropdown-validation", @id = "serviceheaddropdown" })
+                                                @Html.LabelFor(Model => Model.ServiceHead, "Service Head", new { @class = "form -label required-label" })
+                                                @Html.DropDownListFor(Model => Model.ServiceHead, new SelectList(Model.serviceHeadList, "Value", "Text", Model.ServiceHead_Id), new { @class = "form-control select2-list dropdown-validation", @id = "serviceheaddropdown" })
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                @Html.LabelFor(Model => Model.ServiceName, "Service", new { @class = "form-label " })
-                                                @Html.DropDownListFor(Model => Model.ServiceName, new SelectList(Model.serviceList, "Value", "Text", Model.Service_Id), new { @class = "form-control select2-list dropdown-validation", @id = "ServiceDropdwon", onchange = "getServiceCharges()" })
+                                                @Html.LabelFor(Model => Model.Service, "Service", new { @class = "form-label required-label" })
+                                                @Html.DropDownListFor(Model => Model.Service, new SelectList(Model.serviceList, "Value", "Text", Model.Service_Id), new { @class = "form-control select2-list dropdown-validation", @id = "ServiceDropdwon", onchange = "getServiceCharges()" })
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 @Html.LabelFor(Model => Model.Charges, "Charges", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.Charges, new { @class = "form-control", @id = "Charges", @disabled = "true" })
+                                                @Html.TextBoxFor(Model => Model.Charges, new { @class = "form-control", @id = "Charges", @readonly = "readonly" })
                                                 @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Charges)</p> *@
                                             </div>
                                         </div>
@@ -123,9 +130,30 @@
                                         
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                @Html.LabelFor(Model => Model.NetAmount, "Net Amount ", new { @class = "form - label" })
-                                                @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control",@id="NetAmount" })
+                                                @Html.LabelFor(Model => Model.NetAmount, "Net Amount ", new { @class = "form-label" })
+                                                @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount", @readonly = "readonly" })
                                                 @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.TotalAmount)</p> *@
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(Model => Model.ServiceDate, "Service Date", new { @class = "form-label" })
+                                                @Html.TextBoxFor(Model => Model.ServiceDate, new { @class = "form-control", @id = "ServiceDate", @type = "Date" })
+                                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.TotalAmount)</p> *@
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(Model => Model.RefundDate, "Refund Date", new { @class = "form-label" })
+                                                @Html.TextBoxFor(Model => Model.RefundDate, new { @class = "form-control", @id = "RefundDate", @type = "Date" })
+                                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.TotalAmount)</p> *@
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
+                                                @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+
                                             </div>
                                         </div>
                                     </div>

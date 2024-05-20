@@ -4,11 +4,14 @@ using HMS.Models;
 using HMS.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Asn1.Ocsp;
+using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace HMS.Controllers
 {
-    public class ConsultantPatientController : Controller
+    public class ConsultantPatientDashboardController : Controller
     {
         private readonly ICommonService _commonService;
         private readonly IPatientMasterServices _patientMasterServices;
@@ -16,7 +19,7 @@ namespace HMS.Controllers
         PatientMasterModel patientMasterModel = new PatientMasterModel();
 
 
-        public ConsultantPatientController(
+        public ConsultantPatientDashboardController(
           IPatientMasterServices patientMasterServices,
           IPatientGeneralDetailMasterServices patientGeneralDetailMasterServices,
           ICommonService commonService
@@ -28,8 +31,7 @@ namespace HMS.Controllers
             _commonService = commonService;
 
         }
-
-        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
+        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "Id")
         {
             var breadcrumbs = new List<Breadcrumb>
                 {
@@ -41,21 +43,7 @@ namespace HMS.Controllers
 
             // Set the Breadcrumbs collection in the ViewBag
             ViewBag.Breadcrumbs = breadcrumbs;
-            ViewBag.PageSizeId = PageSizeId;
-            if (string.IsNullOrEmpty(sortField))
-            {
-                ViewBag.SortField = "Id";
-                ViewBag.SortOrder = "Asc";
-            }
-            else
-            {
-
-                ViewBag.SortField = sortField;
-                ViewBag.SortOrder = sortOrder;
-            }
-
-            ViewBag.searchString = searchString;
-            int count;
+            int count;            
             int TotalCount = 0;
             if (searchString != null)
             {
@@ -63,18 +51,11 @@ namespace HMS.Controllers
             }
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
-
-
-
             string cnd = " and id in (select Patient_Id  from  PatientConsultantMaster where User_Id=" + SessionUser.ToString() + ")";
 
-            var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount,SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder, cnd);
-            patientMasterModel.lstPageSizeDdl = _commonService.GetPageSizeDDL();
-            patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
-            patientMasterModel.GenderList = _commonService.GetGenderList();
-            patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
-            patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
-            patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
+            var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount, SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder, cnd);
+                
+            
             for (int i = 0; i < res.Count; i++)
             {
                 var data = _patientGeneralDetailMasterServices.GetByPatientIdWise(res[i].Id);
@@ -83,6 +64,17 @@ namespace HMS.Controllers
                     res[i].Temperature = data.Temperature;
                     res[i].AdharCard = data.AdharCard;
                 }
+
+                if (res[i].CreatedDate==DateTime.Now)
+                {
+                    for(int j = 0; j < res[i].Id;j++)
+                    {
+                        int total = res[i].Id;
+                        ViewBag.TotalPatient = total;
+                    }
+                    
+                }
+                
 
             }
 
@@ -111,6 +103,5 @@ namespace HMS.Controllers
 
             return View(patientMasterModel);
         }
-
     }
 }

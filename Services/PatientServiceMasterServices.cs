@@ -74,8 +74,8 @@ namespace HMS.Services
             dbparams.Add("@Discount", model.Discount, DbType.String);
             dbparams.Add("@NetAmount", model.NetAmount, DbType.String);
             dbparams.Add("@ReceiptNo", model.ReceiptNo, DbType.String);
-            dbparams.Add("@ServiceDate", model.ServiceDate, DbType.Date);
-            dbparams.Add("@RefundDate", model.RefundDate, DbType.Date);
+            dbparams.Add("@ServiceDate", model.ServiceDate, DbType.String);
+            dbparams.Add("@RefundDate", model.RefundDate, DbType.String);
             dbparams.Add("@CreatedBy", model.CreatedBy, DbType.Int32);
             dbparams.Add("@Active", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);
@@ -98,13 +98,19 @@ namespace HMS.Services
             dbparams.Add("@Discount", model.Discount, DbType.String);
             dbparams.Add("@NetAmount", model.NetAmount, DbType.String);
             dbparams.Add("@ReceiptNo", model.ReceiptNo, DbType.String);
-            dbparams.Add("@ServiceDate", model.ServiceDate, DbType.Date);
-            dbparams.Add("@RefundDate", model.RefundDate, DbType.Date);            
+            dbparams.Add("@ServiceDate", model.ServiceDate, DbType.String);
+            dbparams.Add("@RefundDate", model.RefundDate, DbType.String);            
             dbparams.Add("@Active", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);
             dbparams.Add("@UpdatedBy", model.UpdatedBy, DbType.Int32);
             
             return _dapper.Insert<PatientServiceMasterModel>(CommonSp.updatePatientServiceMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+
+        }
+        public List<PatientServiceMasterModel> GetPatienServiceData()
+        {
+            var dbparams = new DynamicParameters();
+            return _dapper.GetAll<PatientServiceMasterModel>(CommonSp.GetPatientService, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
         }
     }

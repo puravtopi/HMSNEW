@@ -46,7 +46,7 @@ namespace HMS.Services
             return res;
         }
 
-        public List<PatientMasterModel> GetByClinicIdWisePatient(int ClinicId, int TotalCount, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
+        public List<PatientMasterModel> GetByClinicIdWisePatient(ref int TotalCount, int ClinicId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
         {
 
             if (qcnd == null)
@@ -183,7 +183,7 @@ namespace HMS.Services
 
         }
 
-        public List<PatientMasterModel> GetUserWisePatientData(int UserId, int TotalCount, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
+        public List<PatientMasterModel> GetUserWisePatientData(ref int TotalCount, int UserId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
         {
             if (qcnd == null)
                 qcnd = "";

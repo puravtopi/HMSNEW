@@ -48,7 +48,7 @@ namespace HMS.Services
 
        
 
-        public List<DesignationMasterModel> GetByClinicIdWiseDesig(int ClinicId, int TotalCount, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
+        public List<DesignationMasterModel> GetByClinicIdWiseDesig(ref int TotalCount, int ClinicId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
         {
             var dbparams = new DynamicParameters();
             dbparams.Add("@Clinic_Id", ClinicId, DbType.Int32);

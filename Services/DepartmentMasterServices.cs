@@ -46,7 +46,7 @@ namespace HMS.Services
             return res;
         }
 
-        public List<DepartmentMasterModel> GetByClinicIdWiseDept(int ClinicId, int TotalCount, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
+        public List<DepartmentMasterModel> GetByClinicIdWiseDept(ref int TotalCount, int ClinicId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
         {
             var dbparams = new DynamicParameters();
             dbparams.Add("@Clinic_Id", ClinicId, DbType.Int32);
@@ -62,6 +62,7 @@ namespace HMS.Services
             dbparams.Add("TotalCount", dbType: DbType.Int32, direction: ParameterDirection.Output);
             //dbparams.Add("@Date", Date, DbType.String);
             var res = _dapper.GetAll<DepartmentMasterModel>(CommonSp.getByClinicIdWiseDEPT, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+            TotalCount = dbparams.Get<int>("TotalCount");
             return res;
         }
 
