@@ -1,0 +1,275 @@
+﻿@model HMS.Models.PatientMasterModel
+@{
+
+    Layout = "~/Views/Shared/_CounsultantLayout.cshtml";
+    HMS.Common.EncryptDecrypt encryptDecrypt = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+@if (TempData["Temp_Error"] != null)
+{
+
+}
+
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">Patient List</h4>
+    </div>
+    
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            @using (Html.BeginForm(Action, Controller, FormMethod.Post, new { area = Model.Area, id = "AddEditForm" }))
+            {
+                 <div class="row">
+                    <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                        <!--div-->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="main-content-label mg-b-5">
+                                    Patient
+                                </div>
+                                <p class="mg-b-20"></p>
+                                <div class="row row-sm">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Entry DateTime : </b></label> @Model.EntryDateTime 
+                                        </div>
+                            
+                                    </div>
+                                </div>
+                                <div class="row row-sm">
+                                    @Html.HiddenFor(Model => Model.Id)
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                            <label><b>Receipt No : </b></label> @Model.ReceiptNo 
+                                            </div>
+                                        </div>
+                        
+                                    <div class="col-lg-6">
+                                        <div class="form-group">                                
+                                            <label><b>Patient Name : </b></label> @Model.Fname  @Model.Lname
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">                                
+                                            <label><b>Father/Husband Name : </b></label> @Model.Father_HusbandName
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Mother Name : </b></label> @Model.MotherName
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Marital Status: </b></label> @Model.MaritalStatus
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Blood Group: </b></label> @Model.BloodGroup
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Email : </b></label> @Model.Email
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Contact No : </b></label> @Model.ContactNo
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Date Of Birth : </b></label> @Model.DOB.ToShortDateString()
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Age : </b></label> @Model.Age
+                                        </div>
+                                    </div>                       
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Gender : </b></label> @Model.Gender
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Nationality : </b></label> @Model.Nationality
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Occupation : </b></label> @Model.Occupation
+                                        </div>
+                                    </div>
+                        
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">                
+                                <div class="main-content-label mg-b-5">
+                                    Address Details
+                                </div>
+                                <p class="mg-b-20"></p>
+                                <div class="row row-sm">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Address : </b></label> @Model.Address
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>House No : </b></label> @Model.Houseno
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Area : </b></label> @Model.Area
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>City : </b></label> @Model.City                               
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>State : </b></label> @Model.State                                
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>District : </b></label> @Model.District
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Pincode : </b></label> @Model.Pincode                              
+                                        </div>
+                                    </div>
+                                </div>                    
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="main-content-label mg-b-5">
+                                    Patient General Details
+                                </div>
+                                <p class="mg-b-20"></p>
+
+                                <div class="row row-sm">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Temperature : </b></label> @Model.Temperature                                
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Adhar Card No : </b></label> @Model.AdharCard                                
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Weight : </b></label>@Model.Weight                               
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Blood Pressure : </b></label>@Model.Bloodpressure
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Remark : </b></label>@Model.Remark                                
+                                        </div>
+                                    </div>
+                                </div>                   
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="main-content-label mg-b-5">
+                                    Patient Consultantion Details
+                                </div>
+                                <p class="mg-b-20"></p>
+                                <div class="row row-sm">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Department : </b></label>@Model.DepartmentName
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>User name : </b></label>@Model.UserName
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6" style="display:none">
+                                        <div class="form-group">
+                                            <label><b>Consultant Code :</b></label>@ViewBag.Consultant_Code
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Consultant Charges :</b></label>@Model.Consultant_Charges                                
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Discount :</b></label>@Model.Discount
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Refund Amount :</b></label>@Model.RefundAmount                                
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Total Amount  :</b></label>@Model.TotalAmount                                
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>RefBy Name  :</b></label>@Model.RefBy_Name                               
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>RefBy Address :</b></label>@Model.RefBy_Address                                
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label><b>Payment Mode :</b></label>@Model.PaymentMode                                
+                                        </div>
+                                    </div>                        
+                                </div>
+                                <div class="row row-sm">
+                                    <div class="col-lg-12 justify-content-center">
+                                        <a href="@Url.Action("Index","ConsultantPatient")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+                                        @* <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+                                        <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button> *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/div-->
+                </div>
+
+                <input type="hidden" id="@Model.EmergencyAdminssion" />
+                <input type="hidden" id="@Model.FileChargesApplicable" />
+            }
+        </div>
+    </div>
+</div>

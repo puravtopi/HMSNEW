@@ -46,7 +46,7 @@ namespace HMS.Services
             return res;
         }
 
-        public List<PatientMasterModel> GetByClinicIdWisePatient(ref int TotalCount, int ClinicId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
+        public List<PatientMasterModel> GetByClinicIdWisePatient(ref int TotalCount,int UserId, int ClinicId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
         {
 
             if (qcnd == null)
@@ -54,6 +54,7 @@ namespace HMS.Services
 
             var dbparams = new DynamicParameters();
             dbparams.Add("@Clinic_Id", ClinicId, DbType.Int32);
+            dbparams.Add("@User_Id", UserId, DbType.Int32);
             dbparams.Add("@currentPage", currentPage, DbType.String);
             //searchString = "%" + searchString + "%";
             dbparams.Add("@searchString", searchString, DbType.String);

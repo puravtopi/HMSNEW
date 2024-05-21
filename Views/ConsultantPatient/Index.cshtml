@@ -5,143 +5,200 @@
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
 }
-<!DOCTYPE html>
+<script>
 
-<html lang="en">
-<head>
-</head>
-<body>
-    <div class="row row-sm">
-        <div class="col-md-12 col-xl-12 mg-t-20">
-            <div class="card card-dashboard-audience-metrics ht-md-100p">
-                <div class="card-header card-title-line">
-                    <h6 class="card-title">Patient List</h6>
-                </div><!-- card-header -->
-                @using (Html.BeginForm(Action, Controller, null, FormMethod.Post))
-                {
-                    <div>
-                        <div class="row row-sm pd-20">
-                            <div class="col-lg-1">
-                                @Html.DropDownListFor(Model => Model.PageSizeId, new SelectList(Model.lstPageSizeDdl, "PageSizeId", "PageSizeValue"), new { @class = "form-control select2-list", @onchange = @"form.submit();" })
-                            </div><!-- col -->
-                            <div class="col-lg-3">
-                                <div class="input-group">
-                                    @Html.TextBoxFor(Model => Model.SearchString, new { @class = "form-control select2-no-search clearsearch", @placeholder = "Search..." })
-                                </div>
-                            </div><!-- col -->
-                            <div class="col-md-3">
-                                <button id="btnSearch" class="btn btn-primary ">
-                                    Search
-                                </button>
-                                &nbsp;
-                                <a href="@Url.Action("Index","ConsultantPatient")" class="btn btn-secondary">
-                                    Clear
-                                </a>
-                            </div><!-- col -->
-                            <div class="col-md-1">
-                            </div><!-- col -->
-                            <div class="col-md-3 btnright">
-                                <a href="@Url.Action("AddEdit","ConsultantPatient")" class="btn btn-primary">
-                                    Add New
-                                </a>
-                            </div><!-- col -->
-                        </div><!-- row -->
-                        <!-- row -->
-                    </div>
-                }
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="example1" class="table table-striped table-dashboard-two mg-b-0" role="grid">
-                            <thead>
-                                <tr>
-                                    <th class="wd-lg-10p">Action</th>
-                                    <th class="wd-lg-10p"></th>
-                                    <th class="wd-lg-10p">Sr No.</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("First Name", "Index", "ConsultantPatient", new { sortField = "Fname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "ConsultantPatient", new { sortField = "Lname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Father/Husband Name", "Index", "ConsultantPatient", new { sortField = "Father_HusbandName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Mother Name", "Index", "ConsultantPatient", new { sortField = "MotherName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Blood Group", "Index", "ConsultantPatient", new { sortField = "BloodGroup", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Marital Status", "Index", "ConsultantPatient", new { sortField = "MaritalStatus", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Address", "Index", "ConsultantPatient", new { sortField = "Address", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Email", "Index", "ConsultantPatient", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("ContactNo", "Index", "ConsultantPatient", new { sortField = "ContactNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Date Of Birth", "Index", "ConsultantPatient", new { sortField = "DOB", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Age", "Index", "ConsultantPatient", new { sortField = "Age", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Gender", "Index", "ConsultantPatient", new { sortField = "Gender", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Temperature", "Index", "ConsultantPatient", new { sortField = "Temperature", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("AdharCard No.", "Index", "ConsultantPatient", new { sortField = "@AdharCard ", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    <th class="wd-lg-25p">@Html.ActionLink("Status", "Index", "ConsultantPatient", new { sortField = "Active", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                    @*<th class="wd-lg-25p">Is Deleted </th>*@
+    function ShowPopupQP(id, patientId) {
+        debugger;
+        $.get("/PatientMaster/RevisitDetail?patientId=" + patientId + "&Id=" + id + "", function (data) {
+            $("#RevisitDetailModel").html(data);
+            $("#ModelRevisitDetail").modal("show");
+        });
+    }
+    $("#btncloseRevisitDetail").on("click", function (event) {
+        $("#ModelRevisitDetail").modal("hide");
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model != null && Model.patientMastersList != null && Model.patientMastersList.Count > 0)
-                                {
-                                    for (int i = 0; i < Model.patientMastersList.Count; i++)
-                                    {
-                                        <tr>
-                                            <td class="btn-icon-list">
-                                                <a href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"><i class="fa fa-edit iconspacing"></i></a>
-                                                <a href="@Url.Action("Delete","ConsultantPatient",new { deleteId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-trash"></i></a>
-                                                <a onclick="ShowPopupQP(@Model.patientMastersList[i].Id.ToString())"><i class="fa fa-book-open"></i></a>
-                                            </td>
-                                            <td>
-                                                <a href="@Url.Action("CreatePDFDocument","ConsultantPatient",new { patientId = @Model.patientMastersList[i].Id.ToString() })"><i class="fas fa-arrow-alt-circle-down"></i></a>
-                                            </td>
-                                            <td>@Model.patientMastersList[i].RowNum</td>
-                                            <td>@Model.patientMastersList[i].Fname</td>
-                                            <td>@Model.patientMastersList[i].Lname</td>
-                                            <td>@Model.patientMastersList[i].Father_HusbandName</td>
-                                            <td>@Model.patientMastersList[i].MotherName</td>
-                                            <td>@Model.patientMastersList[i].BloodGroup</td>
-                                            <td>@Model.patientMastersList[i].MaritalStatus</td>
-                                            <td>@Model.patientMastersList[i].Address</td>
-                                            <td>@Model.patientMastersList[i].Email</td>
-                                            <td>@Model.patientMastersList[i].ContactNo</td>
-                                            <td>@Model.patientMastersList[i].DOB.ToString("dd-MM-yyyy")</td>
-                                            <td>@Model.patientMastersList[i].Age</td>
-                                            <td>@Model.patientMastersList[i].Gender</td>
-                                            <td>@Model.patientMastersList[i].Temperature</td>
-                                            <td>@Model.patientMastersList[i].AdharCard</td>
-                                            <td>@Model.patientMastersList[i].Active</td>
-                                            @*<td>@(Model.patientMastersList[i].IsDelete? "Yes" : "No")</td>*@
-                                        </tr>
-                                    }
-                                }
-                                else
-                                {
-                                    <tr class="odd">
-                                        <td valign="top" colspan="10" class="dataTables_empty"><div class="card mg-b-20 text-center"><div class="card-body h-100"><img src="~/assets/img/svgicons/no-data.svg" alt="" class="wd-10p"><h5 class="mg-b-10 mg-t-15 tx-18">Its Empty In Here</h5><a href="javascript:void(0);" class="text-dark">@ViewBag.ErroMsg</a></div></div></td>
-                                    </tr>
+    });
 
-                                }
-                            </tbody>
-                        </table>
+    function ShowPopupQPToPatient(id, patientId) {
+        debugger;
+        $.get("/PatientMaster/PatientServiceDetails?Patient_Id=" + patientId + "&Id=" + id + "", function (data) {
+            $("#PatientServiceModel").html(data);
+            $("#ModelPatientService").modal("show");
+        });
+    }
+    $("#btnclosePatientService").on("click", function (event) {
+        $("#ModelPatientService").modal("hide");
 
-                    </div>
-                    @Html.Partial("_Pagination", Model)
-                </div><!-- card-top-content -->
+    });
+</script>
 
-                <div id="Modeldata">
-                </div>
+
+
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">Patient List</h4>
+    </div>
+    <div class="page-rightheader">
+        <div class="ml-3 ml-auto d-flex">
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+                <a href="@Url.Action("AddEdit","PatientMaster")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                    <i class="fa fa-plus "></i>
+                    Add New
+                </a>
             </div>
         </div>
     </div>
-    <script>
-        function ShowPopupQP(id) {
-            $.get("/PatientMaster/RevisitDetail?patientId=" + id + "", function (data) {
-                $("#Modeldata").html(data);
-                $("#ModelQP").modal("show");
-            });
-        }
-        $("#btnclose").on("click", function (event) {
-            $("#ModelQP").modal("hide");
-            alert();
-        });
-    </script>
-</body>
+</div>
 
-<!-- END BODY -->
-</html>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card">
+            @using (Html.BeginForm(Action, Controller, null, FormMethod.Post))
+            {
+                <div class="card-header">
+                    <h4 class="card-title mr-5">Basic tables</h4>
+                    <div class="row row-sm pd-20">
+                        <div class="col-lg-3">
+                            @Html.DropDownListFor(Model => Model.PageSizeId, new SelectList(Model.lstPageSizeDdl, "PageSizeId", "PageSizeValue"), new { @class = "form-control select2-list", @onchange = @"form.submit();" })
+                        </div><!-- col -->
+                        <div class="col-lg-4">
+                            <div class="input-group">
+                                @Html.TextBoxFor(Model => Model.SearchString, new { @class = "form-control select2-no-search clearsearch", @placeholder = "Search..." })
+                            </div>
+                        </div><!-- col -->
+                        <div class="col-lg-5">
+                            <button id="btnSearch" class="btn btn-primary ">
+                                Search
+                            </button>
+                            &nbsp;
+                            <a href="@Url.Action("Index","ConsultantPatient")" class="btn btn-secondary">
+                                Clear
+                            </a>
+                        </div><!-- col -->
+                    </div>
+                </div>
+            }
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example1" class="table table-striped table-dashboard-two mg-b-0" role="grid">
+                        <thead>
+                            <tr>
+                                <th class="wd-lg-10p">Action</th>
+                                <th class="wd-lg-10p"></th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Receipt No", "Index", "ReceiptNo", new { sortField = "ReceiptNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-10p">UHID.</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Entry Date-Time ", "Index", "ConsultantPatient", new { sortField = "EntryDateTime", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("First Name", "Index", "ConsultantPatient", new { sortField = "Fname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "ConsultantPatient", new { sortField = "Lname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                               
+                                
+                                <th class="wd-lg-25p">@Html.ActionLink("Blood Group", "Index", "ConsultantPatient", new { sortField = "BloodGroup", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                
+                                <th class="wd-lg-25p">@Html.ActionLink("Email", "Index", "ConsultantPatient", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("ContactNo", "Index", "ConsultantPatient", new { sortField = "ContactNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Date Of Birth", "Index", "ConsultantPatient", new { sortField = "DOB", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Payment Mood", "Index", "PaymentMode", new { sortField = "PaymentMode", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                
+                                @*<th class="wd-lg-25p">Is Deleted </th>*@
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.patientMastersList != null && Model.patientMastersList.Count > 0)
+                            {
+                                for (int i = 0; i < Model.patientMastersList.Count; i++)
+                                {
+                                    var cClassName = "collapsible" + @Model.patientMastersList[i].RowNum;
+                                    var cClasscontent = "content" + @Model.patientMastersList[i].RowNum;
+                                    var dataTarget = "demo" + @Model.patientMastersList[i].RowNum;
+                                    var hrefDataTarget = "#demo" + @Model.patientMastersList[i].RowNum;
+                                    var dataTarget1 = "#demo" + @Model.patientMastersList[i].RowNum;
+
+                                    var id = "deleteDesignation" + @Model.patientMastersList[i].Id;
+                                    var hrefid = "#deleteDesignation" + @Model.patientMastersList[i].Id;
+                                    var closeId = "exampleModalLabel" + @Model.patientMastersList[i].Id;
+                                    <tr>
+                                        <td class="btn-icon-list d-flex">
+                                            @if (Model.patientMastersList[i].IsCheckRevisit == true)
+                                            {
+                                                <a class="btn btn-primary btn-sm text-white mr-2" href=@hrefDataTarget data-toggle="collapse" aria-expanded="true" aria-controls="collapseOne"><i class="fa fa-plus iconspacing"></i></a>
+                                            }
+
+
+                                            <a class="btn btn-info btn-sm text-white mr-2" href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-danger btn-sm text-white mr-2" data-toggle="modal" data-target=@hrefid><i class="fa fa-trash-o"></i></a>
+                                            @* <a onclick="ShowPopupQP(0,@Model.patientMastersList[i].Id.ToString())" class="btn btn-warning btn-sm text-white mr-2"><i class="fa fa-wheelchair"></i></a>
+                                            <a onclick="ShowPopupQPToPatient(0,@Model.patientMastersList[i].Id.ToString())" class="btn btn-secondary btn-sm text-white mr-2"><i class="fa fa-stethoscope"></i></a> *@
+
+                                        </td>
+                                       @*  <td>
+                                            <a href="@Url.Action("CreatePDFDocument","PatientMaster",new { patientId = @Model.patientMastersList[i].Id.ToString() })"><i class="fas fa-arrow-alt-circle-down"></i></a>
+                                        </td> *@
+
+                                        <td>@Model.patientMastersList[i].ReceiptNo</td>
+                                        <td>@Model.patientMastersList[i].UHID</td>
+                                        <td>@Model.patientMastersList[i].EntryDateTime</td>
+                                        <td>@Model.patientMastersList[i].Fname</td>
+                                        <td>@Model.patientMastersList[i].Lname</td>
+                                       
+                                        <td>@Model.patientMastersList[i].BloodGroup</td>
+                                        
+                                        <td>@Model.patientMastersList[i].Email</td>
+                                        <td>@Model.patientMastersList[i].ContactNo</td>
+                                        <td>@Model.patientMastersList[i].DOB.ToString("dd-MM-yyyy")</td>
+                                        <td>@Model.patientMastersList[i].PaymentMode</td>
+                                      
+                                        @*<td>@(Model.patientMastersList[i].IsDelete? "Yes" : "No")</td>*@
+                                    </tr>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id=@id tabindex="-1" role="dialog" aria-labelledby=@closeId aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id=@closeId>Patient</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="modal-body">
+                                                        <div class="py-3 text-center">
+                                                            <i class="fa fa-exclamation-circle fa-5x"></i>
+                                                            <h4 class="heading mt-4">Are you sure you want to delete patient!</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                                    <a href="@Url.Action("Delete","ConsultantPatient",new { deleteId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })" type="button" class="btn btn-primary">Yes</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                   
+                                }
+                            }
+                            else
+                            {
+                                <tr class="odd">
+                                    <td valign="top" colspan="10" class="dataTables_empty"><div class="card mg-b-20 text-center"><div class="card-body h-100"><img src="~/assets/img/svgicons/no-data.svg" alt="" class="wd-10p"><h5 class="mg-b-10 mg-t-15 tx-18">Its Empty In Here</h5><a href="javascript:void(0);" class="text-dark">@ViewBag.ErroMsg</a></div></div></td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                    @Html.Partial("_Pagination", Model)
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div id="RevisitDetailModel">
+</div>
+<div id="PatientServiceModel">
+</div>

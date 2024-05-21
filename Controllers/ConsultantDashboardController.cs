@@ -3,8 +3,11 @@ using HMS.Interface;
 using HMS.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Reflection;
 
 namespace HMS.Controllers
 {
@@ -15,18 +18,20 @@ namespace HMS.Controllers
         private readonly IPatientGeneralDetailMasterServices _patientGeneralDetailMasterServices;
         PatientMasterModel patientMasterModel = new PatientMasterModel();
         private readonly IRevisitDetailMasterServices _revisitDetailMasterServices;
+        private readonly IPatientConsultantMasterServices _patientConsultantMasterServices;
 
         public ConsultantDashboardController(
           IPatientMasterServices patientMasterServices,
           IPatientGeneralDetailMasterServices patientGeneralDetailMasterServices,
-          ICommonService commonService,IRevisitDetailMasterServices revisitDetailMasterServices
-
+          ICommonService commonService,IRevisitDetailMasterServices revisitDetailMasterServices,
+          IPatientConsultantMasterServices patientConsultantMasterServices
           )
         {
             _patientGeneralDetailMasterServices = patientGeneralDetailMasterServices;
             _patientMasterServices = patientMasterServices;
             _commonService = commonService;
             _revisitDetailMasterServices= revisitDetailMasterServices;
+            _patientConsultantMasterServices=patientConsultantMasterServices;
 
         }
         public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
@@ -62,8 +67,8 @@ namespace HMS.Controllers
                 searchString = searchString.Trim();
             }
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
-            //int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
-            var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount, SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
+            int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
+            var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount,SessionUser, SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
             patientMasterModel.lstPageSizeDdl = _commonService.GetPageSizeDDL();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
             patientMasterModel.GenderList = _commonService.GetGenderList();
@@ -71,15 +76,83 @@ namespace HMS.Controllers
             patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
             
-
-            ViewBag.total = res.Count;
+            if(res.Count > 0)
+            {
+                ViewBag.total = res.Count;
+            }
+            else { ViewBag.total = 0; }
+            var r = 0;
+            var Appointments = 0;
             for (int i = 0; i < res.Count; i++)
             {
-                if (res[i].CreatedDate.ToString("MM-dd-yyyy") == DateTime.Now.ToString("MM-dd-yyyy"))
+                
+                var dateTime = DateTime.Parse(res[i].EntryDateTime);
+                if (dateTime.ToString("MM-dd-yyyy") == DateTime.Now.ToString("MM-dd-yyyy"))
                 {
-                    var r = 0;
+                    
                     r++;
-                    ViewBag.todayPatient = r;
+                   ViewBag.todayPatient = r;
+                    
+                }
+                else
+                {
+                    if(r==0)
+                    {
+                        ViewBag.todayPatient = 0;
+                    }
+                  
+                }
+
+
+                if (dateTime.ToString("MM-dd-yyyy") == DateTime.Now.ToString("MM-dd-yyyy"))
+                {
+                    if(dateTime.ToString("hh:mm") != DateTime.Now.ToString("hh:mm"))
+                    {
+                        var datapa = _patientConsultantMasterServices.GetByPatientIdWise(res[i].Id);
+                        if(datapa != null)
+                        {
+                            if(ViewBag.netamount==null)
+                            {
+                                decimal netamount = decimal.Parse(datapa.TotalAmount);
+                                if (netamount == null)
+                                {
+                                    ViewBag.netamount = netamount;
+                                }
+                                else
+                                {
+
+                                    ViewBag.netamount = netamount;
+                                }
+                            }
+                            else
+                            {
+                                decimal netamount1 = decimal.Parse(datapa.TotalAmount);
+                                ViewBag.netamount += netamount1;
+                            }
+                            
+                        }
+                        else
+                        {
+                            
+                            ViewBag.netamount = 0;
+                        }
+                        
+                    }
+                    
+                }
+                if (res[i].PaymentMode=="Due")
+                {
+                    
+                    Appointments++;
+                    ViewBag.todayAppointments = Appointments;
+                }
+                else
+                {
+                    if(Appointments == 0)
+                    {
+                        ViewBag.todayAppointments = 0;
+                    }
+                    
                 }
                 var data = _patientGeneralDetailMasterServices.GetByPatientIdWise(res[i].Id);
 
@@ -96,12 +169,14 @@ namespace HMS.Controllers
                     //res[i].revisitDetailModel = new List<RevisitDetailModel>();
                     res[i].revisitDetailModel = getAllRevisitDetail;
                     res[i].IsCheckRevisit = true;
+                    ViewBag.RevisitCount = getAllRevisitDetail.Count;
                 }
                 else
                 {
                     getAllRevisitDetail = new List<RevisitDetailModel>();
                     res[i].revisitDetailModel = getAllRevisitDetail;
                     res[i].IsCheckRevisit = false;
+                    ViewBag.RevisitCount = getAllRevisitDetail.Count;
                 }
 
 

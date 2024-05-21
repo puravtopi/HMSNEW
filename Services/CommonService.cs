@@ -141,10 +141,11 @@ namespace HMS.Services
 
             foreach (var item in res)
             {
-
+                var firstname = item.FirstName != null ? item.FirstName.ToString() : " ";
+                var lastname = item.LastName != null ? item.LastName.ToString() : "";
                 lst.Add(new SelectListItem
                 {
-                    Text = item.FirstName.ToString() + " " + item.LastName.ToString(),
+                    Text = firstname + " " + lastname,
                     Value = item.Id.ToString()
                 });
             }

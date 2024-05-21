@@ -30,19 +30,16 @@ namespace HMS.Models
         public int DeletedBy { get; set; }
         public List<SelectListItem> lstStatus { get; set; }
         public List<PatientServiceMasterModel> patientServiceMastersList { get; set; }
-
         public string PatientName { get; set; }
         public string UHID { get; set; }
         public string ConsultantName { get; set; }
         public string RevisitDetail { get; set; }
         public string Department { get; set; }
         public string DepartmentName { get; set; }
-        public List<SelectListItem> departmentList { get; set; }
-        [Required(ErrorMessage = "This field is required.")]
+        public List<SelectListItem> departmentList { get; set; }        
         public string ServiceHead { get; set; }
         public string ServiceHeadName { get; set; }
-        public List<SelectListItem> serviceHeadList { get; set; }
-        [Required(ErrorMessage = "This field is required.")]
+        public List<SelectListItem> serviceHeadList { get; set; }  
         public string Service { get; set; }
         public string ServiceName { get; set; }
         public List<SelectListItem> serviceList { get; set; }

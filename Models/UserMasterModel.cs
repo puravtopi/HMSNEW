@@ -47,9 +47,9 @@ namespace HMS.Models
         public string Departments { get; set; }
         public string DesignationName { get; set; }
         public string DepartmentName { get; set; }
-        public string OPD_Charge { get; set; }
+        public decimal OPD_Charge { get; set; }
         public string Night_Charge { get; set; }
         public string Emergency_Charge { get; set; }
-        public string SpecifyRevisit { get; set; }
+        public float SpecifyRevisit { get; set; }
     }
 }

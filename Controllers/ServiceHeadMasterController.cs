@@ -47,7 +47,6 @@ namespace HMS.Controllers
             }
             else
             {
-
                 ViewBag.SortField = sortField;
                 ViewBag.SortOrder = sortOrder;
             }

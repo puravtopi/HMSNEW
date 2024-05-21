@@ -20,7 +20,7 @@
     <h1 style="text-align:center">Welcome Consultant </h1>
 
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
                     <p class="card-text">Total Patient = @ViewBag.total </p>
@@ -28,20 +28,30 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">                
-                    <p class="card-text">Today’s Appointments =  </p>
-                    <p class="card-text">Revisit Patients=</p>
-                    <p></p>
+                    <p class="card-text">Today’s Appointments = @ViewBag.todayAppointments  </p>
+                    <p class="card-text">Revisit Patients= @ViewBag.RevisitCount</p>                    
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <div class="card">
                 <div class="card-body">
                     <p class="card-text">Opd Services = </p>
                     <p></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="card">
+                <div class="card-body">                   
+                    <p class="card-text">
+                        Net Amount = <span id="netAmount">*******</span>
+                        <i id="toggleIcon" class="fa fa-eye-slash" aria-hidden="true"></i>
+                    </p>
+                    <p class="card-text"></p>
                 </div>
             </div>
         </div>
@@ -96,6 +106,34 @@
         </table>
     </figure>
 }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- jQuery (optional if you want to use jQuery) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        var netAmountValue = '@ViewBag.netamount';  // Store the original net amount
+        $('#toggleIcon').click(function () {
+            var netAmountSpan = $('#netAmount');
+            if (netAmountSpan.data('visible')) {
+                netAmountSpan.text('*******');
+                netAmountSpan.data('visible', false);
+                $('#toggleIcon').removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                netAmountSpan.text(netAmountValue);
+                netAmountSpan.data('visible', true);
+                $('#toggleIcon').removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+        $('#netAmount').data('visible', false);  // Set initial state as hidden
+    });
+</script>
+
+
+<style>
+    .hidden-amount {
+        display: none;
+    }
+</style>
 <style>
     
 html,

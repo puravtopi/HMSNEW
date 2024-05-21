@@ -110,8 +110,8 @@ namespace HMS.Controllers
                 searchString = searchString.Trim();
             }
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
-            //int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
-            var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount, SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
+            int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
+            var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount,SessionUser, SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
             patientMasterModel.lstPageSizeDdl = _commonService.GetPageSizeDDL();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
             patientMasterModel.GenderList = _commonService.GetGenderList();
@@ -228,8 +228,11 @@ namespace HMS.Controllers
                         var dataConsultantMst = _userMasterServices.GetById(patientMasterModel.User_id.Value);
 
                         patientMasterModel.Department_id = dataConsultantMst.Dept_id;
-                        //ViewBag.Consultant_Code = dataConsultantMst.Consultant_Code;
-                        patientMasterModel.User_DesignationList = _commonService.GetUserDepartmentList((int)dataConsultantMst.Dept_id);
+                       
+                            //ViewBag.Consultant_Code = dataConsultantMst.Consultant_Code;
+                            patientMasterModel.User_DesignationList = _commonService.GetUserDepartmentList((int)dataConsultantMst.Dept_id);
+                       
+                        
                     }
                 }
 
@@ -467,16 +470,20 @@ namespace HMS.Controllers
                 {
                     revisitDetailModel.PatientName = patientMasterModel.Fname + " " + patientMasterModel.Lname;
                 }
-                var Desig = _commonService.GetDesignationListById((int)user.Desig_Id);
+                var consultantList = _commonService.GetDesignationListById((int)user.Desig_Id);
                 //ViewBag.Consultant_Code = dataConsultantMst.Consultant_Code;
-                revisitDetailModel.ConsultantList = Desig;
-                revisitDetailModel.ConsultantName = Desig[0].Text;
+                revisitDetailModel.ConsultantList = consultantList;
+                revisitDetailModel.ConsultantName = user.FirstName + " " + user.LastName;
+                revisitDetailModel.ConsultantId = user.Id;
                 revisitDetailModel.Patient_Id = patientId;
+                revisitDetailModel.OPDCharges = user.OPD_Charge;
+                revisitDetailModel.RevisitCharges = user.SpecifyRevisit;
+                //revisitDetailModel.SpecifyRevisitDay = user.SpecifyRevisit;
                 if (Id > 0)
                 {
                     var getAllRevisitData = _revisitDetailMasterServices.GetAllById(Id);
                     revisitDetailModel = getAllRevisitData;
-                    revisitDetailModel.ConsultantList = Desig;
+                    revisitDetailModel.ConsultantList = consultantList;
                 }
                 else
                 {
@@ -811,7 +818,6 @@ namespace HMS.Controllers
                 model.lstStatus = _commonService.GetStatusList();
 
                 List<PatientServiceMasterModel> patient = new List<PatientServiceMasterModel>();
-
                 if (ModelState.IsValid)
                 {
                     if (model.Id == 0)
@@ -844,7 +850,7 @@ namespace HMS.Controllers
                             model.IsDelete = true;
                         }
 
-                            var res = _patientServiceMasterServices.Insert(model);
+                        var res = _patientServiceMasterServices.Insert(model);
                         if (res.DbCode == 1)
                         {
                             TempData[Temp_Message.Success] = res.DbMsg;

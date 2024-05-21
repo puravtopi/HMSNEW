@@ -30,218 +30,223 @@
                         <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
                             <!--div-->
                             <div class="card">
-                                <div class="card-body">                                   
+                                <div class="card-body">
                                     <div class="row">
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.HiddenFor(Model => Model.Id)
-                                                @Html.HiddenFor(Model => Model.UHID)
-                                                @Html.LabelFor(Model => Model.UHID, "UHID", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.UHID, new { @class = "form-control", @id = "UHID", @disabled = "true" })
-                                                @* @Html.DropDownListFor(Model => Model.UHID, new SelectList(Model.ConsultantList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" }) *@
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.HiddenFor(Model => Model.Id)
-                                                @Html.HiddenFor(Model => Model.Patient_Id)
-                                                @Html.LabelFor(Model => Model.PatientName, "Patient Name", new { @class = "form-label required-label" })
-                                                @Html.TextBoxFor(Model => Model.PatientName, new { @class = "form-control", @id = "PatientName", @readonly = "readonly" })
-                                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.PatientName)</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.RevisitDate, "Revisit Date", new { @class = "form-label " })
-                                                @if (Model.Id > 0)
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.RevisitDate, new { @class = "form-control", @id = "RevisitDate", @readonly = "readonly"
-                                                    , @Value = Convert.ToDateTime(@Model.RevisitDate).ToString("MM/dd/yyyy") })
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.RevisitDate, new { @class = "form-control", @type = "Date", @id = "RevisitDate", @value = DateTime.Now.ToString("MM/dd/yyyy") })
-                                                }
+                                         <div class="card">
+                                            <div class="card-body">                                   
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.HiddenFor(Model => Model.Id)
+                                                            @Html.HiddenFor(Model => Model.UHID)
+                                                            @Html.LabelFor(Model => Model.UHID, "UHID", new { @class = "form-label" })
+                                                            @Html.TextBoxFor(Model => Model.UHID, new { @class = "form-control", @id = "UHID", @disabled = "true" })
+                                                            @* @Html.DropDownListFor(Model => Model.UHID, new SelectList(Model.ConsultantList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" }) *@
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.HiddenFor(Model => Model.Id)
+                                                            @Html.HiddenFor(Model => Model.Patient_Id)
+                                                            @Html.LabelFor(Model => Model.PatientName, "Patient Name", new { @class = "form-label required-label" })
+                                                            @Html.TextBoxFor(Model => Model.PatientName, new { @class = "form-control", @id = "PatientName", @readonly = "readonly" })
+                                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.PatientName)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.RevisitDate, "Revisit Date", new { @class = "form-label " })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.RevisitDate, new { @class = "form-control", @id = "RevisitDate", @readonly = "readonly"
+                                                                , @Value = Convert.ToDateTime(@Model.RevisitDate).ToString("MM/dd/yyyy") })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.RevisitDate, new { @class = "form-control", @type = "Date", @id = "RevisitDate", @value = DateTime.Now.ToString("MM/dd/yyyy") })
+                                                            }
                                                
-                                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.RevisitDate)</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.ConsultantId, "Consultant Id", new { @class = "form-label" })
-                                                @Html.DropDownListFor(Model => Model.ConsultantId, new SelectList(Model.ConsultantList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation", @id = "userdropdown", onchange = "getConsultantCharges()" })
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.ConsultantName, "Consultant Name", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.ConsultantName, new { @class = "form-control", @id = "ConsultantNameTest", @readonly = "readonly" })
-                                            </div>
-                                        </div>
+                                                            <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.RevisitDate)</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.ConsultantId, "Consultant Id", new { @class = "form-label" })
+                                                            @Html.DropDownListFor(Model => Model.ConsultantId, new SelectList(Model.ConsultantList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation", @id = "userdropdown", onchange = "getConsultantCharges()" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.ConsultantName, "Consultant Name", new { @class = "form-label" })
+                                                            @Html.TextBoxFor(Model => Model.ConsultantName, new { @class = "form-control", @id = "ConsultantNameTest", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
                                        
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label " })
-                                                @if (Model.Id > 0)
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "GetCharges()", @readonly = "readonly" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "GetCharges()" })
-                                                }
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label " })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "GetCharges()", @readonly = "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "GetCharges()" })
+                                                            }
                                                 
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.NetAmount, "Net Amount", new { @class = "form-label" })
-                                                @if (Model.Id > 0)
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount", onchange = "GetCharges()", @readonly = "readonly" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount", onchange = "GetCharges()" })
-                                                }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.NetAmount, "Net Amount", new { @class = "form-label" })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount", onchange = "GetCharges()", @readonly = "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount", onchange = "GetCharges()" })
+                                                            }
                                                 
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.ReceiptNo, "Receipt No", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.ReceiptNo, new { @class = "form-control", @id = "ReceiptNo", @readonly = "readonly" })
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.GenRemarks, "Gen. Remarks", new { @class = "form-label" })
-                                                @if (Model.Id > 0)
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.GenRemarks, new { @class = "form-control", @id = "GenRemarks", @readonly = "readonly" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.GenRemarks, new { @class = "form-control", @id = "GenRemarks" })
-                                                }                                                
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.RefReceiptNo, "Ref. ReceiptNo", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.RefReceiptNo, new { @class = "form-control", @id = "RefReceiptNo", @readonly = "readonly" })
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.ClinicalDiagnosis, "Clinical Diagnosis", new { @class = "form-label" })
-                                                @if (Model.Id > 0)
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.ClinicalDiagnosis, new { @class = "form-control", @id = "ClinicalDiagnosis", @readonly = "readonly" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.ClinicalDiagnosis, new { @class = "form-control", @id = "ClinicalDiagnosis" })
-                                                }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.ReceiptNo, "Receipt No", new { @class = "form-label" })
+                                                            @Html.TextBoxFor(Model => Model.ReceiptNo, new { @class = "form-control", @id = "ReceiptNo", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.GenRemarks, "Gen. Remarks", new { @class = "form-label" })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.GenRemarks, new { @class = "form-control", @id = "GenRemarks", @readonly = "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.GenRemarks, new { @class = "form-control", @id = "GenRemarks" })
+                                                            }                                                
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.RefReceiptNo, "Ref. ReceiptNo", new { @class = "form-label" })
+                                                            @Html.TextBoxFor(Model => Model.RefReceiptNo, new { @class = "form-control", @id = "RefReceiptNo", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.ClinicalDiagnosis, "Clinical Diagnosis", new { @class = "form-label" })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.ClinicalDiagnosis, new { @class = "form-control", @id = "ClinicalDiagnosis", @readonly = "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.ClinicalDiagnosis, new { @class = "form-control", @id = "ClinicalDiagnosis" })
+                                                            }
                                                 
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.GeneralAdvice, "General Advice", new { @class = "form-label" })
-                                                @if (Model.Id > 0)
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.GeneralAdvice, new { @class = "form-control", @id = "GeneralAdvice", @readonly = "readonly" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.GeneralAdvice, new { @class = "form-control", @id = "GeneralAdvice" })
-                                                }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.GeneralAdvice, "General Advice", new { @class = "form-label" })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.GeneralAdvice, new { @class = "form-control", @id = "GeneralAdvice", @readonly = "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.GeneralAdvice, new { @class = "form-control", @id = "GeneralAdvice" })
+                                                            }
                                                 
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.RefRemarks, "Ref. Remarks", new { @class = "form-label" })
-                                                @if (Model.Id > 0)
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.RefRemarks, new { @class = "form-control", @id = "RefRemarks", @readonly = "readonly" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.RefRemarks, new { @class = "form-control", @id = "RefRemarks" })
-                                                }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.RefRemarks, "Ref. Remarks", new { @class = "form-label" })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.RefRemarks, new { @class = "form-control", @id = "RefRemarks", @readonly = "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.RefRemarks, new { @class = "form-control", @id = "RefRemarks" })
+                                                            }
                                                 
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.SpecifyRevisitDay, "Specify Revisit (In Day)", new { @class = "form-label" })
-                                                @if (Model.Id > 0)
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.SpecifyRevisitDay, new { @class = "form-control", @id = "SpecifyRevisitDay", type = "number", @readonly = "readonly" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.SpecifyRevisitDay, new { @class = "form-control", @id = "SpecifyRevisitDay", type = "number" })
-                                                }
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.SpecifyRevisitDay, "Specify Revisit (In Day)", new { @class = "form-label" })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.SpecifyRevisitDay, new { @class = "form-control", @id = "SpecifyRevisitDay", type = "number", @readonly = "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.SpecifyRevisitDay, new { @class = "form-control", @id = "SpecifyRevisitDay", type = "number" })
+                                                            }
                                                 
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.RadioButtonFor(Model => Model.Patient_Emergency, true, new { id = "Patient_Emergency", Name = "Emergency", onchange = "GetCharges()" }) Emergency Charges
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                @Html.RadioButtonFor(Model => Model.Patient_Emergency, true, new { id = "Patient_Emergency", Name = "Emergency", onchange = "GetCharges()" }) Emergency Charges
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                @Html.RadioButtonFor(Model => Model.Patient_Emergency, false, new { id = "Patient_Emergency", Name = "Night", onchange = "GetCharges()" }) Night Charges
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="form-group">
+                                                                @Html.LabelFor(Model => Model.Complimentary, "Complimentary", new { @class = "form-label required-label" })
+                                                                @Html.CheckBoxFor(Model => Model.Complimentary, new
+                                                                    {
+                                                                        @id = "Complimentary"
+                                                                    })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.RevisitCharges, "Revisit Charges", new { @class = "form-label" })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.RevisitCharges, new { @class = "form-control", @id = "RevisitCharges", onchange = "GetCharges()", @readonly = "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.RevisitCharges, new { @class = "form-control", @id = "RevisitCharges", onchange = "GetCharges()" })
+                                                            }
+                                                
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.OPDCharges, "OPD Charges", new { @class = "form-label" })
+                                                            @Html.TextBoxFor(Model => Model.OPDCharges, new { @class = "form-control", @id = "OPDCharges", onchange = "GetCharges()" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row row-sm">
+                                                    <div class="col-lg-12 justify-content-center">
+                                                        <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+
+                                                        <a href="@Url.Action("Index","PatientMaster")" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+
+                                                        <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.RadioButtonFor(Model => Model.Patient_Emergency, false, new { id = "Patient_Emergency", Name = "Night", onchange = "GetCharges()" }) Night Charges
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.Complimentary, "Complimentary", new { @class = "form-label required-label" })
-                                                    @Html.CheckBoxFor(Model => Model.Complimentary, new
-                                                        {
-                                                            @id = "Complimentary"
-                                                        })
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.RevisitCharges, "Revisit Charges", new { @class = "form-label" })
-                                                @if (Model.Id > 0)
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.RevisitCharges, new { @class = "form-control", @id = "RevisitCharges", onchange = "GetCharges()", @readonly = "readonly" })
-                                                }
-                                                else
-                                                {
-                                                    @Html.TextBoxFor(Model => Model.RevisitCharges, new { @class = "form-control", @id = "RevisitCharges", onchange = "GetCharges()" })
-                                                }
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div class="form-group">
-                                                @Html.LabelFor(Model => Model.OPDCharges, "OPD Charges", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.OPDCharges, new { @class = "form-control", @id = "OPDCharges", onchange = "GetCharges()" })
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div class="row row-sm">
-                                        <div class="col-lg-12 justify-content-center">
-                                            <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
-
-                                            <a href="@Url.Action("Index","PatientMaster")" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
-
-                                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <!--/div-->
                     </div>
