@@ -77,7 +77,7 @@ namespace HMS.Controllers
             _serviceMasterService= serviceMasterService;
         }
 
-        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
+        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "Id")
         {
             var breadcrumbs = new List<Breadcrumb>
                 {
@@ -92,7 +92,7 @@ namespace HMS.Controllers
             ViewBag.PageSizeId = PageSizeId;
             if (string.IsNullOrEmpty(sortField))
             {
-                ViewBag.SortField = "CI.Id";
+                ViewBag.SortField = "Id";
                 ViewBag.SortOrder = "Asc";
             }
             else
@@ -258,12 +258,15 @@ namespace HMS.Controllers
         [HttpPost]
         public IActionResult AddEdit(PatientMasterModel model)
         {
+
+            int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+            int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
+
             patientMasterModel.lstStatus = _commonService.GetStatusList();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
             model.MaritalStatusList = _commonService.GetMaritalStatusList();
             patientMasterModel.GenderList = _commonService.GetGenderList();
             patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
-            int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
 
@@ -304,7 +307,7 @@ namespace HMS.Controllers
 
 
                     model.DOB = model.DOB.Date;
-                    model.CreatedBy = SclinicId;
+                    model.CreatedBy = SessionUser;
                     if (model.Active == true)
                     {
                         model.IsDelete = false;
@@ -328,9 +331,7 @@ namespace HMS.Controllers
 
                     if (res.DbCode == 1)
                     {
-
                         TempData[Temp_Message.Success] = res.DbMsg;
-
                         return RedirectToAction("Index");
                     }
                     else
@@ -342,7 +343,7 @@ namespace HMS.Controllers
                 }
                 else
                 {
-                    model.UpdatedBy = SclinicId;
+                    model.UpdatedBy = SessionUser;
                     model.Clinic_Id = SclinicId;
                     if (model.Active == true)
                     {
@@ -511,6 +512,7 @@ namespace HMS.Controllers
             try
             {
                 int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+                int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
                 if (ModelState.IsValid)
                 {
                     bool SpecifyRevisitDay = true;
@@ -548,7 +550,7 @@ namespace HMS.Controllers
                         {
                             if (model.Id == 0)
                             {
-                                model.CreatedBy = 1;
+                                model.CreatedBy = SessionUser;
                                 model.Active = true;
                                 if (model.Active == true)
                                 {

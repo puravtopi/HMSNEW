@@ -19,12 +19,14 @@ namespace HMS.Controllers
         PatientMasterModel patientMasterModel = new PatientMasterModel();
         private readonly IRevisitDetailMasterServices _revisitDetailMasterServices;
         private readonly IPatientConsultantMasterServices _patientConsultantMasterServices;
+        private readonly IUserMasterServices _userMasterServices;
+
 
         public ConsultantDashboardController(
           IPatientMasterServices patientMasterServices,
           IPatientGeneralDetailMasterServices patientGeneralDetailMasterServices,
           ICommonService commonService,IRevisitDetailMasterServices revisitDetailMasterServices,
-          IPatientConsultantMasterServices patientConsultantMasterServices
+          IPatientConsultantMasterServices patientConsultantMasterServices,IUserMasterServices userMasterServices
           )
         {
             _patientGeneralDetailMasterServices = patientGeneralDetailMasterServices;
@@ -32,40 +34,15 @@ namespace HMS.Controllers
             _commonService = commonService;
             _revisitDetailMasterServices= revisitDetailMasterServices;
             _patientConsultantMasterServices=patientConsultantMasterServices;
-
+            _userMasterServices = userMasterServices;
         }
         public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
         {
-            //var breadcrumbs = new List<Breadcrumb>
-            //    {
-            //        new Breadcrumb { Text = "HMS", Url = null },
-            //        new Breadcrumb { Text = "Master", Url = null },
-            //        new Breadcrumb { Text = "Patient", Url = null },
-
-            //    };
-
-            //// Set the Breadcrumbs collection in the ViewBag
-            //ViewBag.Breadcrumbs = breadcrumbs;
-            ViewBag.PageSizeId = PageSizeId;
-            if (string.IsNullOrEmpty(sortField))
-            {
-                ViewBag.SortField = "CI.Id";
-                ViewBag.SortOrder = "Asc";
-            }
-            else
-            {
-
-                ViewBag.SortField = sortField;
-                ViewBag.SortOrder = sortOrder;
-            }
-
-            ViewBag.searchString = searchString;
+            
+            
             int count;
             int TotalCount = 0;
-            if (searchString != null)
-            {
-                searchString = searchString.Trim();
-            }
+            
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
             var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount,SessionUser, SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
@@ -75,7 +52,17 @@ namespace HMS.Controllers
             patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
             patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
-            
+            if(SessionUser > 0 && SessionUser!=null)
+            {
+                var data = _userMasterServices.GetById(SessionUser);
+                if (data != null)
+                {
+                    var firstname = data.FirstName != null ? data.FirstName : "";
+                    var lastname = data.LastName != null ? data.LastName : "";
+                    ViewBag.Consultantname =firstname + " "+ lastname;
+                }
+                
+            }
             if(res.Count > 0)
             {
                 ViewBag.total = res.Count;

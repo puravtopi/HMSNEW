@@ -54,7 +54,7 @@ namespace HMS.Services
 
             var dbparams = new DynamicParameters();
             dbparams.Add("@Clinic_Id", ClinicId, DbType.Int32);
-            dbparams.Add("@User_Id", UserId, DbType.Int32);
+            dbparams.Add("@CreatedBy", UserId, DbType.Int32);
             dbparams.Add("@currentPage", currentPage, DbType.String);
             //searchString = "%" + searchString + "%";
             dbparams.Add("@searchString", searchString, DbType.String);
@@ -67,7 +67,7 @@ namespace HMS.Services
             dbparams.Add("TotalCount", dbType: DbType.Int32, direction: ParameterDirection.Output);
             //dbparams.Add("@Date", Date, DbType.String);
 
-            var res = _dapper.GetAll<PatientMasterModel>(CommonSp.getByClinicIdWisePATIENT, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+            var res = _dapper.GetAll<PatientMasterModel>(CommonSp.GetAllPatientLoginUserWise, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
             TotalCount = dbparams.Get<int>("TotalCount");
             return res;

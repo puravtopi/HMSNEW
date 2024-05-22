@@ -5,19 +5,15 @@
 	string Action = ViewContext.RouteData.Values["action"].ToString();
 	string Controller = ViewContext.RouteData.Values["controller"].ToString();
 }
-
 <div class="page-header">
     <div class="page-leftheader">
-		<h4 class="page-title mb-0">Consultant Dashboard</h4>
-	</div>
-	<div class="page-rightheader">
-		<div class="ml-3 ml-auto d-flex">
-		</div>
-	</div>
+        <h4 class="page-title mb-0">DashBoard </h4>
+        </>        
+    </div>
 </div>
  @using (Html.BeginForm(Action, Controller, null, FormMethod.Post))
 {
-    <h1 style="text-align:center">Welcome Consultant </h1>
+    <h1 style="text-align:center">Welcome @ViewBag.Consultantname </h1>
 
     <div class="row">
         <div class="col-sm-3">
@@ -105,7 +101,83 @@
 
         </table>
     </figure>
+
+
+    <div class="row">
+        <div class="col-xl-12 product">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Revenue</h3>
+                    <div class="card-options ">
+                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                        <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-xl-8">
+                            <div class="chart-wrapper">
+                                <canvas id="line-chart" class=" chartjs-render-monitor chart-dropshadow2 overflow-hidden"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-xl-4 lg-mt-5">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card box-shadow-0 overflow-hidden">
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <i class="fa fa-tasks fa-2x text-primary text-primary-shadow"></i>
+                                                <h3 class="mt-3 mb-0 ">07</h3>
+                                                <small class="text-muted">Progress Tasks</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card box-shadow-0 overflow-hidden">
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <i class="fa fa-ticket fa-2x text-secondary text-secondary-shadow"></i>
+                                                <h3 class="mt-3 mb-0 ">03</h3>
+                                                <small class="text-muted">Open Ticket</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card box-shadow-0 mb-0 overflow-hidden">
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <i class="fa fa-bug fa-2x text-success text-success-shadow"></i>
+                                                <h3 class="mt-3 mb-0 ">02</h3>
+                                                <small class="text-muted">In Progress Bugs</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 ">
+                                    <div class="card box-shadow-0 mb-0 overflow-hidden">
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <i class="fa fa-folder-open-o fa-2x text-info text-info-shadow"></i>
+                                                <h3 class="mt-3 mb-0 ">04</h3>
+                                                <small class="text-muted">Progress Projects</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
+
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- jQuery (optional if you want to use jQuery) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
