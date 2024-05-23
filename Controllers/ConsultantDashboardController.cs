@@ -5,6 +5,7 @@ using HMS.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
@@ -59,6 +60,8 @@ namespace HMS.Controllers
             }
 
             var result = _consultantServices.GetDashboardCount(SessionUser);
+            var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser,2024);
+
 
             ViewBag.todayPatient = result.TotalPatient;
             ViewBag.netamount = result.TotalIncome;
@@ -66,10 +69,22 @@ namespace HMS.Controllers
             ViewBag.revisitCount = 0;
             ViewBag.totalServices = 0;
             ViewBag.totalPatient = result.TotalPatient + 0;
-
-
+            ViewBag.Chartdata= JsonConvert.SerializeObject(ChartCount); 
+            
             return View();
         }
+        public IActionResult GetDataForYear(int year)
+        {
+            int sessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
+
+            // Call your service method to fetch data for the specified year
+            var chartData = _consultantServices.GetDashboardChartCount(sessionUser, year);
+
+            // Convert the data to JSON and return it
+            return Json(chartData);
+        }
+
+        
 
         //public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
         //{

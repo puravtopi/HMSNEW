@@ -2,6 +2,7 @@
 using HMS.Common;
 using HMS.Interface;
 using HMS.Models;
+using System.Collections.Generic;
 using System.Data;
 
 namespace HMS.Services
@@ -13,6 +14,16 @@ namespace HMS.Services
         public ConsultantServices(IDapperService dapper)
         {
             _dapper = dapper;
+        }
+
+        public List<ConsultantDashboardModel> GetDashboardChartCount(int UserId, int Selectedyear)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@userId", UserId, DbType.Int32);
+            dbparams.Add("@customYear", Selectedyear, DbType.Int32);
+
+            return _dapper.GetAll<ConsultantDashboardModel>("usp_Consultant_Dashboard_ChartCount", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+
         }
 
         public ConsultantDashboardModel GetDashboardCount(int UserId)

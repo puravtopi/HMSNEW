@@ -84,94 +84,6 @@
     </div>
 
     <div class="row">
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text">Total Patient = @ViewBag.totalPatient </p>
-                    <p class="card-text">Today's New patient=  @ViewBag.todayPatient</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text">Today’s Appointments = @ViewBag.todayAppointments  </p>
-                    <p class="card-text">Revisit Patients= @ViewBag.revisitCount</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text">Opd Services = </p>
-                    <p></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="card">
-                <div class="card-body">
-                    <p class="card-text">
-                        Net Amount = <span id="netAmount">*******</span>
-                        <i id="toggleIcon" class="fa fa-eye-slash" aria-hidden="true"></i>
-                    </p>
-                    <p class="card-text"></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <figure class="figure">
-        <table class="barChart_h">
-            <tbody>
-                <tr>
-                    <th class="blankCell"></th>
-                    <th class="y-axis">
-                        <div class="y-axis-title"># of Responses</div>
-                    </th>
-                </tr>
-
-                <!-- Data Rows -->
-                <tr class="firstRow">
-                    <th scope="row">April :</th>
-                    <td><span style="width:5%"><b>10</b></span></td>
-                </tr>
-                <tr>
-                    <th scope="row">March :</th>
-                    <td><span style="width:20%"><b>30</b></span></td>
-                </tr>
-                <tr>
-                    <th scope="row">Feburary :</th>
-                    <td><span style="width:10%"><b>20</b></span></td>
-                </tr>
-
-                <tr class="lastRow">
-                    <th scope="row">January :</th>
-                    <td><span style="width:50%"><b>80</b></span></td>
-                </tr>
-                <tr>
-                    <th class="blankCell"></th>
-                    <th class="y-axis">
-
-                        <ol class="y-axis-labels">
-                            <li class="zero"><b>0</b></li>
-                            <li><b>20</b></li>
-                            <li><b>40</b></li>
-                            <li><b>60</b></li>
-                            <li><b>80</b></li>
-                            <li><b>100</b></li>
-                            <li><b>120</b></li>
-                            <li><b>140</b></li>
-                            <li><b>160</b></li>
-                        </ol>
-                    </th>
-                </tr>
-            </tbody>
-
-        </table>
-    </figure>
-
-
-    <div class="row">
         <div class="col-xl-12 product">
             <div class="card">
                 <div class="card-header">
@@ -184,12 +96,21 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <label for="yearDropdown">Select Year:</label>
+                        <select id="yearDropdown" name="year"></select>                        
+                    </div>
+                    <div class="row">
                         <div class="col-lg-12 col-xl-8">
                             <div class="chart-wrapper">
-                                <canvas id="line-chart" class=" chartjs-render-monitor chart-dropshadow2 overflow-hidden"></canvas>
+                                <div class="chart-wrapper">
+                                    
+                                    <canvas id="bar-chart" class="chartjs-render-monitor chart-dropshadow2 overflow-hidden"></canvas>
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-lg-12 col-xl-4 lg-mt-5">
+                           
                             <div class="row">
                                 <div class="col-6">
                                     <div class="card box-shadow-0 overflow-hidden">
@@ -243,9 +164,55 @@
         </div>
     </div>
 }
+<style>
+    .hidden-amount {
+        display: none;
+    }
 
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
 
+    label {
+        font-size: 16px;
+        margin-right: 10px;
+    }
 
+    select {
+        font-size: 16px;
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        outline: none;
+    }
+
+        select:focus {
+            border-color: #007BFF;
+        }
+</style>
+    <script>
+    function populateYearDropdown(startYear, endYear) {
+        const yearDropdown = document.getElementById('yearDropdown');
+        const currentYear = new Date().getFullYear();
+
+        for (let year = startYear; year <= endYear; year++) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            if (year === currentYear) {
+                option.selected = true;
+            }
+            yearDropdown.appendChild(option);
+        }
+    }
+
+    window.onload = function () {
+        const currentYear = new Date().getFullYear();
+        populateYearDropdown(currentYear - 10, currentYear );  // Example: last 100 years and next 10 years
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>    
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- jQuery (optional if you want to use jQuery) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -266,231 +233,127 @@
         });
         $('#netAmount').data('visible', false);  // Set initial state as hidden
     });
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     var ctx = document.getElementById('bar-chart').getContext('2d');
+    //     debugger
+    //     // Parse the chart data from ViewBag
+    //     var chartData = JSON.parse('@Html.Raw(ViewBag.Chartdata)');
+
+    //     // Extract the labels (Months) and data (TotalCount)
+    //     var labels = chartData.map(function (item) { return item.Months; });
+    //     var data = chartData.map(function (item) { return item.TotalMonthCount; });
+
+    //     var config = {
+    //         type: 'bar',
+    //         data: {
+    //             labels: labels,
+    //             datasets: [{
+    //                 label: 'Total Count',
+    //                 data: data,
+    //                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
+    //                 borderColor: 'rgba(153, 102, 255, 1)',
+    //                 borderWidth: 1
+    //             }]
+    //         },
+    //         options: {
+    //             scales: {
+    //                 x: {
+    //                     title: {
+    //                         display: true,
+    //                         text: 'Months'
+    //                     }
+    //                 },
+    //                 y: {
+    //                     title: {
+    //                         display: true,
+    //                         text: 'Total Count'
+    //                     },
+    //                     min: 0,
+    //                     max: 10,
+    //                     ticks: {
+    //                         stepSize: 1
+    //                     }
+    //                     // beginAtZero: true
+    //                 }
+    //             }
+    //         }
+    //     };
+
+    //     var barChart = new Chart(ctx, config);
+    // });
 </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        debugger
+        // Function to update chart data based on selected year
+        function updateChartData(year) {
+            // Make an AJAX request to fetch data for the selected year
+            fetch('/ConsultantDashboard/GetDataForYear?year=' + year)
+                .then(response => response.json())
+                .then(chartData => {
+                    // Extract the labels and data from the fetched data
+                    var labels = chartData.map(item => item.Months);
+                    var data = chartData.map(item => item.TotalMonthCount);
 
-
-<style>
-    .hidden-amount {
-        display: none;
-    }
-</style>
-<style>
-
-    html,
-    body {
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        padding: 0 10px;
-    }
-    /* nope
-        *,
-        *:before,
-        *:after {
-          box-sizing: border-box;
-        }
-        */
-    /* This is better
-        https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
-        */
-    html {
-        box-sizing: border-box;
-    }
-
-    *,
-    *:before,
-    *:after {
-        box-sizing: inherit;
-    }
-
-    body {
-        font-family: Helvetica, Arial, Sans-Serif;
-        font-weight: normal;
-        line-height: 1.4em;
-        font-size: 0.9em;
-        color: #000;
-    }
-
-    /**************************************************************************/
-    /* DESKTOP                                                                */
-    /**************************************************************************/
-    /* FIGURE */
-    /*use classes as you don't want to style every figure in your document like this.*/
-    .figure {
-        min-width: 200px;
-        max-width: 780px;
-        margin: 2rem;
-        padding: 1.5rem 2rem 2rem;
-        border: 1px solid #000;
-    }
-
-    /* TABLE */
-    .barChart_h {
-        table-layout: fixed; /* enforce cell widths*/
-        /* display: block; nope we want a table this time */
-        /*height: auto; don;t need this*/
-        /* Do I need this? */
-        width: 100%; /* yes now needed for full width table (display:table)*/
-        overflow-wrap: break-word;
-        border-spacing: 0;
-    }
-
-        /* CAPTION */
-        .barChart_h caption {
-            /*display: block;Nope we want a table caption */
-            padding: 0 0 1rem 0;
-            line-height: 1.1;
-            font-size: 1.1rem;
-            font-weight: bold;
-            text-align: left;
+                    // Update the chart with new data
+                    barChart.data.labels = labels;
+                    barChart.data.datasets[0].data = data;
+                    barChart.update();
+                })
+                .catch(error => console.error('Error fetching data:', error));
         }
 
-        /* TBODY */
-        .barChart_h tbody {
-            /* display: block; nope we want table behaviour still*/
-        }
-            /* We don't need this in this example as we are not linearising the table*/
-            /*
-        .barChart_h tbody:after {
-          /* For IE9 and under, need to enclose floats... */
-            /*
-          content: "";
-          display: block;
-          clear: both;
-          height: 0;
-        }
-        */
+        var ctx = document.getElementById('bar-chart').getContext('2d');
 
-            /* TH+TD */
-            .barChart_h tbody tr.firstRow th,
-            .barChart_h tbody tr.firstRow td {
-                padding: 1rem 0 0.5rem 0;
-                /* Add extra vertical padding. */
-            }
+        // Parse the initial chart data from ViewBag
+        var chartData = JSON.parse('@Html.Raw(ViewBag.Chartdata)');
+        var labels = chartData.map(item => item.Months);
+        var data = chartData.map(item => item.TotalMonthCount);
 
-            .barChart_h tbody th,
-            .barChart_h tbody td {
-                padding: 0.5rem 0 0.4rem 0;
-                /* Space around Bars. */
-            }
-
-            .barChart_h tbody tr.lastRow th,
-            .barChart_h tbody tr.lastRow td {
-                padding: 0.5rem 0 1rem 0;
-                /* Add extra vertical padding. */
-            }
-
-            /* TH */
-            .barChart_h tbody th {
-                font-weight: normal;
-                text-align: right;
-            }
-
-            /* TD */
-            .barChart_h tbody td {
-                /* X-AXIS. (vertical) */
-                border-right: 1px solid #ddd;
-                /* Finish out repeating vertical-gridlines. */
-                background-image: linear-gradient(to right, #ddd 1px, transparent 1px);
-                /* Create grey-transparent gradient for 1px, then remainder of gradient is transparent.
-                                                       This creates the illusion of a 1px vertical-line. */
-                background-size: 10% 100%;
-                /* Go right in 10% increments. */
-            }
-
-                /* BARS */
-                .barChart_h tbody td span {
-                    position: relative;
-                    /* Needed for absolute-positioning of Bar-value. */
-                    display: block;
-                    /* Expands <span> to fill <td> */
-                    height: 20px;
-                    background: #4493DE;
-                    /* Aqua (default) */
-                    border-top: 1px solid #000;
-                    border-right: 1px solid #000;
-                    border-bottom: 1px solid #000;
-                    box-shadow: 5px 0px 5px rgba(0, 0, 0, 0.3);
-                }
-
-                    /* BAR-VALUES */
-                    .barChart_h tbody td span b {
-                        position: absolute;
-                        left: 100%;
-                        top: 0;
-                        right: auto;
-                        bottom: 0;
-                        display: block;
-                        padding: 0 0 0 0.5rem;
-                        font-weight: normal;
+        var config = {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Total Count',
+                    data: data,
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Months'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Total Count'
+                        },
+                        min: 0,
+                        max: 10,
+                        ticks: {
+                            stepSize: 1
+                        }
                     }
-
-            /* Y-AXIS */
-            .barChart_h tbody th.blankCell {
-                width: 22%; /* Adjust to suit butwe need a width or both cells will be 50% by default*/
-            }
-
-            .barChart_h tbody th.y-axis {
-                position: relative;
-                /* New */
-                padding-bottom: 1.4rem;
-                /* Y-AXIS. (horizontal) */
-                background-color: #fff;
-            }
-
-            /* Y-AXIS TITLE */
-            .barChart_h tbody div.y-axis-title {
-                display: block;
-                text-align: center;
-                font-weight: bold;
-            }
-
-            /* Y-AXIS LABELS */
-            .barChart_h tbody ol.y-axis-labels {
-                position: absolute;
-                top: auto;
-                bottom: 0;
-                right: 0;
-                left: 0;
-                display: flex;
-                /* Create Flexbox (Flex-Container). */
-                flex-direction: row;
-                margin: 0;
-                /* New */
-                padding: 0;
-                /* New */
-                list-style: none;
-                /* New */
-                font-size: 0.9rem;
-            }
-
-                .barChart_h tbody ol.y-axis-labels li.zero {
-                    position: absolute;
-                    /* Remove 0 from Flexbox flow. */
-                    /* New */
-                    left: 0;
-                    right: auto;
-                    bottom: auto;
-                    top: 0;
                 }
+            }
+        };
 
-                    .barChart_h tbody ol.y-axis-labels li.zero b {
-                        transform: translate(-50%, 0%);
-                    }
+        var barChart = new Chart(ctx, config);
 
-                .barChart_h tbody ol.y-axis-labels li {
-                    flex: 1 0 0;
-                    text-align: right;
-                }
+        // Event listener for dropdown change
+        document.getElementById('yearDropdown').addEventListener('change', function () {
+            var selectedYear = this.value;
+            updateChartData(selectedYear);
+        });
+    });
 
-                    .barChart_h tbody ol.y-axis-labels li b {
-                        display: inline-flex;
-                        transform: translate(50%, 0%);
-                        font-weight: normal;
-                    }
-
-</style>
-
+</script>
 
