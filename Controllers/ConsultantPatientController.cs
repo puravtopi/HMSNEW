@@ -95,9 +95,9 @@ namespace HMS.Controllers
 
 
 
-            //string cnd = " and id in (select Patient_Id  from  PatientConsultantMaster where User_Id=" + SessionUser.ToString() + ")";
+            string qcnd = " and CI.id in (select Patient_Id  from  PatientConsultantMaster where User_Id=" + SessionUser.ToString() + ")";
 
-            var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount,SessionUser,SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder, "");
+            var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount,SessionUser,SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder, qcnd);
             patientMasterModel.lstPageSizeDdl = _commonService.GetPageSizeDDL();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
             patientMasterModel.GenderList = _commonService.GetGenderList();

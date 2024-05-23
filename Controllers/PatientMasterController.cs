@@ -77,7 +77,7 @@ namespace HMS.Controllers
             _serviceMasterService= serviceMasterService;
         }
 
-        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "Id")
+        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
         {
             var breadcrumbs = new List<Breadcrumb>
                 {
@@ -92,7 +92,7 @@ namespace HMS.Controllers
             ViewBag.PageSizeId = PageSizeId;
             if (string.IsNullOrEmpty(sortField))
             {
-                ViewBag.SortField = "Id";
+                ViewBag.SortField = "CI.Id";
                 ViewBag.SortOrder = "Asc";
             }
             else

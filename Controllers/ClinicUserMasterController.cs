@@ -151,8 +151,9 @@ namespace HMS.Controllers
                     model.Clinic_Id = SclinicId;
                     model.Dept_id = Int32.Parse(model.Departments);
                     model.Desig_Id = Int32.Parse(model.Designations);
-                    int randomNumber = _random.Next(10000000, 99999999);
-                    string password = _commonService.GetMd5HashNewMethod(randomNumber.ToString());
+                 //   int randomNumber = _random.Next(10000000, 99999999);
+                 //   string password = _commonService.GetMd5HashNewMethod(randomNumber.ToString());
+                    string password = _commonService.GetMd5HashNewMethod("123456");
                     model.Password = password;
                     
                     //model.Active = true;

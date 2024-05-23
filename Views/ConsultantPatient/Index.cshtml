@@ -39,14 +39,14 @@
         <h4 class="page-title mb-0">Patient List</h4>
     </div>
     <div class="page-rightheader">
-        <div class="ml-3 ml-auto d-flex">
+@*         <div class="ml-3 ml-auto d-flex">
             <div class="d-flex align-items-center flex-wrap text-nowrap">
                 <a href="@Url.Action("AddEdit","PatientMaster")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
                     <i class="fa fa-plus "></i>
                     Add New
                 </a>
             </div>
-        </div>
+        </div> *@
     </div>
 </div>
 
@@ -85,7 +85,7 @@
                         <thead>
                             <tr>
                                 <th class="wd-lg-10p">Action</th>
-                                <th class="wd-lg-10p"></th>
+                               
                                 <th class="wd-lg-25p">@Html.ActionLink("Receipt No", "Index", "ReceiptNo", new { sortField = "ReceiptNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-10p">UHID.</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Entry Date-Time ", "Index", "ConsultantPatient", new { sortField = "EntryDateTime", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>

@@ -53,11 +53,17 @@ namespace HMS.Controllers
             ViewBag.searchString = searchString;
             int count;
             int TotalCount = 0;
+            searchString = " ";
+
+            int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+
+            string qcnd = " and Clinic_Id=" + SclinicId.ToString();
+
             if (searchString != null)
             {
                 searchString = searchString.Trim();
             }
-            var res = _UserMasterServices.GetAll(ref TotalCount, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
+            var res = _UserMasterServices.GetAll(ref TotalCount, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder, qcnd);
             UserMasterModel.lstPageSizeDdl = _commonService.GetPageSizeDDL();
 
             if (res[0].DbCode == -1)
@@ -148,7 +154,7 @@ namespace HMS.Controllers
                 }
                 else
                 {
-                    model.UpdatedBy =SclinicId;
+                    model.UpdatedBy = SclinicId;
                     model.Clinic_Id = SclinicId;
                     if (model.Active == true)
                     {
@@ -211,8 +217,8 @@ namespace HMS.Controllers
         {
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             var ClinicIDWiseList = _UserMasterServices.GetByClinicIdWiseUserList(SclinicId);
-            
-            for(int i=0; i<ClinicIDWiseList.Count; i++)
+
+            for (int i = 0; i < ClinicIDWiseList.Count; i++)
             {
                 var data = _UserMasterServices.GetById(ClinicIDWiseList[i].Id);
                 if (data != null)
@@ -223,10 +229,10 @@ namespace HMS.Controllers
                         {
                             string password = _commonService.GetMd5HashNewMethod(model.NewPassowrd);
 
-                            UserMasterModel user=new UserMasterModel();
+                            UserMasterModel user = new UserMasterModel();
                             user.Id = data.Id;
                             user.Password = password;
-                            user.UpdatedBy= SclinicId;
+                            user.UpdatedBy = SclinicId;
                             var res = _UserMasterServices.UpdatePassword(user);
                             if (res.DbCode == 1)
                             {
@@ -248,7 +254,7 @@ namespace HMS.Controllers
                         TempData[Temp_Message.Error] = "Password Not Match";
                     }
                 }
-            }                                
+            }
             return View(ClinicIDWiseList);
         }
 
