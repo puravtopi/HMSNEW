@@ -208,5 +208,13 @@ namespace HMS.Services
             TotalCount = dbparams.Get<int>("TotalCount");
             return res;
         }
+
+        public PatientMasterModel PatientStatusUpdate(int Id)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@Id", Id, DbType.Int32);
+            return _dapper.Get<PatientMasterModel>(CommonSp.GetPatientStatusUpdate, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+
+        }
     }
 }

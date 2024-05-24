@@ -95,7 +95,7 @@ namespace HMS.Controllers
 
 
 
-            string qcnd = " and CI.id in (select Patient_Id  from  PatientConsultantMaster where User_Id=" + SessionUser.ToString() + ")";
+            string qcnd = " and CI.IsChecked = 0 OR CI.IsChecked IS NULL and CI.id in (select Patient_Id  from  PatientConsultantMaster where User_Id=" + SessionUser.ToString() + ")";
 
             var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount,SessionUser,SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder, qcnd);
             patientMasterModel.lstPageSizeDdl = _commonService.GetPageSizeDDL();
@@ -104,8 +104,9 @@ namespace HMS.Controllers
             patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
             patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
+
             for (int i = 0; i < res.Count; i++)
-            {
+            {              
                 var data = _patientGeneralDetailMasterServices.GetByPatientIdWise(res[i].Id);
                 if (data != null)
                 {
@@ -128,7 +129,7 @@ namespace HMS.Controllers
 
                 var getAllPatientServiceDetail = _patientServiceMasterServices.GetAll(res[i].Id);
                 if (getAllPatientServiceDetail != null && getAllPatientServiceDetail.Count > 0)
-                {                    
+                {
                     res[i].patientServiceMastersModel = getAllPatientServiceDetail;
                     res[i].IsCheckPatientService = true;
                 }
@@ -139,21 +140,21 @@ namespace HMS.Controllers
                     res[i].IsCheckPatientService = false;
                 }
 
+
             }
 
             if (res.Count > 0)
             {
-                if (res[0].DbCode == -1)
-                {
-                    ViewBag.ErroMsg = res[0].DbMsg;
-                    count = 0;
-                }
-                else
-                {
-                    count = res.Count;
-                    patientMasterModel.patientMastersList = res;
-
-                }
+                        if (res[0].DbCode == -1)
+                        {
+                            ViewBag.ErroMsg = res[0].DbMsg;
+                            count = 0;
+                        }
+                        else
+                        {
+                            count = res.Count;
+                            patientMasterModel.patientMastersList = res;
+                        }
             }
             patientMasterModel.Pager = new JW.Pager(TotalCount, currentPage, PageSizeId);
             if (TempData[Temp_Message.Success] != null)
@@ -163,7 +164,7 @@ namespace HMS.Controllers
             patientMasterModel.sortField = sortField;
             patientMasterModel.sortOrder = ViewBag.SortOrder;
             sortOrder = ViewBag.SortOrder;
-
+            
             return View(patientMasterModel);
         }
 
@@ -188,6 +189,7 @@ namespace HMS.Controllers
             if (dId != 0)
             {
                 patientMasterModel = _patientMasterServices.GetById(dId);
+                _patientMasterServices.PatientStatusUpdate(patientMasterModel.Id);
 
                 var dataGeneral = _patientGeneralDetailMasterServices.GetByPatientIdWise(patientMasterModel.Id);
                 if (dataGeneral != null)

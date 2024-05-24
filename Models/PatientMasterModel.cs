@@ -100,6 +100,7 @@ namespace HMS.Models
         public string UHID { get; set; }
         public List<PatientServiceMasterModel> patientServiceMastersModel { get; set; }
         public bool? IsCheckPatientService { get; set; }
+        public bool? IsChecked { get; set; }
 
     }
 }

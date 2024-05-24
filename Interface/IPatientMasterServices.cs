@@ -15,5 +15,6 @@ namespace HMS.Interface
         public PatientConsultantMasterModel GetConsultantByPatientId(int Id);
         public List<PatientMasterModel> GetPatientData();
         public List<PatientMasterModel> GetUserWisePatientData(ref int TotalCount, int UserId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null);
+        public PatientMasterModel PatientStatusUpdate(int Id);
     }
 }

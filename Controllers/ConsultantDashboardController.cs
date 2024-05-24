@@ -54,7 +54,7 @@ namespace HMS.Controllers
                 {
                     var firstname = data.FirstName != null ? data.FirstName : "";
                     var lastname = data.LastName != null ? data.LastName : "";
-                    ViewBag.Consultantname = "Welcome " + firstname + " " + lastname;
+                    ViewBag.Consultantname =  firstname + " " + lastname;
                 }
 
             }
@@ -69,7 +69,12 @@ namespace HMS.Controllers
             ViewBag.revisitCount = 0;
             ViewBag.totalServices = 0;
             ViewBag.totalPatient = result.TotalPatient + 0;
-            ViewBag.Chartdata= JsonConvert.SerializeObject(ChartCount); 
+            ViewBag.Chartdata= JsonConvert.SerializeObject(ChartCount);
+            ViewBag.patientIsChecked = result.PatientIsCheckedCount;
+            ViewBag.PatienIsCheckedpending = result.PatientIsCheckedPendingCount;
+            ViewBag.Currentdate = DateAndTime.Now.ToString("dd-MM-yyyy");
+            ViewBag.StartedTime = result.StartedTime;
+            ViewBag.EndedTime = result.EndedTime;
             
             return View();
         }
