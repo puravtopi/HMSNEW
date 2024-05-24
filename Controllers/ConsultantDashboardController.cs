@@ -58,9 +58,10 @@ namespace HMS.Controllers
                 }
 
             }
+            var year =DateTime.Now.ToString("yyyy");
 
             var result = _consultantServices.GetDashboardCount(SessionUser);
-            var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser,2024);
+            var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser,Int32.Parse(year));
 
 
             ViewBag.todayPatient = result.TotalPatient;
