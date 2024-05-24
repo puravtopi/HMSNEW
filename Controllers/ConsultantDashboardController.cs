@@ -81,7 +81,7 @@ namespace HMS.Controllers
             var chartData = _consultantServices.GetDashboardChartCount(sessionUser, year);
 
             // Convert the data to JSON and return it
-            return Json(chartData);
+             return Json(chartData);
         }
 
         
