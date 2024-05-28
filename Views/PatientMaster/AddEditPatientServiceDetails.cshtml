@@ -42,6 +42,9 @@
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         @Html.HiddenFor(Model => Model.Id)
+                                        @Html.HiddenFor(Model => Model.Consultant_Id)
+                                        @Html.HiddenFor(Model => Model.Patient_Id)
+
                                         @Html.LabelFor(Model => Model.UHID, "UHID", new { @class = "form-label" })
                                         @Html.TextBoxFor(Model => Model.UHID, new { @class = "form-control", @id = "UHID", @disabled = "true" })
 

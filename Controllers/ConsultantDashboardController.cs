@@ -23,7 +23,7 @@ namespace HMS.Controllers
         private readonly IPatientConsultantMasterServices _patientConsultantMasterServices;
         private readonly IUserMasterServices _userMasterServices;
         private readonly IConsultantServices _consultantServices;
-
+        ConsultantDashboardModel consultantDashboard = new ConsultantDashboardModel();
 
         public ConsultantDashboardController(
           IPatientMasterServices patientMasterServices,
@@ -69,7 +69,9 @@ namespace HMS.Controllers
                     ChartCount[i].SumOfTotalAmount = ChartCount[i].SumOfTotalAmount+ ChartCount[i].RevisitCount;
                 }
             }
-
+            var patientMaster = _patientMasterServices.GetConsultantPatient(SessionUser, DateTime.Now.ToString("yyyy-MM-dd"));
+            
+            ViewBag.PatientList= patientMaster;
             ViewBag.todayPatient = result.TotalPatient;
             ViewBag.netamount = result.TotalIncome;
             ViewBag.todayAppointments = 0;
@@ -82,6 +84,8 @@ namespace HMS.Controllers
             ViewBag.Currentdate = DateAndTime.Now.ToString("dd-MM-yyyy");
             ViewBag.StartedTime = result.StartedTime;
             ViewBag.EndedTime = result.EndedTime;
+
+            ViewBag.ServiceCount=result.TotalServiceCount;
             
             return View();
         }

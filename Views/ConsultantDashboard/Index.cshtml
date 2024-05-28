@@ -1,4 +1,4 @@
-﻿@model HMS.Models.PatientMasterModel
+﻿@model HMS.Models.ConsultantDashboardModel
 @{
     Layout = "~/Views/Shared/_CounsultantLayout.cshtml";
     HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
@@ -51,7 +51,7 @@
                     <div class="d-flex">
                         <div class="">
                             <p class="mb-2 h6">Total Services</p>
-                            <h2 class="mb-1 ">@ViewBag.totalServices</h2>
+                            <h2 class="mb-1 ">@ViewBag.ServiceCount</h2>
                             @* <p class="mb-0 text-muted"><span class="text-danger">(+0.54%)</span><i class="fe fe-arrow-down text-danger"></i>Decrease</p> *@
                         </div>
 
@@ -107,7 +107,54 @@
         </div>
 
     </div>
-    
+
+   <div class="row">
+        <div class="col-xl-12 product">
+            <div class="card">
+                <div class="card-body">
+                    <table id="example1" class="table table-striped table-dashboard-two mg-b-0" style="border:1px">
+                        <thead class="h4">
+                            <tr>
+                                <th class="wd-lg-25p" style="font:bold">@Html.ActionLink("Receipt No", "Index", "ReceiptNo", new { sortField = "ReceiptNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-10p">UHID.</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Entry Date-Time ", "Index", "ConsultantPatient", new { sortField = "EntryDateTime", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("First Name", "Index", "ConsultantPatient", new { sortField = "Fname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "ConsultantPatient", new { sortField = "Lname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Blood Group", "Index", "ConsultantPatient", new { sortField = "BloodGroup", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Email", "Index", "ConsultantPatient", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("ContactNo", "Index", "ConsultantPatient", new { sortField = "ContactNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Date Of Birth", "Index", "ConsultantPatient", new { sortField = "DOB", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>                                
+                            </tr>
+                        </thead>                        
+                        <tbody>
+                            @if(ViewBag.PatientList!=null)
+                            {
+                                <tr>
+                                    <td><a href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@ViewBag.PatientList.Id.ToString()) })">@ViewBag.PatientList.ReceiptNo</a></td>                                    
+                                    <td>@ViewBag.PatientList.UHID</td>
+                                    <td>@ViewBag.PatientList.EntryDateTime</td>
+                                    <td>@ViewBag.PatientList.Fname</td>
+                                    <td>@ViewBag.PatientList.Lname</td>
+                                    <td>@ViewBag.PatientList.BloodGroup</td>
+                                    <td>@ViewBag.PatientList.Email</td>
+                                    <td>@ViewBag.PatientList.ContactNo</td>
+                                    <td>@ViewBag.PatientList.DOB.ToString("dd-MM-yyyy")</td>
+                                    
+                                </tr>                      
+                            }
+                            else
+                            {
+                                <tr class="odd">
+                                    <td valign="top" colspan="10" class="dataTables_empty"><div class="card mg-b-20 text-center"><div class="card-body h-100"><img src="~/assets/img/svgicons/no-data.svg" alt="" class="wd-10p"><h5 class="mg-b-10 mg-t-15 tx-18">Its Empty In Here</h5><a href="javascript:void(0);" class="text-dark">@ViewBag.ErroMsg</a></div></div></td>
+                                </tr>
+                            }
+                     </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div
+
     <div class="row">
         <div class="col-xl-12 product">
             <div class="card">
@@ -363,6 +410,7 @@
             updateChartData(selectedYear);
         });
     });
+    console.log(@ViewBag.PatientList);
 
 </script>
 

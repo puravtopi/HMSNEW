@@ -216,5 +216,14 @@ namespace HMS.Services
             return _dapper.Get<PatientMasterModel>(CommonSp.GetPatientStatusUpdate, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
         }
+
+        public PatientMasterModel GetConsultantPatient(int User_Id, string currentDate)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@userId", User_Id, DbType.Int32);
+            dbparams.Add("@entrydatetime", currentDate, DbType.String);
+            return _dapper.Get<PatientMasterModel>("usp_Consultant_Dashboard_Patient", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+
+        }
     }
 }

@@ -427,12 +427,13 @@ namespace HMS.Controllers
 
         public IActionResult Delete(string deleteId)
         {
+            int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
             int dId = 0;
             if (deleteId != null)
                 dId = Convert.ToInt32(encryptDecrypt.DecryptString(deleteId));
             if (dId != 0)
             {
-                int Deleted_By = 1;
+                int Deleted_By = SessionUser;
                 var res = _patientMasterServices.DeleteById(dId, Deleted_By);
                 if (res.DbCode == 1)
                 {
@@ -563,9 +564,7 @@ namespace HMS.Controllers
                                 {
                                     model.RevisitDate = DateTime.Now.ToString();
                                 }
-                                model.CreatedDate = DateTime.Now;
-                                model.UpdatedDate = DateTime.Now;
-                                model.DeletedDate = DateTime.Now;
+                                model.CreatedBy = SessionUser;
                                 var res = _revisitDetailMasterServices.Insert(model);
                                 if (res.DbCode == 1)
                                 {
@@ -581,7 +580,7 @@ namespace HMS.Controllers
                             else
                             {
                                 model.UpdatedDate = DateTime.Now;
-                                model.CreatedBy = 1;
+                                model.UpdatedBy = SessionUser;
                                 var res = _revisitDetailMasterServices.Update(model);
                                 if (res.DbCode == 1)
                                 {
@@ -626,12 +625,13 @@ namespace HMS.Controllers
 
         public IActionResult DeteleRevisitDetail(string deleteId)
         {
+            int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
             int dId = 0;
             if (deleteId != null)
                 dId = Convert.ToInt32(encryptDecrypt.DecryptString(deleteId));
             if (dId != 0)
             {
-                int Deleted_By = 1;
+                int Deleted_By = SessionUser;
                 var res = _revisitDetailMasterServices.DeteleRevisitDetail(dId, Deleted_By);
                 if (res.DbCode == 1)
                 {
@@ -771,6 +771,7 @@ namespace HMS.Controllers
                 }
                 patientServiceMaster.ConsultantName = user.FirstName + " " + user.LastName;
                 patientServiceMaster.Patient_Id = Patient_Id;
+                patientServiceMaster.Consultant_Id = user.Id;
 
                 int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
                 patientServiceMaster.departmentList = _commonService.GetDepartmentList(SclinicId);
@@ -795,6 +796,7 @@ namespace HMS.Controllers
             try
             {
                 int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+                int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
                 if (ModelState.IsValid)
                 {
                     //bool SpecifyRevisitDay = true;
@@ -811,12 +813,12 @@ namespace HMS.Controllers
 
                     model.Department_Id = int.Parse(model.DepartmentName);
                     model.ServiceHead_Id = int.Parse(model.ServiceHeadName);
-                    model.Consultant_Id = null;
+                    model.Consultant_Id = model.Consultant_Id;
                     model.Revisit_Id = null;
                     model.Service_Id = int.Parse(model.ServiceName);
                     if (model.Id == 0)
                     {
-                        model.CreatedBy = 1;
+                        model.CreatedBy = SessionUser;
                         model.Active = true;
                         if (model.Active == true)
                         {
@@ -830,21 +832,20 @@ namespace HMS.Controllers
                         //{
                         //    model.RevisitDate = DateTime.Now.ToString();
                         //}
-                        model.CreatedDate = DateTime.Now;
-                        model.UpdatedDate = DateTime.Now;
-                        model.DeletedDate = DateTime.Now;
+                       
                         model.ServiceDate = DateTime.Now;
                         model.RefundDate = DateTime.Now;
                         var res = _patientServiceMasterServices.Insert(model);
                         if (res.DbCode > 1)
                         {
                             ServiceMasterModel modelServiceMasterModel = new ServiceMasterModel();
-                            modelServiceMasterModel.CreatedBy = 1;
+                            modelServiceMasterModel.CreatedBy = SessionUser;
                             modelServiceMasterModel.Active = true;
                             modelServiceMasterModel.PatientServiceMasterId = res.DbCode;
                             modelServiceMasterModel.ServiceId = int.Parse(model.ServiceName);
                             modelServiceMasterModel.Discount = model.Discount;
                             modelServiceMasterModel.Charges = model.Charges;
+                            modelServiceMasterModel.NetAmount = decimal.Parse(model.NetAmount);
                             if (modelServiceMasterModel.Active == true)
                             {
                                 modelServiceMasterModel.IsDelete = false;
@@ -854,8 +855,6 @@ namespace HMS.Controllers
                                 modelServiceMasterModel.IsDelete = true;
                             }
                             modelServiceMasterModel.CreatedDate = DateTime.Now;
-                            modelServiceMasterModel.UpdatedDate = DateTime.Now;
-                            modelServiceMasterModel.DeletedDate = DateTime.Now;
                             var ress = _serviceMasterService.InsertPatientServiceMasterDetails(modelServiceMasterModel);
                             //TempData[Temp_Message.Success] = res.DbMsg;
                             //return RedirectToAction("Index");
@@ -869,7 +868,7 @@ namespace HMS.Controllers
                     else
                     {
                         model.UpdatedDate = DateTime.Now;
-                        model.CreatedBy = 1;
+                        model.UpdatedBy = SessionUser;
                         var res = _patientServiceMasterServices.Update(model);
                         if (res.DbCode == 1)
                         {
@@ -918,6 +917,7 @@ namespace HMS.Controllers
             {
                 int PatientServiceMasterId = 0;
                 int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+                int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
                 //if (ModelState.IsValid)
                 //{
                 PatientServiceMasterModel models = new PatientServiceMasterModel();
@@ -933,7 +933,7 @@ namespace HMS.Controllers
                 models.Consultant_Id = null;
                 models.Revisit_Id = null;
                 models.Patient_Id = OnFarms[0].Patient_Id;
-                models.CreatedBy = 1;
+                models.CreatedBy = SessionUser;
                 models.Active = true;
                 if (models.Active == true)
                 {
@@ -946,8 +946,6 @@ namespace HMS.Controllers
                 models.Department_Id = OnFarms[0].Department_Id;
                 models.ServiceHead_Id = OnFarms[0].ServiceHead_Id;
                 models.CreatedDate = DateTime.Now;
-                models.UpdatedDate = DateTime.Now;
-                models.DeletedDate = DateTime.Now;
                 models.ServiceDate = DateTime.Now;
                 models.RefundDate = DateTime.Now;
                 var res = _patientServiceMasterServices.Insert(models);
@@ -980,9 +978,8 @@ namespace HMS.Controllers
                         {
                             model.IsDelete = true;
                         }
+                        model.CreatedBy = SessionUser;
                         model.CreatedDate = DateTime.Now;
-                        model.UpdatedDate = DateTime.Now;
-                        model.DeletedDate = DateTime.Now;
                         model.ServiceId = model.Id;
                         var ress = _serviceMasterService.InsertPatientServiceMasterDetails(model);
                         //if (ress.DbCode == 1)
@@ -1008,12 +1005,14 @@ namespace HMS.Controllers
 
         public IActionResult DetelePatientServiceDetails(string deleteId)
         {
+            int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
             int dId = 0;
             if (deleteId != null)
                 dId = Convert.ToInt32(encryptDecrypt.DecryptString(deleteId));
             if (dId != 0)
             {
-                int Deleted_By = 1;
+                int Deleted_By = SessionUser;
+
                 var res = _patientServiceMasterServices.DeleteById(dId, Deleted_By);
                 if (res.DbCode == 1)
                 {

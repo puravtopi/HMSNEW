@@ -1,4 +1,6 @@
-﻿namespace HMS.Models
+﻿using System.Collections.Generic;
+
+namespace HMS.Models
 {
     public class ConsultantDashboardModel
     {
@@ -12,7 +14,8 @@
         public string StartedTime { get; set; }
         public string EndedTime { get; set; }
         public decimal RevisitCount { get; set; }
-
+        public PatientMasterModel patientMastersList { get; set; }
+        public int TotalServiceCount { get; set; }
 
     }
 }
