@@ -71,6 +71,12 @@
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.ReceiptNo, "Receipt No", new { @class = "form-label" })
+                                                            @Html.TextBoxFor(Model => Model.ReceiptNo, new { @class = "form-control", @id = "ReceiptNo", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
                                                             @Html.LabelFor(Model => Model.ConsultantId, "Consultant Id", new { @class = "form-label" })
                                                             @Html.DropDownListFor(Model => Model.ConsultantId, new SelectList(Model.ConsultantList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation", @id = "userdropdown", onchange = "getConsultantCharges()" })
                                                         </div>
@@ -81,41 +87,7 @@
                                                             @Html.TextBoxFor(Model => Model.ConsultantName, new { @class = "form-control", @id = "ConsultantNameTest", @readonly = "readonly" })
                                                         </div>
                                                     </div>
-                                       
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label " })
-                                                            @if (Model.Id > 0)
-                                                            {
-                                                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "GetCharges()", @readonly = "readonly" })
-                                                            }
-                                                            else
-                                                            {
-                                                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "GetCharges()" })
-                                                            }
-                                                
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            @Html.LabelFor(Model => Model.NetAmount, "Net Amount", new { @class = "form-label" })
-                                                            @if (Model.Id > 0)
-                                                            {
-                                                                @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount", onchange = "GetCharges()", @readonly = "readonly" })
-                                                            }
-                                                            else
-                                                            {
-                                                                @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount", onchange = "GetCharges()" })
-                                                            }
-                                                
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-4">
-                                                        <div class="form-group">
-                                                            @Html.LabelFor(Model => Model.ReceiptNo, "Receipt No", new { @class = "form-label" })
-                                                            @Html.TextBoxFor(Model => Model.ReceiptNo, new { @class = "form-control", @id = "ReceiptNo", @readonly = "readonly" })
-                                                        </div>
-                                                    </div>
+                                                    
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             @Html.LabelFor(Model => Model.GenRemarks, "Gen. Remarks", new { @class = "form-label" })
@@ -191,6 +163,7 @@
                                                 
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-8">
                                                     <div class="row">
                                                         <div class="col-lg-4">
                                                             <div class="form-group">
@@ -212,6 +185,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.OPDCharges, "OPD Charges", new { @class = "form-label" })
+                                                            @Html.TextBoxFor(Model => Model.OPDCharges, new { @class = "form-control", @id = "OPDCharges", onchange = "GetCharges()", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
                                                             @Html.LabelFor(Model => Model.RevisitCharges, "Revisit Charges", new { @class = "form-label" })
@@ -228,11 +208,36 @@
                                                     </div>
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
-                                                            @Html.LabelFor(Model => Model.OPDCharges, "OPD Charges", new { @class = "form-label" })
-                                                            @Html.TextBoxFor(Model => Model.OPDCharges, new { @class = "form-control", @id = "OPDCharges", onchange = "GetCharges()" })
+                                                            @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label " })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "GetCharges()", @readonly = "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "GetCharges()" })
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                   
+                                                    
+                                                    <div class="col-lg-4">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(Model => Model.NetAmount, "Net Amount", new { @class = "form-label" })
+                                                            @if (Model.Id > 0)
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount",  @readonly= "readonly" })
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount", @readonly = "readonly" })
+                                                            }
+
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="row row-sm">
                                                     <div class="col-lg-12 justify-content-center">
                                                         <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
@@ -268,17 +273,18 @@
         })
 
         function GetCharges() {
+            
             var disCharge=$("#Discount").val();
-            var netCharge=$("#NetAmount").val();
+            // var netCharge=$("#NetAmount").val();
             var revisitCharges = $("#RevisitCharges").val();
             var oPDCharges = $("#OPDCharges").val();
-            if (netCharge != "0") 
-            {
-                var Charges = (netCharge - disCharge);
-                var netTotal = parseInt(Charges) + parseInt(revisitCharges);
-                var netTotalfinal = parseInt(netTotal) + parseInt(oPDCharges);
-                var netCharge = $("#NetAmount").val(netTotalfinal);
-            }
+            
+                
+                // var Charges = (netCharge - disCharge);
+            // var netTotal = ; parseInt(revisitCharges) - parseInt(disCharge)
+            var netTotalfinal = (parseInt(revisitCharges) - parseInt(disCharge)) + parseInt(oPDCharges);
+               /*  var netCharge =  */$("#NetAmount").val(netTotalfinal);
+            
             
         }
         function getEmergencyCharges() {

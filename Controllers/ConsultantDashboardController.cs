@@ -62,7 +62,13 @@ namespace HMS.Controllers
 
             var result = _consultantServices.GetDashboardCount(SessionUser);
             var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser,Int32.Parse(year));
-
+            for(int i=0;i<ChartCount.Count;i++)
+            {
+                if (ChartCount[i].RevisitCount>0)
+                {
+                    ChartCount[i].SumOfTotalAmount = ChartCount[i].SumOfTotalAmount+ ChartCount[i].RevisitCount;
+                }
+            }
 
             ViewBag.todayPatient = result.TotalPatient;
             ViewBag.netamount = result.TotalIncome;
@@ -85,9 +91,15 @@ namespace HMS.Controllers
 
             // Call your service method to fetch data for the specified year
             var chartData = _consultantServices.GetDashboardChartCount(sessionUser, year);
-
+            for (int i = 0; i < chartData.Count; i++)
+            {
+                if (chartData[i].RevisitCount > 0)
+                {
+                    chartData[i].SumOfTotalAmount = chartData[i].SumOfTotalAmount + chartData[i].RevisitCount;
+                }
+            }
             // Convert the data to JSON and return it
-             return Json(chartData);
+            return Json(chartData);
         }
 
         

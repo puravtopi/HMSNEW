@@ -105,8 +105,7 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-
-                                                @Html.LabelFor(Model => Model.ServiceHead, "Service Head", new { @class = "form -label required-label" })
+                                                @Html.LabelFor(Model => Model.ServiceHead, "Service Head", new { @class = "form-label required-label" })
                                                 @Html.DropDownListFor(Model => Model.ServiceHead, new SelectList(Model.serviceHeadList, "Value", "Text", Model.ServiceHead_Id), new { @class = "form-control select2-list dropdown-validation", @id = "serviceheaddropdown" })
                                             </div>
                                         </div>
@@ -156,7 +155,6 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
                                                 @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
-
                                             </div>
                                         </div>
                                     </div>

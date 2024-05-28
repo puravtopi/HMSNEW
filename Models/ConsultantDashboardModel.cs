@@ -11,6 +11,7 @@
         public int PatientIsCheckedPendingCount { get; set; }
         public string StartedTime { get; set; }
         public string EndedTime { get; set; }
+        public decimal RevisitCount { get; set; }
 
 
     }
