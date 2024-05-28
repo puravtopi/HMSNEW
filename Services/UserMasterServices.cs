@@ -84,10 +84,18 @@ namespace HMS.Services
 
         public UserMasterModel GetByEmail(string email)
         {
-            var dbparams = new DynamicParameters();
-            dbparams.Add("@Email", email, DbType.String);
-            return _dapper.Get<UserMasterModel>(CommonSp.getByEmailUserMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@Email", email, DbType.String);
+                return _dapper.Get<UserMasterModel>(CommonSp.getByEmailUserMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+            
         }
 
         public UserMasterModel GetById(int Id)

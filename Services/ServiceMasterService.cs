@@ -92,5 +92,25 @@ namespace HMS.Services
             return _dapper.Insert<ServiceMasterModel>(CommonSp.updateServiceMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
         }
+
+        public ServiceMasterModel InsertPatientServiceMasterDetails(ServiceMasterModel model)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@PatientServiceMasterId", model.PatientServiceMasterId, DbType.Int32);
+            dbparams.Add("@ServiceId", model.ServiceId, DbType.Int32);
+            dbparams.Add("@Charges", model.Charges, DbType.Decimal);
+            dbparams.Add("@Discount", model.Discount, DbType.Decimal);
+            dbparams.Add("@NetAmount", model.NetAmount, DbType.String);
+            dbparams.Add("@Active", model.Active, DbType.Int32);
+            dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);
+            return _dapper.Update<ServiceMasterModel>(CommonSp.savePatientServiceMasterDetails, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+        }
+
+        public List<PatientServiceMasterModel> GetAllPatientServiceMasterDetails(int Patient_Id)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@Patient_Id", Patient_Id, DbType.Int32);
+            return _dapper.GetAll<PatientServiceMasterModel>(CommonSp.GetAllPatientServiceMasterDetails, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+        }
     }
 }

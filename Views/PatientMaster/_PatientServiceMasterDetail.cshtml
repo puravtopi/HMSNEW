@@ -1,0 +1,203 @@
+﻿@model List<HMS.Models.ServiceMasterModel>
+    @using (Html.BeginForm("addDetailforservice", "PatientMaster", FormMethod.Post))
+    {
+        <!-- row opened -->
+        <div class="row mt-5">
+            <div class="col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive forminputs-dt">
+                            <table id="form-input-datatable" class="table table-bordered text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th><input id="checkId" type="checkbox" /></th>
+                                        <th>Service Head Name</th>
+                                        <th>Department Name</th>
+                                        <th>Service Name</th>
+                                        <th>Charges</th>
+                                        <th>Discount</th>
+                                        <th>Net Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && Model.Count() > 0)
+                                    {
+                                        for (int i = 0; i < Model.Count(); i++)
+                                        {
+                                           
+                                            var chargesId = "Charges" + Model[i].Id;
+                                            var discount = "Discount" + Model[i].Id;
+                                            var netAmount = "NetAmount" + Model[i].Id;
+                                            var Patient_Id = "Patient_Id" + Model[i].Id;
+                                            @Html.HiddenFor(Model => Model[i].Id)
+                                            @Html.HiddenFor(Model => Model[i].ServiceHead_Id)
+                                            @Html.HiddenFor(Model => Model[i].Department_Id)
+                                            @* @Html.HiddenFor(Model => Model[i].Patient_Id) *@
+
+                                        @Html.TextBoxFor(Model => Model[i].Patient_Id, new { @class = "form-control hidden", @id = Patient_Id, @readonly = "readonly" })
+                                            <tr>
+                                                <td>
+                                                @* <input id="Remember" name="Remember" type="checkbox" value="true" @(Model[i].IsChecked ? "checked=\"checked\"" : "") /> *@
+                                                @Html.CheckBoxFor(m => Model[i].IsChecked, new { @class = "checkId"})
+                                                    @* <input type="checkbox" class="checkId" name="Selections"
+                                                       checkd="@Model[i].IsChecked"
+                                                       value="@Model[i].IsChecked" /> *@
+                                                </td>
+                                                <td>@Model[i].ServiceHeadName</td>
+                                                <td>@Model[i].DepartmentName</td>
+                                                <td>@Model[i].ServiceName</td>
+                                                <td>
+                                                @Html.TextBoxFor(Model => Model[i].Charges, new { @class = "form-control", @id = chargesId, @readonly = "readonly" })
+                                                </td>
+                                                <td>
+                                                   
+                                                    @Html.TextBoxFor(Model => Model[i].Discount, new { @class = "form-control", @id = discount, onchange = "calculateAmounts('" + @Model[i].Id + "')", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                                </td>
+                                                <td>
+                                                    @Html.TextBoxFor(Model => Model[i].NetAmount, new { @class = "form-control", @id = @netAmount })
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                        <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+                        <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery Validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <!-- jQuery Unobtrusive Validation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+       
+    $("#ischeckmultiple").on('change', function () {
+       
+        if (this.checked) {
+            document.getElementById('singleservicediv').style.display = 'block';
+            document.getElementById('multipleservicediv').style.display = 'none';
+        } else {
+            document.getElementById('singleservicediv').style.display = 'none';
+            document.getElementById('multipleservicediv').style.display = 'block';
+        }
+    });
+        $("#btnMultiService").on('click', function () {
+
+            document.getElementById('singleservicediv').style.display = 'none';
+            document.getElementById('multipleservicediv').style.display = 'block';
+        })
+
+        $(document).ready(function () 
+        {
+       
+            $('#DepartmentDropdwon').change(function () {
+
+                var Department_Id = $(this).val();
+                console.log("Selected department ID: " + Department_Id);
+                // Your AJAX call or other logic here
+                $.ajax({
+                    url: '/ServiceMaster/GetBYDepartmentIdWiseServicedData',
+                    type: 'GET',
+                    data: { Department_Id: Department_Id },
+                    success: function (data) {
+                        PopulateSubProductDropDown("#serviceheaddropdown", data)
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors
+                    }
+                });
+            });
+        });
+
+        function PopulateSubProductDropDown(dropDownId, list, selectedId) {
+            $(dropDownId).empty();
+            $(dropDownId).append("<option value='0'>Select</option>")
+            $.each(list, function (index, row) {
+                $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
+            });
+        }
+        
+
+        $(document).ready(function () {
+            $('#serviceheaddropdown').change(function () {
+                var ServiceHead_Id = $(this).val();
+                console.log("Selected serviceHead ID: " + ServiceHead_Id);
+                // Your AJAX call or other logic here
+                $.ajax({
+                    url: '/ServiceMaster/GetByServiceHeadIdWiseServicedData',
+                    type: 'GET',
+                    data: { ServiceHead_Id: ServiceHead_Id },
+                    success: function (data) {
+                        debugger
+                        PopulateSubProductDropDown("#ServiceDropdwon", data)
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors
+                    }
+                });
+            });
+        });
+
+        function PopulateSubProductDropDown(dropDownId, list, selectedId) {
+            $(dropDownId).empty();
+            $(dropDownId).append("<option value='0'>Select</option>")
+            $.each(list, function (index, row) {
+                $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
+            });
+        }
+        function getServiceCharges() {
+
+            var Service_Id = $("#ServiceDropdwon").val();
+
+            // Your AJAX call or other logic here
+            $.ajax({
+                url: '/ServiceMaster/GetServiceCharges',
+                type: 'GET',
+                data: { Service_Id: Service_Id },
+                success: function (data) {
+
+                    $("#Charges").val(data.charges);
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                }
+            });
+        }
+
+        function calculateAmounts(id) {
+            var Charges = parseFloat($('#Charges' + id).val());
+            var discount = parseFloat($('#Discount' + id).val());
+            var pId = localStorage.getItem("Patient_Id");
+            $('#Patient_Id' + id).val(pId);
+           
+            if (isNaN(discount)) {
+                // If the discount value is NaN, set it to 0
+                discount = 0;
+            }
+
+            // Calculate the total amount
+            var totalAmount = Charges - discount;
+
+            // Update the TotalAmount textbox with the calculated value
+            $('#NetAmount' + id).val(totalAmount.toFixed(2));
+        }
+
+
+        $('#checkId').click(function () {
+            $('.checkId').prop('checked', this.checked)
+        });
+    </script>

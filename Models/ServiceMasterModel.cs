@@ -13,7 +13,7 @@ namespace HMS.Models
         public int ServiceHead_Id { get; set; }
         public int Department_Id { get; set; }
         [Required(ErrorMessage = "This field is required.")]
-        public string Charges { get; set; }        
+        public decimal Charges { get; set; }        
         public string Lab_Legend { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
@@ -33,6 +33,14 @@ namespace HMS.Models
         public List<SelectListItem> ServiceHeadList { get; set; }
         public string ServiceHead { get; set; }
 
+        public string ServiceHeadName { get; set; }
 
+        public decimal Discount { get; set; }
+        public decimal NetAmount { get; set; }
+        public bool IsChecked { get; set; }
+        public int PatientServiceMasterId { get; set; }
+        public int Patient_Id { get; set; }
+
+        public int ServiceId { get; set; }
     }
 }

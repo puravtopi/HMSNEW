@@ -150,6 +150,10 @@ namespace HMS.Common
         public const string GetAllPatientLoginUserWise = "usp_PatientMaster_GetBy_LoginUserWise";
 
         public const string GetPatientStatusUpdate = "usp_PatientMaster_IsCheck_StatusUpdate";
+
+        // Patient Service Master Details
+        public const string savePatientServiceMasterDetails = "sp_PatientServiceMasterDetails_Insert";
+        public const string GetAllPatientServiceMasterDetails = "usp_PatientServiceMasterDetails_GetByPatientId";
     }
     public class PageSizeDdl : BaseResponseModel
     {

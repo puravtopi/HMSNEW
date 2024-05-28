@@ -10,16 +10,16 @@ namespace HMS.Models
         public int Id { get; set; }
         public int Patient_Id { get; set; }
         public int Department_Id { get; set; }
-        public int Consultant_Id { get; set; }
+        public int? Consultant_Id { get; set; }
         public int ServiceHead_Id { get; set; }
         public int Service_Id { get; set; }
-        public int Revisit_Id { get; set; }
-        public string Charges { get; set; }
-        public string Discount { get; set; }
+        public int? Revisit_Id { get; set; }
+        public decimal Charges { get; set; }
+        public decimal Discount { get; set; }
         public string NetAmount { get; set; }
         public string ReceiptNo { get; set; }
-        public string ServiceDate { get; set; }
-        public string RefundDate { get; set; }
+        public DateTime ServiceDate { get; set; }
+        public DateTime RefundDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public int CreatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
@@ -45,5 +45,6 @@ namespace HMS.Models
         public List<SelectListItem> serviceList { get; set; }
         public string Revisit { get; set; }
         public List<SelectListItem> revisitList { get; set; }
+        public List<ServiceMasterModel> serviceLists { get; set; }
     }
 }

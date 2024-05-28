@@ -128,7 +128,7 @@
                                             <a class="btn btn-info btn-sm text-white mr-2" href="@Url.Action("AddEdit","PatientMaster",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"><i class="fa fa-edit"></i></a>
                                             <a class="btn btn-danger btn-sm text-white mr-2" data-toggle="modal" data-target=@hrefid><i class="fa fa-trash-o"></i></a>
                                             <a onclick="ShowPopupQP(0,@Model.patientMastersList[i].Id.ToString())" class="btn btn-warning btn-sm text-white mr-2"><i class="fa fa-wheelchair"></i></a>
-                                            <a onclick="ShowPopupQPToPatient(0,@Model.patientMastersList[i].Id.ToString())" class="btn btn-secondary btn-sm text-white mr-2"><i class="fa fa-stethoscope"></i></a>
+                                            <a href="@Url.Action("AddEditPatientServiceDetails","PatientMaster",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })" class="btn btn-secondary btn-sm text-white mr-2"><i class="fa fa-stethoscope"></i></a>
 
                                         </td>
                                         <td>

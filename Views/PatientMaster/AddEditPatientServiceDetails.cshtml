@@ -1,0 +1,339 @@
+﻿@model HMS.Models.PatientServiceMasterModel
+@{
+    Layout = "~/Views/Shared/_ClinicLayout.cshtml";
+    HMS.Common.EncryptDecrypt encryptDecrypt = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+@if (TempData["Temp_Error"] != null)
+{
+
+}
+
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">Patient Service</h4>
+    </div>
+    <div class="page-rightheader">
+        <div class="ml-3 ml-auto d-flex">
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+                <a href="@Url.Action("Index","PatientMaster")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                    <i class="fa fa-plus "></i>
+                    Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("AddEditPatientServiceDetails", "PatientMaster", FormMethod.Post))
+{
+    
+            <div class="row">
+                <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+                    <!--div-->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="main-content-label mg-b-5">
+                                Patient Service Detail
+                            </div>
+                            <p class="mg-b-20"></p>
+                            <div class="row row-sm">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.HiddenFor(Model => Model.Id)
+                                        @Html.LabelFor(Model => Model.UHID, "UHID", new { @class = "form-label" })
+                                        @Html.TextBoxFor(Model => Model.UHID, new { @class = "form-control", @id = "UHID", @disabled = "true" })
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.HiddenFor(Model => Model.Patient_Id)
+                                        @Html.LabelFor(Model => Model.PatientName, "Patient Name", new { @class = "form-label required-label" })
+                                        @Html.TextBoxFor(Model => Model.PatientName, new { @class = "form-control", @id = "PatientName", @readonly = "readonly" })
+                                        <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.PatientName)</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(Model => Model.ConsultantName, "Consultant Name", new { @class = "form-label required-label" })
+                                        @Html.TextBoxFor(Model => Model.ConsultantName, new { @class = "form-control", @id = "ConsultantName", @readonly = "readonly" })
+                                        <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.ConsultantName)</p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row row-sm">
+                                <div class="table-responsive">
+                                    <table id="example1" class="table table-striped table-dashboard-two mg-b-0" role="grid">
+                                        <thead>
+                                            <tr>
+                                                <th>Deparment Name</th>
+                                                <th>Service Head Name</th>
+                                                <th>Service Name</th>
+                                                <th>Charges</th>
+                                                <th>Discount</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null && Model.patientServiceMastersList != null && Model.patientServiceMastersList.Count > 0)
+                                            {
+                                                for (int i = 0; i < Model.patientServiceMastersList.Count; i++)
+                                                {
+                                                    <tr>
+                                                        <td>@Model.patientServiceMastersList[i].DepartmentName</td>
+                                                        <td>@Model.patientServiceMastersList[i].ServiceHeadName</td>
+                                                        <td>@Model.patientServiceMastersList[i].ServiceName</td>
+                                                        <td>@Model.patientServiceMastersList[i].Charges</td>
+                                                        <td>@Model.patientServiceMastersList[i].Discount</td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr class="odd">
+                                                    <td valign="top" colspan="10" class="dataTables_empty"><div class="card mg-b-20 text-center"><div class="card-body h-100"><img src="~/assets/img/svgicons/no-data.svg" alt="" class="wd-10p"><h5 class="mg-b-10 mg-t-15 tx-18">Its Empty In Here</h5><a href="javascript:void(0);" class="text-dark">@ViewBag.ErroMsg</a></div></div></td>
+                                                </tr>
+
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row row-sm">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(Model => Model.DepartmentName, "Department", new { @class = "form-label" })
+                                        @Html.DropDownListFor(Model => Model.DepartmentName, new SelectList(Model.departmentList, "Value", "Text", Model.Department_Id), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwon" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+
+                                        @Html.LabelFor(Model => Model.ServiceHeadName, "Service Head", new { @class = "form-label" })
+                                        @Html.DropDownListFor(Model => Model.ServiceHeadName, new SelectList(Model.serviceHeadList, "Value", "Text", Model.ServiceHead_Id), new { @class = "form-control select2-list dropdown-validation", @id = "serviceheaddropdown" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(Model => Model.ServiceName, "Service", new { @class = "form-label" })
+                                        @Html.DropDownListFor(Model => Model.ServiceName, new SelectList(Model.serviceList, "Value", "Text", Model.Service_Id), new { @class = "form-control select2-list dropdown-validation", @id = "ServiceDropdwon", onchange = "getServiceCharges()" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(Model => Model.Charges, "Charges", new { @class = "form-label" })
+                                        @Html.TextBoxFor(Model => Model.Charges, new { @class = "form-control", @id = "Charges", @readonly = "readonly" })
+                                        @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Charges)</p> *@
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "calculateAmountsSingle()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                        @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Discount)</p> *@
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        @Html.LabelFor(Model => Model.NetAmount, "Net Amount ", new { @class = "form-label" })
+                                        @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount" })
+                                        @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.TotalAmount)</p> *@
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="form-group mb-0 justify-content-end">
+                                <div class="checkbox">
+                                    <div class="custom-checkbox custom-control">
+                                        <input type="checkbox" class="custom-control-input" id="ischeckmultiple" name="ischeckmultiple">
+                                        <label for="ischeckmultiple" class="custom-control-label mt-1">If you select multiple service then check checkbox</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="multipledataview" style="display:none">
+                                @Html.Partial("_PatientServiceMasterDetail", Model.serviceLists)
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-lg-12 justify-content-center" id="divMasterId">
+                                    <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+                                    <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                                </div>
+                            </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                   
+                   
+                 
+                </div>
+                <!--/div-->
+            
+
+      
+}
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<!-- jQuery Unobtrusive Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    
+    $("#ischeckmultiple").on('change', function () {
+        debugger;
+        if (this.checked) {
+            document.getElementById('multipledataview').style.display = 'block';
+            document.getElementById('divMasterId').style.display = 'none';
+        } else {
+            document.getElementById('multipledataview').style.display = 'none';
+            document.getElementById('divMasterId').style.display = 'block';
+        }
+    });
+    $("#openinfomodel").on('click', function () {
+
+        document.getElementById('singleservicediv').style.display = 'block';
+        document.getElementById('multipleservicediv').style.display = 'none';
+        var serviceHead_Id = $("#serviceheaddropdown").val();
+        console.log(serviceHead_Id);
+        // Your AJAX call or other logic here
+        $.ajax({
+            url: '/PatientMaster/PatientServiceMasterDetails',
+            type: 'GET',
+            data: { serviceHead_Id: serviceHead_Id },
+            success: function (data) {
+                debugger;
+                $("#multipledataview").html(data);
+            },
+            error: function (xhr, status, error) {
+                // Handle errors
+            }
+        });
+    })
+
+    $("#btnMultiService").on('click', function () {
+
+        document.getElementById('singleservicediv').style.display = 'none';
+        document.getElementById('multipleservicediv').style.display = 'block';
+    })
+
+    $(document).ready(function () {
+        $('#DepartmentDropdwon').change(function () {
+
+            var Department_Id = $(this).val();
+            console.log("Selected department ID: " + Department_Id);
+            // Your AJAX call or other logic here
+            $.ajax({
+                url: '/ServiceMaster/GetBYDepartmentIdWiseServicedData',
+                type: 'GET',
+                data: { Department_Id: Department_Id },
+                success: function (data) {
+                    PopulateSubProductDropDown("#serviceheaddropdown", data)
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                }
+            });
+        });
+    });
+
+    function PopulateSubProductDropDown(dropDownId, list, selectedId) {
+        $(dropDownId).empty();
+        $(dropDownId).append("<option value='0'>Select</option>")
+        $.each(list, function (index, row) {
+            $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
+        });
+    }
+    ServiceDropdwon
+
+    $(document).ready(function () {
+        $('#serviceheaddropdown').change(function () {
+            var ServiceHead_Id = $(this).val();
+            var Patient_Id = $("#UHID").val();
+            localStorage.setItem("Patient_Id", Patient_Id);
+            $('#Patient_Id').val(Patient_Id);
+            console.log("Selected serviceHead ID: " + ServiceHead_Id);
+            // Your AJAX call or other logic here
+            $.ajax({
+                url: '/ServiceMaster/GetByServiceHeadIdWiseServicedData',
+                type: 'GET',
+                data: { ServiceHead_Id: ServiceHead_Id },
+                success: function (data) {
+                 
+                    PopulateSubProductDropDown("#ServiceDropdwon", data);
+                    $.ajax({
+                        url: '/PatientMaster/PatientServiceMasterDetails',
+                        type: 'GET',
+                        data: { serviceHead_Id: ServiceHead_Id },
+                        success: function (data) {
+                            $("#multipledataview").html(data);
+                            
+                        },
+                        error: function (xhr, status, error) {
+                            // Handle errors
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                }
+            });
+        });
+    });
+
+    function PopulateSubProductDropDown(dropDownId, list, selectedId) {
+        $(dropDownId).empty();
+        $(dropDownId).append("<option value='0'>Select</option>")
+        $.each(list, function (index, row) {
+            $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
+        });
+    }
+    
+    function getServiceCharges() {
+
+        var Service_Id = $("#ServiceDropdwon").val();
+
+        // Your AJAX call or other logic here
+        $.ajax({
+            url: '/ServiceMaster/GetServiceCharges',
+            type: 'GET',
+            data: { Service_Id: Service_Id },
+            success: function (data) {
+
+                $("#Charges").val(data.charges);
+            },
+            error: function (xhr, status, error) {
+                // Handle errors
+            }
+        });
+    }
+
+    function calculateAmountsSingle() {
+        var Charges = parseFloat($('#Charges').val());
+        var discount = parseFloat($('#Discount').val());
+
+        if (isNaN(discount)) {
+            // If the discount value is NaN, set it to 0
+            discount = 0;
+        }
+
+        // Calculate the total amount
+        var totalAmount = Charges - discount;
+
+        // Update the TotalAmount textbox with the calculated value
+        $('#NetAmount').val(totalAmount.toFixed(2));
+    }
+
+</script>
