@@ -16,6 +16,20 @@ namespace HMS.Models
         public decimal RevisitCount { get; set; }
         public PatientMasterModel patientMastersList { get; set; }
         public int TotalServiceCount { get; set; }
+        public int TodayPatientCount { get; set; }
+        public int YesterdayPatientCount { get; set; }
+
+        public string ChangeDirection { get; set; }
+        public float PercentageChange { get; set; } 
+        public int TodayRevenue { get; set; }
+        public int YesterdayRevenue { get; set; }
+        public int TodayServiceCount { get; set; }
+        public int YesterdayServiceCount { get; set; }
+
+        public string RevenueChangeDirection { get; set;}
+        public float RevenuePercentageChange { get; set; }
+        public string ServiceChangeDirection { get; set; }
+        public float ServicePercentageChange { get; set; }
 
     }
 }

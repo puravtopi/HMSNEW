@@ -200,9 +200,18 @@
         if (this.checked) {
             document.getElementById('multipledataview').style.display = 'block';
             document.getElementById('divMasterId').style.display = 'none';
+            document.getElementById('ServiceDropdwon').style.display = 'none';
+            document.getElementById('Charges').style.display = 'none';
+            document.getElementById('NetAmount').style.display = 'none';
+            document.getElementById('Discount').style.display = 'none';
+
         } else {
             document.getElementById('multipledataview').style.display = 'none';
             document.getElementById('divMasterId').style.display = 'block';
+            document.getElementById('ServiceDropdwon').style.display = 'block';
+            document.getElementById('Charges').style.display = 'block';
+            document.getElementById('NetAmount').style.display = 'block';
+            document.getElementById('Discount').style.display = 'block';
         }
     });
     $("#openinfomodel").on('click', function () {

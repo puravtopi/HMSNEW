@@ -13,101 +13,129 @@
 </div>
 @using (Html.BeginForm(Action, Controller, null, FormMethod.Post))
 {
-    <h1 style="text-align:center">Welcome @ViewBag.Consultantname </h1>
-    <h5 style="text-align:center">@ViewBag.Currentdate &ensp;||&ensp; Start Time :-@ViewBag.StartedTime &ensp;-&ensp; End Time :-@ViewBag.EndedTime</h5>
-    
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-            <div class="card overflow-hidden">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="">
-                            <p class="mb-2 h6">Total Patients</p>
-                            <h2 class="mb-1 ">@ViewBag.totalPatient</h2>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-            <div class="card overflow-hidden">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="">
-                            <p class="mb-2 h6">New Patients</p>
-                            <h2 class="mb-1 ">@ViewBag.todayPatient</h2>
-                            @* <p class="mb-0 text-muted"><span class="text-danger">(+0.54%)</span><i class="fe fe-arrow-down text-danger"></i>Decrease</p> *@
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-            <div class="card overflow-hidden">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="">
-                            <p class="mb-2 h6">Total Services</p>
-                            <h2 class="mb-1 ">@ViewBag.ServiceCount</h2>
-                            @* <p class="mb-0 text-muted"><span class="text-danger">(+0.54%)</span><i class="fe fe-arrow-down text-danger"></i>Decrease</p> *@
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-            <div class="card overflow-hidden">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="">
-                            <p class="mb-2 h6">Total Collections</p>
-                            <h2 class="mb-1 ">
-
-                                <p class="card-text">
-                                    Net Amount = <span id="netAmount">*******</span>
-                                    <i id="toggleIcon" class="fa fa-eye-slash" aria-hidden="true"></i>
-                                </p>
-                                <p class="card-text"></p>
-                            </h2>
-                            @* <p class="mb-0 text-muted"><span class="text-danger">(+0.54%)</span><i class="fe fe-arrow-down text-danger"></i>Decrease</p> *@
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-            <div class="card overflow-hidden">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="">
-                            <p class="mb-2 h6">Patient Checked</p>
-                            <h2 class="mb-1 ">@ViewBag.patientIsChecked</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-            <div class="card overflow-hidden">
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="">
-                            <p class="mb-2 h6">Patients Checked Pending</p>
-                            <h2 class="mb-1 ">@ViewBag.PatienIsCheckedpending</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+	    <div class="col-xl-12">
+		    <div class="banner banner-color mt-0">
+			    <div class="col-xl-2 col-lg-3 col-md-12">
+				    <img src="../assets/images/svg/new_message.svg" alt="image" class="image">
+			    </div>
+			    <div class="page-content col-xl-7 col-lg-6 col-md-12">
+				    <h3 class="mb-1">Welcome back!  @ViewBag.Consultantname </h3>
+				    <p class="mb-0 fs-16">@ViewBag.Currentdate &ensp;||&ensp; Start Time :-@ViewBag.StartedTime &ensp;-&ensp; End Time :-@ViewBag.EndedTime</p>
+			    </div>			   
+		    </div>
+	    </div>
     </div>
-
+    <!-- row opened -->
+	<div class="row">
+	    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+		    <div class="card overflow-hidden">
+			    <div class="card-body">
+				    <div class="d-flex">
+					    <div class="">
+						    <p class="mb-2 h6">Active Client</p>
+    						<h2 class="mb-1 ">@ViewBag.totalPatient</h2>
+                            @if(ViewBag.ChangeDirection=="Increas")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.PercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.ChangeDirection</p>
+                            }
+                            else if(ViewBag.ChangeDirection=="Decrease")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.PercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.ChangeDirection</p>
+                            }
+                            else
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.PercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.ChangeDirection</p>
+                            }
+                        </div>
+			    		<div class=" my-auto ml-auto">
+						<div class="chart-wrapper text-center">
+							<canvas id="areaChart1" class="areaChart2 chartjs-render-monitor chart-dropshadow-primary overflow-hidden mx-auto"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+	<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+		<div class="card overflow-hidden">
+			<div class="card-body">
+				<div class="d-flex">
+					<div class="">
+						<p class="mb-2 h6">Total Revenue</p>
+						<h2 class="mb-1 ">$@ViewBag.netamount</h2>
+                            @if(ViewBag.RevenueChangeDirection=="Increas")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.RevenuePercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.RevenueChangeDirection</p>
+                            }
+                            @* else if(ViewBag.RevenueChangeDirection=="Decrease")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                            } *@
+                            else
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>Decrease</p>
+                            }
+					</div>
+					<div class=" my-auto ml-auto">
+						<div class="chart-wrapper">
+							<canvas id="areaChart2" class="areaChart2 chartjs-render-monitor chart-dropshadow-secondary overflow-hidden"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+		<div class="card overflow-hidden">
+			<div class="card-body">
+				<div class="d-flex">
+					<div class="">
+						<p class="mb-2 h6">Services</p>
+						<h2 class="mb-1 ">@ViewBag.ServiceCount</h2>
+						@if(ViewBag.ServiceChangeDirection=="Increas")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.ServicePercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.ServiceChangeDirection</p>
+                            }
+                           @*  else if(ViewBag.RevenueChangeDirection=="Decrease")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.ServicePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                            } *@
+                            else
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.ServicePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>Decrease</p>
+                            }
+					</div>
+					<div class="my-auto ml-auto">
+						<div class="chart-wrapper">
+							<canvas id="areaChart3" class="areaChart3 chartjs-render-monitor chart-dropshadow-info overflow-hidden"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
+		<div class="card overflow-hidden">
+			<div class="card-body">
+				<div class="d-flex">
+					<div class="">
+						<p class="mb-2 h6">Pending Patient</p>
+						<h2 class="mb-1 ">@ViewBag.PatienIsCheckedpending</h2>
+						<p class="mb-0 text-muted"><span class="text-danger">(+0.42%)</span><i class="fe fe-arrow-down text-danger"></i>Decrease</p>
+					</div>
+					<div class="my-auto ml-auto">
+						<div class="chart-wrapper">
+							<canvas id="areaChart4" class="areaChart4 chartjs-render-monitor chart-dropshadow-success overflow-hidden"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- row closed -->
+	
    <div class="row">
         <div class="col-xl-12 product">
             <div class="card">
@@ -253,9 +281,11 @@
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../assets/plugins/chart/chart.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- jQuery (optional if you want to use jQuery) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
     $(document).ready(function () {
         var netAmountValue = '@ViewBag.netamount';  // Store the original net amount

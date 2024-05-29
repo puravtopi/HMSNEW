@@ -48,7 +48,7 @@ namespace HMS.Controllers
         PatientMasterModel patientMasterModel = new PatientMasterModel();
         PatientGeneralDetailMasterModel PatientGeneralDetailMasterModel = new PatientGeneralDetailMasterModel();
         private readonly IWebHostEnvironment _webHostEnvironment;
-
+        
         public PatientMasterController(ICommonService commonService,
             IPatientMasterServices patientMasterServices,
             IPatientGeneralDetailMasterServices patientGeneralDetailMasterServices,
@@ -772,6 +772,7 @@ namespace HMS.Controllers
                 patientServiceMaster.ConsultantName = user.FirstName + " " + user.LastName;
                 patientServiceMaster.Patient_Id = Patient_Id;
                 patientServiceMaster.Consultant_Id = user.Id;
+                HttpContext.Session.SetInt32(SessionHelper.SessionPatient_Id, Patient_Id);
 
                 int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
                 patientServiceMaster.departmentList = _commonService.GetDepartmentList(SclinicId);
@@ -814,8 +815,8 @@ namespace HMS.Controllers
                     model.Department_Id = int.Parse(model.DepartmentName);
                     model.ServiceHead_Id = int.Parse(model.ServiceHeadName);
                     model.Consultant_Id = model.Consultant_Id;
-                    model.Revisit_Id = null;
-                    model.Service_Id = int.Parse(model.ServiceName);
+                    model.Revisit_Id = getTopOneRevisitDetail.Id    ;
+                    //model.Service_Id = int.Parse(model.ServiceName);
                     if (model.Id == 0)
                     {
                         model.CreatedBy = SessionUser;
@@ -836,7 +837,7 @@ namespace HMS.Controllers
                         model.ServiceDate = DateTime.Now;
                         model.RefundDate = DateTime.Now;
                         var res = _patientServiceMasterServices.Insert(model);
-                        if (res.DbCode > 1)
+                        if (res.DbCode >= 1)
                         {
                             ServiceMasterModel modelServiceMasterModel = new ServiceMasterModel();
                             modelServiceMasterModel.CreatedBy = SessionUser;
@@ -918,41 +919,45 @@ namespace HMS.Controllers
                 int PatientServiceMasterId = 0;
                 int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
                 int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
+                int Patient_Id = (int)HttpContext.Session.GetInt32(SessionHelper.SessionPatient_Id);
+
                 //if (ModelState.IsValid)
                 //{
                 PatientServiceMasterModel models = new PatientServiceMasterModel();
 
                 patientMasterModel = _patientMasterServices.GetById(OnFarms[0].Patient_Id);
 
-                if (patientMasterModel != null)
-                {
-                    DateTime dtPtientvisit = patientMasterModel.CreatedDate.Value;
-                    models.ReceiptNo = patientMasterModel.ReceiptNo;
-                }
-                var getTopOneRevisitDetail = _revisitDetailMasterServices.GetTopOneRevisitDetail();
-                models.Consultant_Id = null;
-                models.Revisit_Id = null;
-                models.Patient_Id = OnFarms[0].Patient_Id;
-                models.CreatedBy = SessionUser;
-                models.Active = true;
-                if (models.Active == true)
-                {
-                    models.IsDelete = false;
-                }
-                else
-                {
-                    models.IsDelete = true;
-                }
+                    if (patientMasterModel != null)
+                    {
+                        DateTime dtPtientvisit = patientMasterModel.CreatedDate.Value;
+                        models.ReceiptNo = patientMasterModel.ReceiptNo;
+                    }
+                    var getTopOneRevisitDetail = _revisitDetailMasterServices.GetTopOneRevisitDetail();
+
+
+                    models.Consultant_Id = getTopOneRevisitDetail.ConsultantId;
+                    models.Revisit_Id = getTopOneRevisitDetail.Id;
+                    models.Patient_Id = Patient_Id;
+                    models.CreatedBy = SessionUser;
+                    models.Active = true;
+                    if (models.Active == true)
+                    {
+                        models.IsDelete = false;
+                    }
+                    else
+                    {
+                        models.IsDelete = true;
+                    }
                 models.Department_Id = OnFarms[0].Department_Id;
                 models.ServiceHead_Id = OnFarms[0].ServiceHead_Id;
                 models.CreatedDate = DateTime.Now;
-                models.ServiceDate = DateTime.Now;
-                models.RefundDate = DateTime.Now;
-                var res = _patientServiceMasterServices.Insert(models);
-                if (res.DbCode > 1)
-                {
-                    PatientServiceMasterId = res.DbCode;
-                }
+                    models.ServiceDate = DateTime.Now;
+                    models.RefundDate = DateTime.Now;
+                    var res = _patientServiceMasterServices.Insert(models);
+                    if (res.DbCode > 1)
+                    {
+                        PatientServiceMasterId = res.DbCode;
+                    }
                 //}
                 //}
                 //else

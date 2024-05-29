@@ -189,7 +189,7 @@ namespace HMS.Controllers
             if (dId != 0)
             {
                 patientMasterModel = _patientMasterServices.GetById(dId);
-                _patientMasterServices.PatientStatusUpdate(patientMasterModel.Id);
+                //_patientMasterServices.PatientStatusUpdate(patientMasterModel.Id);
 
                 var dataGeneral = _patientGeneralDetailMasterServices.GetByPatientIdWise(patientMasterModel.Id);
                 if (dataGeneral != null)
@@ -242,7 +242,7 @@ namespace HMS.Controllers
                 patientMasterModel.Active = true;
                 patientMasterModel.User_DesignationList = _commonService.GetUserDepartmentList(0);
             }
-
+            
 
             patientMasterModel.lstStatus = _commonService.GetStatusList();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
@@ -251,6 +251,7 @@ namespace HMS.Controllers
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
+            patientMasterModel.patientServiceMasters.departmentList = _commonService.GetDepartmentList(SclinicId);
 
             return View(patientMasterModel);
         }

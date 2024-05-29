@@ -16,6 +16,15 @@ namespace HMS.Services
             _dapper = dapper;
         }
 
+        public ConsultantDashboardModel GetDashboardAvrageCount(int UserId)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@userId", UserId, DbType.Int32);
+
+            return _dapper.Get<ConsultantDashboardModel>("usp_Consultant_Dashboard_AvrageCount", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+
+        }
+
         public List<ConsultantDashboardModel> GetDashboardChartCount(int UserId, int Selectedyear)
         {
             var dbparams = new DynamicParameters();

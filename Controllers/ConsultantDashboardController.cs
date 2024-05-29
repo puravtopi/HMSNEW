@@ -61,6 +61,7 @@ namespace HMS.Controllers
             var year =DateTime.Now.ToString("yyyy");
 
             var result = _consultantServices.GetDashboardCount(SessionUser);
+
             var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser,Int32.Parse(year));
             for(int i=0;i<ChartCount.Count;i++)
             {
@@ -69,6 +70,7 @@ namespace HMS.Controllers
                     ChartCount[i].SumOfTotalAmount = ChartCount[i].SumOfTotalAmount+ ChartCount[i].RevisitCount;
                 }
             }
+            var AvrageCount = _consultantServices.GetDashboardAvrageCount(SessionUser);
             var patientMaster = _patientMasterServices.GetConsultantPatient(SessionUser, DateTime.Now.ToString("yyyy-MM-dd"));
             
             ViewBag.PatientList= patientMaster;
@@ -84,6 +86,12 @@ namespace HMS.Controllers
             ViewBag.Currentdate = DateAndTime.Now.ToString("dd-MM-yyyy");
             ViewBag.StartedTime = result.StartedTime;
             ViewBag.EndedTime = result.EndedTime;
+            ViewBag.PercentageChange = AvrageCount.PercentageChange;
+            ViewBag.ChangeDirection = AvrageCount.ChangeDirection;
+            ViewBag.RevenueChangeDirection = AvrageCount.RevenueChangeDirection;
+            ViewBag.RevenuePercentageChange = AvrageCount.RevenuePercentageChange;
+            ViewBag.ServiceChangeDirection = AvrageCount.ServiceChangeDirection;
+            ViewBag.ServicePercentageChange = AvrageCount.ServicePercentageChange;
 
             ViewBag.ServiceCount=result.TotalServiceCount;
             

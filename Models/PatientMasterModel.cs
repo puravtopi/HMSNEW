@@ -101,6 +101,6 @@ namespace HMS.Models
         public List<PatientServiceMasterModel> patientServiceMastersModel { get; set; }
         public bool? IsCheckPatientService { get; set; }
         public bool? IsChecked { get; set; }
-
+        public PatientServiceMasterModel patientServiceMasters { get; set; }
     }
 }
