@@ -24,6 +24,7 @@ namespace HMS.Interface
         public List<SelectListItem> GetPaymentModeList();
 
         public int GetConsultantId(int ClinicId);
+        public int GetReceptionistId(int ClinicId);
         public List<SelectListItem> GetDesignationListById(int Desig_Id);
         public List<SelectListItem> GetDepartmentwiseServiceheadList(int Department_Id);
         public List<SelectListItem> GetServiceHeadwiseServiceList(int ServiceHead_Id);

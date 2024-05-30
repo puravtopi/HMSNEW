@@ -172,6 +172,8 @@ namespace HMS.Controllers
                 }
                 else
                 {
+                    model.Dept_id = Int32.Parse(model.Departments);
+                    model.Desig_Id = Int32.Parse(model.Designations);
                     model.Clinic_Id = SclinicId;                    
                     model.UpdatedBy = SclinicId;
                     if (model.Active == true)

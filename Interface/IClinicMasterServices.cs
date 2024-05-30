@@ -12,5 +12,6 @@ namespace HMS.Interface
         public ClinicMasterModel DeleteById(int Id, int DeletedBy);
         public ClinicMasterModel UpdateCode(ClinicMasterModel model);
         public int GetConsultantIdById(int Id);
+        public int GetReceptionistIdById(int Id);
     }
 }

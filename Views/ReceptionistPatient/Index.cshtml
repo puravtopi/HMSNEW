@@ -1,6 +1,6 @@
 ﻿@model HMS.Models.PatientMasterModel
 @{
-    Layout = "~/Views/Shared/_CounsultantLayout.cshtml";
+    Layout = "~/Views/Shared/_ReceptionistLayout.cshtml";
     HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
@@ -38,16 +38,16 @@
     <div class="page-leftheader">
         <h4 class="page-title mb-0">Patient List</h4>
     </div>
-    <div class="page-rightheader">
+    @* <div class="page-rightheader">
          <div class="ml-3 ml-auto d-flex">
             <div class="d-flex align-items-center flex-wrap text-nowrap">
-                <a href="@Url.Action("AddEdit","ConsultantPatient")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                <a href="@Url.Action("AddEdit","ReceptionistPatient")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
                     <i class="fa fa-plus "></i>
                     Add New
                 </a>
             </div>
         </div> 
-    </div>
+    </div> *@
 </div>
 
 
@@ -72,7 +72,7 @@
                                 Search
                             </button>
                             &nbsp;
-                            <a href="@Url.Action("Index","ConsultantPatient")" class="btn btn-secondary">
+                            <a href="@Url.Action("Index","ReceptionistPatient")" class="btn btn-secondary">
                                 Clear
                             </a>
                         </div><!-- col -->

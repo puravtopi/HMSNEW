@@ -1,13 +1,13 @@
-﻿@model HMS.Models.ConsultantDashboardModel
+﻿@model HMS.Models.ReceptionistDashboardModel
 @{
-    Layout = "~/Views/Shared/_CounsultantLayout.cshtml";
+    Layout = "~/Views/Shared/_ReceptionistLayout.cshtml";
     HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
 }
 <div class="page-header">
     <div class="page-leftheader">
-        <h4 class="page-title mb-0">DashBoard </h4>
+        <h4 class="page-title mb-0">Receptionist DashBoard </h4>
         </>
     </div>
 </div>

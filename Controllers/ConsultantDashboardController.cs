@@ -8,6 +8,7 @@ using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Reflection;
 
@@ -63,13 +64,29 @@ namespace HMS.Controllers
             var result = _consultantServices.GetDashboardCount(SessionUser);
 
             var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser,Int32.Parse(year));
-            for(int i=0;i<ChartCount.Count;i++)
+            string CurrentMonth = String.Format("{0:MMMM}", DateTime.Now);
+            string LastMonth = String.Format("{0:MMMM}", DateTime.Now.AddMonths(-1));
+
+
+            for (int i=0;i<ChartCount.Count;i++)
             {
                 if (ChartCount[i].RevisitCount>0)
                 {
                     ChartCount[i].SumOfTotalAmount = ChartCount[i].SumOfTotalAmount+ ChartCount[i].RevisitCount;
+                    
                 }
+                
+                if (ChartCount[i].Months == CurrentMonth)
+                {
+                    ViewBag.MonthlyCollection = ChartCount[i].SumOfTotalAmount;
+                }
+                if (ChartCount[i].Months == LastMonth)
+                {
+                    ViewBag.LastMonthlyCollection = ChartCount[i].SumOfTotalAmount;
+                }
+
             }
+           
             var AvrageCount = _consultantServices.GetDashboardAvrageCount(SessionUser);
             var patientMaster = _patientMasterServices.GetConsultantPatient(SessionUser, DateTime.Now.ToString("yyyy-MM-dd"));
             
@@ -91,9 +108,18 @@ namespace HMS.Controllers
             ViewBag.RevenueChangeDirection = AvrageCount.RevenueChangeDirection;
             ViewBag.RevenuePercentageChange = AvrageCount.RevenuePercentageChange;
             ViewBag.ServiceChangeDirection = AvrageCount.ServiceChangeDirection;
-            ViewBag.ServicePercentageChange = AvrageCount.ServicePercentageChange;
+            ViewBag.TodayServiceCount = AvrageCount.TodayServiceCount;
+            ViewBag.TodayTotalAmount = AvrageCount.TodayRevenue;
+            ViewBag.YesterdayTotalAmount = AvrageCount.YesterdayRevenue;
 
-            ViewBag.ServiceCount=result.TotalServiceCount;
+
+            float ServiceCount=float.Parse(AvrageCount.ServicePercentageChange.ToString().TrimStart('-'));
+            if (ServiceCount > 100)
+            {
+                AvrageCount.ServicePercentageChange = ServiceCount / 10;
+            }
+            ViewBag.ServicePercentageChange = AvrageCount.ServicePercentageChange;
+            
             
             return View();
         }

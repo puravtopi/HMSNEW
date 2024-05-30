@@ -90,6 +90,7 @@ namespace HMS.Controllers
                     HttpContext.Session.SetString(SessionHelper.SessionUserName, Userdata.Email);
 
                     var consulttypeId = _commonService.GetConsultantId(Userdata.Clinic_Id.Value);
+                    var ReceptionistId = _commonService.GetReceptionistId(Userdata.Clinic_Id.Value);
 
                     string password = _commonService.GetMd5HashNewMethod(model.Password);
 
@@ -103,6 +104,10 @@ namespace HMS.Controllers
                         else if (consulttypeId == Userdata.Desig_Id)
                         {
                             return RedirectToAction("Index", "ConsultantDashboard");
+                        }
+                        else if (ReceptionistId == Userdata.Desig_Id)
+                        {
+                            return RedirectToAction("Index", "ReceptionistDashboard");
                         }
                         else
                         {

@@ -287,6 +287,11 @@ namespace HMS.Services
             var res = _clinicMasterServices.GetConsultantIdById(ClinicId);
             return res;
         }
+        public int GetReceptionistId(int ClinicId)
+        {
+            var res = _clinicMasterServices.GetReceptionistIdById(ClinicId);
+            return res;
+        }
 
         public List<SelectListItem> GetDesignationListById(int Desig_Id)
         {

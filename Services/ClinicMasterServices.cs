@@ -58,7 +58,19 @@ namespace HMS.Services
 
         public int GetConsultantIdById(int Id)
         {
-            string query = "Select * from DesignationMaster where DesignationName='consultant' and Clinic_Id=" + Id;
+            string query = "Select * from DesignationMaster where DesignationName='Consultant' and Clinic_Id=" + Id;
+            var data = _dapper.Get<DesignationMasterModel>(query, null, commandType: CommandType.Text, ConnStrings.HMSConnectionstring);
+
+            if (data != null)
+                return data.Id;
+            else
+                return 0;
+
+        }
+
+        public int GetReceptionistIdById(int Id)
+        {
+            string query = "Select * from DesignationMaster where DesignationName='Receptionist' and Clinic_Id=" + Id;
             var data = _dapper.Get<DesignationMasterModel>(query, null, commandType: CommandType.Text, ConnStrings.HMSConnectionstring);
 
             if (data != null)
