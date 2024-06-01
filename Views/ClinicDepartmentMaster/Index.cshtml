@@ -1,10 +1,16 @@
 ﻿@model HMS.Models.DepartmentMasterModel
+@using HMS.Common;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Html;
+@using System.Text;
 @{
     Layout = "~/Views/Shared/_ClinicLayout.cshtml";
     HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
 }
+
 <!DOCTYPE html>
 
 
@@ -27,6 +33,7 @@
 <div class="row">
     <div class="col-xl-12">
         <div class="card">
+           
             @using (Html.BeginForm(Action, Controller, null, FormMethod.Post))
             {
                 <div class="card-header">
