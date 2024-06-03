@@ -142,6 +142,7 @@ namespace HMS.Controllers
                     {
                         TempData[Temp_Message.Success] = res.DbMsg;
                         return RedirectToAction("Index");
+
                     }
                     else
                     {

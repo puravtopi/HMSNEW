@@ -36,9 +36,8 @@
                     </li>
 
                     <li class="page-item">
-                            <a class="page-link paginate_button" style="width:70px !important" href="@Url.Action(Action, Controller, new {  CurrentPage = Model.Pager.CurrentPage > 1 ? Model.Pager.CurrentPage - 1 : Model.Pager.CurrentPage, SearchString = Model.SearchString,PageSizeId=Model.PageSizeId ,sortField=Model.sortField,sortOrder=Model.sortOrder,fromDate=Model.fromDate,toDate=Model.toDate})">
-                            <span aria-hidden="true">Previous</span>
-                            <span class="sr-only">Previous</span>
+                            <a class="page-link paginate_button" href="@Url.Action(Action, Controller, new {  CurrentPage = Model.Pager.CurrentPage > 1 ? Model.Pager.CurrentPage - 1 : Model.Pager.CurrentPage, SearchString = Model.SearchString,PageSizeId=Model.PageSizeId ,sortField=Model.sortField,sortOrder=Model.sortOrder,fromDate=Model.fromDate,toDate=Model.toDate})">
+                                <i class="fa fa-angle-left"></i>
                         </a>
                     </li>
                 }
@@ -52,8 +51,7 @@
                 {
                     <li class="page-item">
                             <a class="page-link paginate_button " href="@Url.Action(Action,Controller,new {CurrentPage=Model.Pager.CurrentPage +1,SearchString=Model.SearchString,PageSizeId=Model.PageSizeId,sortField=Model.sortField,sortOrder=Model.sortOrder,fromDate=Model.fromDate,toDate=Model.toDate})" aria-label="Next">
-                            <span aria-hidden="true">Next</span>
-                            <span class="sr-only">Next</span>
+                                <i class="fa fa-angle-right"></i>
                         </a>
                     </li>
                     <li class="page-item">
