@@ -47,6 +47,7 @@ namespace HMS.Controllers
         public IActionResult Index()
         {
             int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
+            int ClinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
 
             if (SessionUser > 0 && SessionUser != null)
             {
@@ -55,27 +56,27 @@ namespace HMS.Controllers
                 {
                     var firstname = data.FirstName != null ? data.FirstName : "";
                     var lastname = data.LastName != null ? data.LastName : "";
-                    ViewBag.Consultantname =  firstname + " " + lastname;
+                    ViewBag.Consultantname = firstname + " " + lastname;
                 }
 
             }
-            var year =DateTime.Now.ToString("yyyy");
+            var year = DateTime.Now.ToString("yyyy");
 
             var result = _consultantServices.GetDashboardCount(SessionUser);
 
-            var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser,Int32.Parse(year));
+            var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser, Int32.Parse(year));
             string CurrentMonth = String.Format("{0:MMMM}", DateTime.Now);
             string LastMonth = String.Format("{0:MMMM}", DateTime.Now.AddMonths(-1));
 
 
-            for (int i=0;i<ChartCount.Count;i++)
+            for (int i = 0; i < ChartCount.Count; i++)
             {
-                if (ChartCount[i].RevisitCount>0)
+                if (ChartCount[i].RevisitCount > 0)
                 {
-                    ChartCount[i].SumOfTotalAmount = ChartCount[i].SumOfTotalAmount+ ChartCount[i].RevisitCount;
-                    
+                    ChartCount[i].SumOfTotalAmount = ChartCount[i].SumOfTotalAmount + ChartCount[i].RevisitCount;
+
                 }
-                
+
                 if (ChartCount[i].Months == CurrentMonth)
                 {
                     ViewBag.MonthlyCollection = ChartCount[i].SumOfTotalAmount;
@@ -86,18 +87,25 @@ namespace HMS.Controllers
                 }
 
             }
-           
+
             var AvrageCount = _consultantServices.GetDashboardAvrageCount(SessionUser);
             var patientMaster = _patientMasterServices.GetConsultantPatient(SessionUser, DateTime.Now.ToString("yyyy-MM-dd"));
-            
-            ViewBag.PatientList= patientMaster;
+            var RecepData = _consultantServices.GetReceptionWiseCounts(ClinicId, SessionUser);
+
+
+            ConsultantDashboardModel model = new ConsultantDashboardModel();
+
+            model.ReceptionWiseCount = RecepData;
+
+
+            ViewBag.PatientList = patientMaster;
             ViewBag.todayPatient = result.TotalPatient;
             ViewBag.netamount = result.TotalIncome;
             ViewBag.todayAppointments = 0;
             ViewBag.revisitCount = 0;
             ViewBag.totalServices = 0;
             ViewBag.totalPatient = result.TotalPatient + 0;
-            ViewBag.Chartdata= JsonConvert.SerializeObject(ChartCount);
+            ViewBag.Chartdata = JsonConvert.SerializeObject(ChartCount);
             ViewBag.patientIsChecked = result.PatientIsCheckedCount;
             ViewBag.PatienIsCheckedpending = result.PatientIsCheckedPendingCount;
             ViewBag.Currentdate = DateAndTime.Now.ToString("dd-MM-yyyy");
@@ -113,15 +121,15 @@ namespace HMS.Controllers
             ViewBag.YesterdayTotalAmount = AvrageCount.YesterdayRevenue;
 
 
-            float ServiceCount=float.Parse(AvrageCount.ServicePercentageChange.ToString().TrimStart('-'));
+            float ServiceCount = float.Parse(AvrageCount.ServicePercentageChange.ToString().TrimStart('-'));
             if (ServiceCount > 100)
             {
                 AvrageCount.ServicePercentageChange = ServiceCount / 10;
             }
             ViewBag.ServicePercentageChange = AvrageCount.ServicePercentageChange;
-            
-            
-            return View();
+
+
+            return View(model);
         }
         public IActionResult GetDataForYear(int year)
         {
@@ -140,7 +148,7 @@ namespace HMS.Controllers
             return Json(chartData);
         }
 
-        
+
 
         //public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
         //{

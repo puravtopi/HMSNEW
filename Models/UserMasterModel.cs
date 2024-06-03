@@ -50,6 +50,7 @@ namespace HMS.Models
         public decimal OPD_Charge { get; set; }
         public string Night_Charge { get; set; }
         public string Emergency_Charge { get; set; }
+       
         public float SpecifyRevisit { get; set; }
     }
 }

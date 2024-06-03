@@ -54,6 +54,8 @@ namespace HMS.Models
         public string Occupation { get; set; }
         public string Houseno { get; set; }
         public string District { get; set; }
+
+        public string ConsultantName { get; set; }
         public string Area { get; set; }
         public List<SelectListItem?>? MaritalStatusList { get; set; }
         public List<SelectListItem?>? GenderList { get; set; }

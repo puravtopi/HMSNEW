@@ -91,11 +91,12 @@
                                 <th class="wd-lg-25p">@Html.ActionLink("Patient Is Check ", "Index", "PatientMaster", new { sortField = "", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Entry Date-Time ", "Index", "PatientMaster", new { sortField = "EntryDateTime", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("First Name", "Index", "PatientMaster", new { sortField = "Fname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "PatientMaster", new { sortField = "Lname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>                                
+                                <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "PatientMaster", new { sortField = "Lname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Consultant Name", "Index", "PatientMaster", new { sortField = "ConsultantName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Blood Group", "Index", "PatientMaster", new { sortField = "BloodGroup", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Email", "Index", "PatientMaster", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("ContactNo", "Index", "PatientMaster", new { sortField = "ContactNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Date Of Birth", "Index", "PatientMaster", new { sortField = "DOB", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("DOB", "Index", "PatientMaster", new { sortField = "DOB", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Payment Mood", "Index", "PaymentMode", new { sortField = "PaymentMode", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 
                                 @*<th class="wd-lg-25p">Is Deleted </th>*@
@@ -153,7 +154,7 @@
                                         <td>@Model.patientMastersList[i].EntryDateTime</td>
                                         <td>@Model.patientMastersList[i].Fname</td>
                                         <td>@Model.patientMastersList[i].Lname</td>
-                                       
+                                        <td>@Model.patientMastersList[i].ConsultantName</td>
                                         <td>@Model.patientMastersList[i].BloodGroup</td>
                                         
                                         <td>@Model.patientMastersList[i].Email</td>

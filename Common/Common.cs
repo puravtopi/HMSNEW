@@ -106,6 +106,7 @@ namespace HMS.Common
         public const string getByIdPatientConsultantMaster = "usp_PatientConsultantMaster_GetById";
         public const string getByDepartmentIdWise_Consultant = "usp_ConsultantMaster_GetBy_DepartmentIdWise";
         public const string getByPatientIdWise_Consultant = "usp_PatientConsultantMaster_GetBy_PatientId";
+        public const string getConsultantDashboardReceptionistCount = "usp_Consultant_Dashboard_Receptionist_Count";
         //Patient Revisit Detail
         public const string saveRevisitDetail = "usp_RevisitDetail_Insert";
         public const string GetTopOneRevisitDetail = "usp_RevisitDetail_GetTopOneRevisitDetail";

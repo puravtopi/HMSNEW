@@ -61,6 +61,7 @@
                                 <th class="wd-lg-25p">@Html.ActionLink("First Name", "Index", "ClinicUserMaster", new { sortField = "FirstName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "ClinicUserMaster", new { sortField = "LastName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Email", "Index", "ClinicUserMaster", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("DesignationName", "Index", "ClinicUserMaster", new { sortField = "DesignationName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Status", "Index", "ClinicUserMaster", new { sortField = "Active", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 @*<th class="wd-lg-25p">Is Deleted </th>*@
 
@@ -83,6 +84,7 @@
                                         <td>@Model.userMasterList[i].FirstName</td>
                                         <td>@Model.userMasterList[i].LastName</td>
                                         <td>@Model.userMasterList[i].Email</td>
+                                        <td>@Model.userMasterList[i].DesignationName</td>
                                         <td>@Model.userMasterList[i].Active</td>
                                         @*<td>@(Model.userMasterList[i].IsDelete? "Yes" : "No")</td>*@
                                     </tr>
