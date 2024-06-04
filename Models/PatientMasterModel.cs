@@ -54,8 +54,6 @@ namespace HMS.Models
         public string Occupation { get; set; }
         public string Houseno { get; set; }
         public string District { get; set; }
-
-        public string ConsultantName { get; set; }
         public string Area { get; set; }
         public List<SelectListItem?>? MaritalStatusList { get; set; }
         public List<SelectListItem?>? GenderList { get; set; }
@@ -104,5 +102,11 @@ namespace HMS.Models
         public bool? IsCheckPatientService { get; set; }
         public bool? IsChecked { get; set; }
         public PatientServiceMasterModel patientServiceMasters { get; set; }
+
+        public int ActivityTypeId { get; set; }
+        public int ActivityBy { get; set; }
+        public int ActivityFor { get; set; }
+        public string ActivityDate { get; set; }
+        public string Description { get; set; }
     }
 }

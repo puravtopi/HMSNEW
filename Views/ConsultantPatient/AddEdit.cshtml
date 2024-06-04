@@ -32,7 +32,7 @@
         <div class="card">
             @using (Html.BeginForm(Action, Controller, FormMethod.Post, new { area = Model.Area, id = "AddEditForm" }))
             {
-                if (Model.Id != null && Model.Id > 0)
+                if (@Model.Id > 0)
                 {
                     <div class="row" id="user-profile">
                         <div class="col-lg-12">
@@ -310,72 +310,7 @@
                                 </div>
                             </div>
 
-                            <div class="card">
-                                <div class="card-body">
-                                    @if (Model.patientServiceMasters != null)
-                                    {
-                                        <div class="row row-sm">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.Department, "Department", new { @class = "form-label" })
-                                                    @Html.DropDownListFor(Model => Model.patientServiceMasters.Department, new SelectList(Model.patientServiceMasters.departmentList, "Value", "Text", Model.patientServiceMasters.Department), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwon" })
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.ServiceHead, "Service Head", new { @class = "form-label" })
-                                                    @Html.DropDownListFor(Model => Model.patientServiceMasters.ServiceHead, new SelectList(Model.patientServiceMasters.serviceHeadList, "Value", "Text", Model.patientServiceMasters.ServiceHead), new { @class = "form-control select2-list dropdown-validation", @id = "serviceheaddropdown" })
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.Service, "Service", new { @class = "form-label" })
-                                                    @Html.DropDownListFor(Model => Model.patientServiceMasters.Service, new SelectList(Model.patientServiceMasters.serviceList, "Value", "Text", Model.patientServiceMasters.Service), new { @class = "form-control select2-list dropdown-validation", @id = "ServiceDropdwon", onchange = "getServiceCharges()" })
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.Charges, "Charges", new { @class = "form-label" })
-                                                    @Html.TextBoxFor(Model => Model.patientServiceMasters.Charges, new { @class = "form-control", @id = "Charges", @readonly = "readonly" })
-                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Charges)</p> *@
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.Discount, "Discount", new { @class = "form-label" })
-                                                    @Html.TextBoxFor(Model => Model.patientServiceMasters.Discount, new { @class = "form-control", @id = "Discount", onchange = "calculateAmountsSingle()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
-                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Discount)</p> *@
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.NetAmount, "Net Amount ", new { @class = "form-label" })
-                                                    @Html.TextBoxFor(Model => Model.patientServiceMasters.NetAmount, new { @class = "form-control", @id = "NetAmount" })
-                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.TotalAmount)</p> *@
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-
-                                    <div class="form-group mb-0 justify-content-end">
-                                        <div class="checkbox">
-                                            <div class="custom-checkbox custom-control">
-                                                <input type="checkbox" class="custom-control-input" id="ischeckmultiple" name="ischeckmultiple">
-                                                <label for="ischeckmultiple" class="custom-control-label mt-1">If you select multiple service then check checkbox</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-5">
-                                        <div class="col-lg-12 justify-content-center" id="divMasterId">
-                                            <a href="@Url.Action("Index","ConsultantPatient")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
-                                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+                           
                         </div><!-- col end -->
                     </div>
                 }
@@ -400,8 +335,6 @@
                                         </div>
                                     </div>
                                     <div class="row row-sm">
-
-
                                         @if (Model.Id > 0)
                                         {
                                             <div class="col-lg-4">
@@ -578,15 +511,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @* <div class="row row-sm">
-                            <div class="col-lg-12 justify-content-center">
-                            <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
-
-                            <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
-
-                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
-                            </div>
-                            </div> *@
+                                   
                                 </div>
                             </div>
 
@@ -632,15 +557,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @* <div class="row row-sm">
-                            <div class="col-lg-12 justify-content-center">
-                            <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
-
-                            <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
-
-                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
-                            </div>
-                            </div> *@
                                 </div>
                             </div>
                             <div class="card">
@@ -819,11 +735,39 @@
                 document.getElementById('AdharCardError').style.display = 'none';
             }
         });
+    $(document).ready(function () {
+        debugger;
+        $('#DepartmentDropdwon').change(function () {
+
+            var Department_Id = $(this).val();
+            console.log("Selected department ID: " + Department_Id);
+            // Your AJAX call or other logic here
+            $.ajax({
+                url: '/UserMaster/GetBYDepartmentIdWiseUserData',
+                type: 'GET',
+                data: { Department_Id: Department_Id },
+                success: function (data) {
+                    PopulateSubProductDropDown("#userdropdown", data)
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                }
+            });
+        });
+    });
+
+    function PopulateSubProductDropDown(dropDownId, list, selectedId) {
+        $(dropDownId).empty();
+        $(dropDownId).append("<option value='0'>Select</option>")
+        $.each(list, function (index, row) {
+            $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
+        });
+    }
 
 
 
     function getConsultantCharges() {
-
+        debugger
         var userId = $("#userdropdown").val();
 
         // Your AJAX call or other logic here
@@ -923,6 +867,7 @@
 
 
     $(document).ready(function () {
+        debugger;
         $('#DepartmentDropdwon').change(function () {
 
             var Department_Id = $(this).val();
@@ -949,7 +894,7 @@
             $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
         });
     }
-    ServiceDropdwon
+    
 
     $(document).ready(function () {
         $('#serviceheaddropdown').change(function () {

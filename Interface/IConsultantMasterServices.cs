@@ -16,7 +16,5 @@ namespace HMS.Interface
         public List<ConsultantMasterModel> GetBYDepartmentIdWiseConsultant(int Department_Id);
         public ClinicMasterModel UpdateConsultant_Code(ConsultantMasterModel model);
         public List<SelectListItem> GetConsultantList();
-
-       
     }
 }

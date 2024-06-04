@@ -223,7 +223,5 @@ namespace HMS.Services
             }
         }
 
-       
-
     }
 }

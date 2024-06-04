@@ -106,7 +106,6 @@ namespace HMS.Common
         public const string getByIdPatientConsultantMaster = "usp_PatientConsultantMaster_GetById";
         public const string getByDepartmentIdWise_Consultant = "usp_ConsultantMaster_GetBy_DepartmentIdWise";
         public const string getByPatientIdWise_Consultant = "usp_PatientConsultantMaster_GetBy_PatientId";
-        public const string getConsultantDashboardReceptionistCount = "usp_Consultant_Dashboard_Receptionist_Count";
         //Patient Revisit Detail
         public const string saveRevisitDetail = "usp_RevisitDetail_Insert";
         public const string GetTopOneRevisitDetail = "usp_RevisitDetail_GetTopOneRevisitDetail";
@@ -155,6 +154,20 @@ namespace HMS.Common
         // Patient Service Master Details
         public const string savePatientServiceMasterDetails = "sp_PatientServiceMasterDetails_Insert";
         public const string GetAllPatientServiceMasterDetails = "usp_PatientServiceMasterDetails_GetByPatientId";
+
+        //Activity Master
+        public const string getAllActivityMaster = "usp_ActivityMaster_GetAll";
+        public const string saveActivityMaster = "usp_ActivityMaster_Insert";
+        public const string updateActivityMaster = "usp_ActivityMaster_Update";
+        public const string deleteByIdActivityMaster = "usp_ActivityMaster_DeleteById";
+        public const string getByIdActivityMaster = "usp_ActivityMaster_GetById";
+        //Activity Master Details 
+        public const string getAllActivityMasterDetails = "usp_ActivityMasterDetails_GetAll";
+        public const string saveActivityMasterDetails = "usp_ActivityMasterDetails_Insert";
+        public const string updateActivityMasterDetails = "usp_ActivityMasterDetails_Update";
+        public const string deleteByIdActivityMasterDetails = "usp_ActivityMasterDetails_DeleteById";
+        public const string getByIdActivityMasterDetails = "usp_ActivityMasterDetails_GetById";
+
     }
     public class PageSizeDdl : BaseResponseModel
     {

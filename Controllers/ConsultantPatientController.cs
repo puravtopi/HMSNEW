@@ -30,6 +30,7 @@ namespace HMS.Controllers
         private readonly IPatientServiceMasterServices _patientServiceMasterServices;
         private readonly IServiceHeadMasterService _serviceHeadMasterService;
         private readonly IServiceMasterService _serviceMasterService;
+        private readonly IActivityMasterDetailsServices _activityMasterDetailsServices;
 
 
         public ConsultantPatientController(
@@ -42,7 +43,8 @@ namespace HMS.Controllers
           IRevisitDetailMasterServices revisitDetailMasterServices,
           IPatientServiceMasterServices patientServiceMasterServices,
           IServiceHeadMasterService serviceHeadMasterService,
-          IServiceMasterService serviceMasterService
+          IServiceMasterService serviceMasterService,
+          IActivityMasterDetailsServices activityMasterDetailsServices
           )
         {
             _patientGeneralDetailMasterServices = patientGeneralDetailMasterServices;
@@ -56,6 +58,7 @@ namespace HMS.Controllers
             _patientServiceMasterServices = patientServiceMasterServices;
             _serviceHeadMasterService= serviceHeadMasterService;
             _serviceMasterService= serviceMasterService;
+            _activityMasterDetailsServices= activityMasterDetailsServices; 
         }
 
         public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
@@ -263,8 +266,9 @@ namespace HMS.Controllers
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
             model.MaritalStatusList = _commonService.GetMaritalStatusList();
             patientMasterModel.GenderList = _commonService.GetGenderList();
-            patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
+            //patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+            int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
             patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
 
@@ -325,8 +329,14 @@ namespace HMS.Controllers
 
                     model.ReceiptNo = _commonService.GenerateReciptNo();
 
+                    //ActivityMasterDetails
+                    model.ActivityTypeId = 1;
+                    model.ActivityBy = SessionUser;
+                    model.Description = null;
+
                     var res = _patientMasterServices.Insert(model);
 
+                     
                     if (res.DbCode == 1)
                     {
 
@@ -360,6 +370,7 @@ namespace HMS.Controllers
                         model.EntryDateTime = d;
                     }
                     var res = _patientMasterServices.Update(model);
+                   
 
                     //Patient GeneralDetail Master data updated
                     var patientGeneralDetailMaster = _patientGeneralDetailMasterServices.GetByPatientIdWise(model.Id);

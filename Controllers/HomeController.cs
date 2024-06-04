@@ -88,7 +88,6 @@ namespace HMS.Controllers
                     HttpContext.Session.SetInt32(SessionHelper.SessionClinicID, (int)Userdata.Clinic_Id);
                     HttpContext.Session.SetInt32(SessionHelper.SessionUserId, Userdata.Id);
                     HttpContext.Session.SetString(SessionHelper.SessionUserName, Userdata.Email);
-                    HttpContext.Session.SetString(SessionHelper.SessionClinicDesignation, Userdata.DesignationName);
 
                     var consulttypeId = _commonService.GetConsultantId(Userdata.Clinic_Id.Value);
                     var ReceptionistId = _commonService.GetReceptionistId(Userdata.Clinic_Id.Value);
