@@ -60,6 +60,7 @@ namespace HMS
             services.AddScoped<IReceptionistMasterServices, ReceptionistServices>();
             services.AddScoped<IActivityMasterServices, ActivityMasterServices>();
             services.AddScoped<IActivityMasterDetailsServices, ActivityMasterDetailsServices>();
+            services.AddScoped<IPatientInitialAssessmentMasterServices, PatientInitialAssessmentMasterServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

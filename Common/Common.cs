@@ -167,7 +167,13 @@ namespace HMS.Common
         public const string updateActivityMasterDetails = "usp_ActivityMasterDetails_Update";
         public const string deleteByIdActivityMasterDetails = "usp_ActivityMasterDetails_DeleteById";
         public const string getByIdActivityMasterDetails = "usp_ActivityMasterDetails_GetById";
-
+        // Patient Initial Assessment Master
+        public const string getAllPatientInitialAssessmentMaster = "usp_PatientInitialAssessmentMaster_GetAll";
+        public const string savePatientInitialAssessmentMaster = "usp_PatientInitialAssessmentMaster_Insert";
+        public const string updatePatientInitialAssessmentMaster = "usp_PatientInitialAssessmentMaster_Update";
+        public const string deleteByIdPatientInitialAssessmentMaster = "usp_PatientInitialAssessmentMaster_DeleteById";
+        public const string getByIdPatientInitialAssessmentMaster = "usp_PatientInitialAssessmentMaster_GetById";
+        public const string getByPatientIdWisePatientInitialAssessmentMaster  = "usp_PatientInitialAssessmentMaster_GetBy_PatientId";
     }
     public class PageSizeDdl : BaseResponseModel
     {

@@ -108,5 +108,31 @@ namespace HMS.Models
         public int ActivityFor { get; set; }
         public string ActivityDate { get; set; }
         public string Description { get; set; }
+
+        //
+        public string ChiefComplaints { get; set; }
+        public string PresentIllness { get; set; }
+        public string PastHistory { get; set; }
+        public string FutureHistory { get; set; }
+        public string PersonalHistory { get; set; }
+        public string TravelHistory { get; set; }
+        public string Remake { get; set; }
+
+        public List<SelectListItem> DepartmentList1 { get; set; }
+        public int Department_ID { get; set; }
+        public string Department { get; set; }
+
+        public List<SelectListItem> ServiceHeadList { get; set; }
+        public List<SelectListItem> ServiceList { get; set; }
+        public int ServiceHead_Id { get; set; }
+        public string ServiceHead { get; set; }
+        public string ServiceHeadName { get; set; }
+        public decimal Charges { get; set; }
+        public string Discount1 { get; set; }
+        public decimal NetAmount { get; set; }        
+        public int PatientServiceMasterId { get; set; }
+        public int Patient_Id { get; set; }
+        public int ServiceId { get; set; }
+        public string Service { get; set; }
     }
 }

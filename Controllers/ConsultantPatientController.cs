@@ -31,6 +31,7 @@ namespace HMS.Controllers
         private readonly IServiceHeadMasterService _serviceHeadMasterService;
         private readonly IServiceMasterService _serviceMasterService;
         private readonly IActivityMasterDetailsServices _activityMasterDetailsServices;
+        private readonly IPatientInitialAssessmentMasterServices _patientInitialAssessmentMasterServices;
 
 
         public ConsultantPatientController(
@@ -44,7 +45,8 @@ namespace HMS.Controllers
           IPatientServiceMasterServices patientServiceMasterServices,
           IServiceHeadMasterService serviceHeadMasterService,
           IServiceMasterService serviceMasterService,
-          IActivityMasterDetailsServices activityMasterDetailsServices
+          IActivityMasterDetailsServices activityMasterDetailsServices,
+          IPatientInitialAssessmentMasterServices patientInitialAssessmentMasterServices
           )
         {
             _patientGeneralDetailMasterServices = patientGeneralDetailMasterServices;
@@ -58,7 +60,8 @@ namespace HMS.Controllers
             _patientServiceMasterServices = patientServiceMasterServices;
             _serviceHeadMasterService= serviceHeadMasterService;
             _serviceMasterService= serviceMasterService;
-            _activityMasterDetailsServices= activityMasterDetailsServices; 
+            _activityMasterDetailsServices= activityMasterDetailsServices;
+            _patientInitialAssessmentMasterServices= patientInitialAssessmentMasterServices;
         }
 
         public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
@@ -192,7 +195,7 @@ namespace HMS.Controllers
             if (dId != 0)
             {
                 patientMasterModel = _patientMasterServices.GetById(dId);
-                _patientMasterServices.PatientStatusUpdate(patientMasterModel.Id);
+                //_patientMasterServices.PatientStatusUpdate(patientMasterModel.Id);
 
                 var dataGeneral = _patientGeneralDetailMasterServices.GetByPatientIdWise(patientMasterModel.Id);
                 if (dataGeneral != null)
@@ -208,7 +211,7 @@ namespace HMS.Controllers
                 if (dataConsultant != null)
                 {
                     patientMasterModel.User_id = dataConsultant.User_Id;
-                    patientMasterModel.Consultant_Charges = dataConsultant.Consultant_Charges;
+                    patientMasterModel.Consultant_Charges = dataConsultant.Consultant_Charges;                    
                     patientMasterModel.Discount = dataConsultant.Discount;
                     //patientMasterModel.EmergencyAdminssion = dataConsultant.EmergencyAdminssion;
                     //patientMasterModel.FileChargesApplicable = dataConsultant.FileChargesApplicable;
@@ -237,6 +240,20 @@ namespace HMS.Controllers
                         patientMasterModel.UserName = fristname + " " + lastname;
 
                     }
+                    var remake = _patientInitialAssessmentMasterServices.GetByPatientId(patientMasterModel.Id);
+                    if(remake!=null)
+                    {
+                        patientMasterModel.ChiefComplaints = remake.ChiefComplaints;
+                        patientMasterModel.PresentIllness= remake.PresentIllness;
+                        patientMasterModel.PastHistory = remake.PastHistory;
+                        patientMasterModel.FutureHistory = remake.FutureHistory;
+                        patientMasterModel.PersonalHistory = remake.PersonalHistory;
+                        patientMasterModel.TravelHistory = remake.TravelHistory;
+                        patientMasterModel.Remake=remake.Remake;
+                    }
+
+                    
+                    
                 }
 
             }
@@ -252,7 +269,9 @@ namespace HMS.Controllers
             patientMasterModel.GenderList = _commonService.GetGenderList();
             patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
-            patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
+            patientMasterModel.DepartmentList1 = _commonService.GetDepartmentList(SclinicId);
+            patientMasterModel.ServiceHeadList=_commonService.GetDepartmentwiseServiceheadList(SclinicId);
+            patientMasterModel.ServiceList=_commonService.GetServiceHeadwiseServiceList(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
             //patientMasterModel.patientServiceMasters.departmentList = _commonService.GetDepartmentList(SclinicId);
 
@@ -718,115 +737,115 @@ namespace HMS.Controllers
             }
         }
 
-        public IActionResult AddEditPatientServiceDetails(PatientServiceMasterModel model)
-        {
-            try
-            {
-                int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
-                model.departmentList = _commonService.GetDepartmentList(SclinicId);
-                model.serviceHeadList = _commonService.GetDepartmentwiseServiceheadList(model.Department_Id);
-                model.serviceList = _commonService.GetServiceHeadwiseServiceList(model.ServiceHead_Id);
-                model.lstStatus = _commonService.GetStatusList();
+        //public IActionResult AddEditPatientServiceDetails(PatientServiceMasterModel model)
+        //{
+        //    try
+        //    {
+        //        int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+        //        model.departmentList = _commonService.GetDepartmentList(SclinicId);
+        //        model.serviceHeadList = _commonService.GetDepartmentwiseServiceheadList(model.Department_Id);
+        //        model.serviceList = _commonService.GetServiceHeadwiseServiceList(model.ServiceHead_Id);
+        //        model.lstStatus = _commonService.GetStatusList();
 
-                List<PatientServiceMasterModel> patient = new List<PatientServiceMasterModel>();
-                if (ModelState.IsValid)
-                {
-                    if (model.Id == 0)
-                    {
-                        patient = _patientServiceMasterServices.GetPatienServiceData();
-                        if (patient.Count > 0)
-                        {
-                            var receipt = patient.Max(a => a.Id);
-                            receipt++;
-                            model.ReceiptNo = receipt.ToString();
-                        }
-                        else
-                        {
-                            model.ReceiptNo = "1";
-                        }
-                        //Temporary Set Revisit Id 1 
-                        model.Revisit_Id = 1;
+        //        List<PatientServiceMasterModel> patient = new List<PatientServiceMasterModel>();
+        //        if (ModelState.IsValid)
+        //        {
+        //            if (model.Id == 0)
+        //            {
+        //                patient = _patientServiceMasterServices.GetPatienServiceData();
+        //                if (patient.Count > 0)
+        //                {
+        //                    var receipt = patient.Max(a => a.Id);
+        //                    receipt++;
+        //                    model.ReceiptNo = receipt.ToString();
+        //                }
+        //                else
+        //                {
+        //                    model.ReceiptNo = "1";
+        //                }
+        //                //Temporary Set Revisit Id 1 
+        //                model.Revisit_Id = 1;
 
-                        model.Department_Id = Int32.Parse(model.Department);
-                        model.Service_Id = Int32.Parse(model.Service);
-                        model.ServiceHead_Id = Int32.Parse(model.ServiceHead);
+        //                model.Department_Id = Int32.Parse(model.Department);
+        //                model.Service_Id = Int32.Parse(model.Service);
+        //                model.ServiceHead_Id = Int32.Parse(model.ServiceHead);
 
-                        model.CreatedBy = SclinicId;
-                        if (model.Active == true)
-                        {
-                            model.IsDelete = false;
-                        }
-                        else
-                        {
-                            model.IsDelete = true;
-                        }
+        //                model.CreatedBy = SclinicId;
+        //                if (model.Active == true)
+        //                {
+        //                    model.IsDelete = false;
+        //                }
+        //                else
+        //                {
+        //                    model.IsDelete = true;
+        //                }
 
-                        var res = _patientServiceMasterServices.Insert(model);
-                        if (res.DbCode == 1)
-                        {
-                            TempData[Temp_Message.Success] = res.DbMsg;
-                            return RedirectToAction("Index");
-                        }
-                        else
-                        {
-                            TempData[Temp_Message.Error] = res.DbMsg;
-                            return RedirectToAction("AddEditPatientServiceDetails");
-                        }
-                    }
-                    else
-                    {
+        //                var res = _patientServiceMasterServices.Insert(model);
+        //                if (res.DbCode == 1)
+        //                {
+        //                    TempData[Temp_Message.Success] = res.DbMsg;
+        //                    return RedirectToAction("Index");
+        //                }
+        //                else
+        //                {
+        //                    TempData[Temp_Message.Error] = res.DbMsg;
+        //                    return RedirectToAction("AddEditPatientServiceDetails");
+        //                }
+        //            }
+        //            else
+        //            {
 
-                        model.UpdatedBy = SclinicId;
-                        if (model.ReceiptNo == null)
-                        {
-                            patient = _patientServiceMasterServices.GetPatienServiceData();
-                            if (patient.Count > 0)
-                            {
-                                var receipt = patient.Max(a => a.Id);
-                                receipt++;
-                                model.ReceiptNo = receipt.ToString();
-                            }
-                        }
-                        model.Department_Id = Int32.Parse(model.Department);
-                        model.Service_Id = Int32.Parse(model.Service);
-                        model.ServiceHead_Id = Int32.Parse(model.ServiceHead);
+        //                model.UpdatedBy = SclinicId;
+        //                if (model.ReceiptNo == null)
+        //                {
+        //                    patient = _patientServiceMasterServices.GetPatienServiceData();
+        //                    if (patient.Count > 0)
+        //                    {
+        //                        var receipt = patient.Max(a => a.Id);
+        //                        receipt++;
+        //                        model.ReceiptNo = receipt.ToString();
+        //                    }
+        //                }
+        //                model.Department_Id = Int32.Parse(model.Department);
+        //                model.Service_Id = Int32.Parse(model.Service);
+        //                model.ServiceHead_Id = Int32.Parse(model.ServiceHead);
 
-                        if (model.Active == true)
-                        {
-                            model.IsDelete = false;
-                        }
-                        else
-                        {
-                            model.IsDelete = true;
-                        }
+        //                if (model.Active == true)
+        //                {
+        //                    model.IsDelete = false;
+        //                }
+        //                else
+        //                {
+        //                    model.IsDelete = true;
+        //                }
 
-                        var res = _patientServiceMasterServices.Update(model);
-                        if (res.DbCode == 1)
-                        {
-                            TempData[Temp_Message.Success] = res.DbMsg;
-                            return RedirectToAction("Index");
-                        }
-                        else
-                        {
-                            TempData[Temp_Message.Error] = res.DbMsg;
-                            return RedirectToAction("AddEditPatientServiceDetails");
-                        }
-                    }
-                }
-                else
-                {
-                    var errors = ModelState.Select(x => x.Value.Errors)
-                              .Where(y => y.Count > 0)
-                              .ToList();
+        //                var res = _patientServiceMasterServices.Update(model);
+        //                if (res.DbCode == 1)
+        //                {
+        //                    TempData[Temp_Message.Success] = res.DbMsg;
+        //                    return RedirectToAction("Index");
+        //                }
+        //                else
+        //                {
+        //                    TempData[Temp_Message.Error] = res.DbMsg;
+        //                    return RedirectToAction("AddEditPatientServiceDetails");
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            var errors = ModelState.Select(x => x.Value.Errors)
+        //                      .Where(y => y.Count > 0)
+        //                      .ToList();
 
-                }
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+        //        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
         public IActionResult DetelePatientServiceDetails(string deleteId)
         {
             int dId = 0;
@@ -847,5 +866,129 @@ namespace HMS.Controllers
             }
             return RedirectToAction("Index");
         }
+
+
+        public ActionResult PatientServiceMasterDetails(int serviceHead_Id)
+        {
+            try
+            {
+                List<ServiceMasterModel> serviceMasterModel = new List<ServiceMasterModel>();
+                serviceMasterModel = _serviceMasterService.GetByServiceHeadIdWiseServiceList(serviceHead_Id);
+                return PartialView("_ConsultantPatientServiceDetail", serviceMasterModel);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPost]
+        public IActionResult AddEditPatientServiceDetails(PatientServiceMasterModel model)
+        {
+            try
+            {
+                int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+                int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
+                if (ModelState.IsValid)
+                {
+                    //bool SpecifyRevisitDay = true;
+                    //bool IsCheckNewConsultant = true;
+                    patientMasterModel = _patientMasterServices.GetById(model.Patient_Id);
+
+                    if (patientMasterModel != null)
+                    {
+                        DateTime dtPtientvisit = patientMasterModel.CreatedDate.Value;
+                        model.ReceiptNo = patientMasterModel.ReceiptNo;
+                    }
+                    var getTopOneRevisitDetail = _revisitDetailMasterServices.GetTopOneRevisitDetail();
+
+
+                    model.Department_Id = int.Parse(model.Department);
+                    model.ServiceHead_Id = int.Parse(model.ServiceHead);
+                    model.Consultant_Id = model.Consultant_Id;
+                    model.Revisit_Id = getTopOneRevisitDetail.Id;
+                    //model.Service_Id = int.Parse(model.ServiceName);
+                    if (model.Id == 0)
+                    {
+                        model.CreatedBy = SessionUser;
+                        model.Active = true;
+                        if (model.Active == true)
+                        {
+                            model.IsDelete = false;
+                        }
+                        else
+                        {
+                            model.IsDelete = true;
+                        }
+                        //if (model.RevisitDate == null)
+                        //{
+                        //    model.RevisitDate = DateTime.Now.ToString();
+                        //}
+
+                        model.ServiceDate = DateTime.Now;
+                        model.RefundDate = DateTime.Now;
+                        var res = _patientServiceMasterServices.Insert(model);
+                        if (res.DbCode >= 1)
+                        {
+                            ServiceMasterModel modelServiceMasterModel = new ServiceMasterModel();
+                            modelServiceMasterModel.CreatedBy = SessionUser;
+                            modelServiceMasterModel.Active = true;
+                            modelServiceMasterModel.PatientServiceMasterId = res.DbCode;
+                            modelServiceMasterModel.ServiceId = int.Parse(model.Service);
+                            modelServiceMasterModel.Discount = model.Discount;
+                            modelServiceMasterModel.Charges = model.Charges;
+                            modelServiceMasterModel.NetAmount = decimal.Parse(model.NetAmount);
+                            if (modelServiceMasterModel.Active == true)
+                            {
+                                modelServiceMasterModel.IsDelete = false;
+                            }
+                            else
+                            {
+                                modelServiceMasterModel.IsDelete = true;
+                            }
+                            modelServiceMasterModel.CreatedDate = DateTime.Now;
+                            var ress = _serviceMasterService.InsertPatientServiceMasterDetails(modelServiceMasterModel);
+                            //TempData[Temp_Message.Success] = res.DbMsg;
+                            //return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData[Temp_Message.Error] = res.DbMsg;
+                            return RedirectToAction("AddEdit");
+                        }
+                    }
+                    else
+                    {
+                        model.UpdatedDate = DateTime.Now;
+                        model.UpdatedBy = SessionUser;
+                        var res = _patientServiceMasterServices.Update(model);
+                        if (res.DbCode == 1)
+                        {
+                            TempData[Temp_Message.Success] = res.DbMsg;
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData[Temp_Message.Error] = res.DbMsg;
+                            return RedirectToAction("AddEdit");
+                        }
+                    }
+                }
+                else
+                {
+                    var errors = ModelState.Select(x => x.Value.Errors)
+                              .Where(y => y.Count > 0)
+                              .ToList();
+
+                }
+                return RedirectToAction("AddEdit");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
     }
 }

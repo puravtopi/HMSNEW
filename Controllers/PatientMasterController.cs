@@ -812,8 +812,8 @@ namespace HMS.Controllers
                     var getTopOneRevisitDetail = _revisitDetailMasterServices.GetTopOneRevisitDetail();
 
 
-                    model.Department_Id = int.Parse(model.DepartmentName);
-                    model.ServiceHead_Id = int.Parse(model.ServiceHeadName);
+                    model.Department_Id = int.Parse(model.Department);
+                    model.ServiceHead_Id = int.Parse(model.ServiceHead);
                     model.Consultant_Id = model.Consultant_Id;
                     model.Revisit_Id = getTopOneRevisitDetail.Id    ;
                     //model.Service_Id = int.Parse(model.ServiceName);
@@ -843,7 +843,7 @@ namespace HMS.Controllers
                             modelServiceMasterModel.CreatedBy = SessionUser;
                             modelServiceMasterModel.Active = true;
                             modelServiceMasterModel.PatientServiceMasterId = res.DbCode;
-                            modelServiceMasterModel.ServiceId = int.Parse(model.ServiceName);
+                            modelServiceMasterModel.ServiceId = int.Parse(model.Service);
                             modelServiceMasterModel.Discount = model.Discount;
                             modelServiceMasterModel.Charges = model.Charges;
                             modelServiceMasterModel.NetAmount = decimal.Parse(model.NetAmount);
