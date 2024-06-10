@@ -316,6 +316,7 @@
                                                         {
                                                             <table class="table row table-borderless w-100 m-0 border">
                                                                 <tbody class="col-lg-6 p-0">
+                                                                    @Html.HiddenFor(Model=>Model.Id)
                                                                     <tr>
 
                                                                         <td>
@@ -367,8 +368,8 @@
                                                                 <tbody>
                                                                     <tr>
                                                                         <td>
-                                                                            <a href="#" class="btn btn-secondary" id="btnReset1" value="Reset">Reset</a>
-                                                                            <button class="btn btn-primary" id="btnSubmit1" value="Submit">Save Remake</button>
+                                                                            <a href="#" class="btn btn-secondary" id="btnReset1">Reset</a>
+                                                                            <button class="btn btn-primary" id="btnSubmit1">Save Remake</button>
 
                                                                         </td>
                                                                     </tr>
@@ -404,7 +405,7 @@
                                                                 <div class="col-lg-4">
                                                                 <div class="form-group">
                                                                         @Html.LabelFor(Model => Model.Service, "Service", new { @class = "form-label required-label" })
-                                                                        @Html.DropDownListFor(Model => Model.Service, new SelectList(Model.ServiceList, "Value", "Text", Model.ServiceId), new { @class = "form-control select2-list dropdown-validation", @id = "ServiceDropdwon", onchange = "getServiceChargesList()" })
+                                                                    @Html.DropDownListFor(Model => Model.Service, new SelectList(Model.ServiceList, "Value", "Text", Model.ServiceId), new { @class = "form-control select2-list dropdown-validation", @id = "ServiceDropdwon", onchange = "getServiceChargesList()" })
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-4">
@@ -415,8 +416,8 @@
                                                                 </div>
                                                                 <div class="col-lg-4">
                                                                 <div class="form-group" >
-                                                                        @Html.LabelFor(Model => Model.Discount1, "Discount", new { @class = "form-label" })
-                                                                    @Html.TextBoxFor(Model => Model.Discount1, new { @class = "form-control", @id = "Discount1", onchange = "calculateAmountsSingle()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                                                        @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label" })
+                                                                    @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "calculateAmountsSingle()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
                                                             </div>
                                                                 </div>
 
@@ -442,7 +443,9 @@
                                                             <div class="row row-sm">
                                                                 <div class="col-lg-12 justify-content-center" id="btnresertandbtnsubmit">
                                                                     <a href="@Url.Action("Index","ConsultantPatient")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
-                                                                @* <button class="btn btn-primary" id="btnSubmit2" value="Submit">Save Service</button> *@
+                                                                @* <button class="btn btn-primary" id="btnSubmit2" >Save Service</button> *@
+                                                                <button class="btn btn-primary" id="btnSubmit2">Save Service</button>
+
                                                                 </div>
                                                             </div>
                                                         }
@@ -743,8 +746,8 @@
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "calculateAmounts()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                                @Html.LabelFor(Model => Model.Discount1, "Discount", new { @class = "form-label" })
+                                                @Html.TextBoxFor(Model => Model.Discount1, new { @class = "form-control", @id = "Discount1", onchange = "calculateAmounts()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
                                                 @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Discount)</p> *@
                                             </div>
                                         </div>
@@ -820,45 +823,41 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+
     <script>
-    $("#btnReset1").click(function () {
-        // Reset the form fields
-        document.getElementById("AddEditForm").reset();
-
-        // Clear validation messages
-        $(".text-danger").text("");
-
-
-    });
     $(document).ready(function () {
-        $('#RemakeForm').submit(function (e) {
-            e.preventDefault(); // Prevent default form submission
-
+        $('#btnSubmit2').click(function () {
+            event.preventDefault(); // Prevent the default form submission
+            
             // Serialize form data
-
-            var formData = $(this).serialize();
-
-            // Make AJAX request
+            var formData = $('#ServiceForm').serialize();
+            console.log(formData);
+            // Send data via AJAX to the controller
             $.ajax({
+                url: '/ConsultantPatient/AddEditPatientServiceDetails', // URL of your controller's action
                 type: 'POST',
-                url: '@Url.Action("AddEdit", "PatientInitialAssessmentMaster")',
                 data: formData,
                 success: function (response) {
-                    // Handle success response
+                    // Handle success
+                    alert('Service saved successfully!');
                 },
                 error: function (xhr, status, error) {
-                    // Handle error response
+                    
+                    // Handle error
+                    console.error('Error saving service:', error);
+                    alert('An error occurred while saving the service.');
                 }
             });
         });
     });
     $(document).ready(function () {
-        $('#btnSubmit1').on('click', function (e) {
+        $('#btnSubmit1').click(function () {
+            event.preventDefault(); // Prevent the default form submission
             
-            e.preventDefault(); // Prevent default form submission
-
-            // Serialize the form data
-            var formData = {                
+            // Serialize form data from the form with ID "RemakeForm"
+            var serializedFormData = $('#RemakeForm').serialize();
+            // Additional data to append to the serialized form data
+            var additionalData = {
                 Patient_Id: @Model.Id,
                 ChiefComplaints: $('#ChiefComplaints').val(),
                 PresentIllness: $('#PresentIllness').val(),
@@ -868,81 +867,46 @@
                 PersonalHistory: $('#PersonalHistory').val(),
                 TravelHistory: $('#TravelHistory').val()
             };
+            // Convert additionalData object to query string
+            var additionalDataStr = $.param(additionalData);
 
-            // Make AJAX request
+            // Append additional data to the serialized form data
+            var formData = serializedFormData + '&' + additionalDataStr;
+
+            // var formData = $('#RemakeForm').serialize();
+            console.log(formData);
+            // Send data via AJAX to the controller
             $.ajax({
+                url: '/ConsultantPatient/AddEditPatientInitialAssessment', // URL of your controller's action
                 type: 'POST',
-                url: '@Url.Action("AddEditPatientInitialAssessment", "ConsultantPatient")', // Use Url.Action to generate the correct URL
                 data: formData,
                 success: function (response) {
-                    alert('Operation successful!');
-                    // Handle success response here
-                    // For example, you can show a success message or redirect the user
+                    // Handle success
+                    alert('Remake saved successfully!');
                 },
                 error: function (xhr, status, error) {
-                    // Handle error response here
+                    // Handle error
                 }
             });
         });
     });
 
     $(document).ready(function () {
-        $('#ServiceForm').submit(function (e) {
-            e.preventDefault(); // Prevent default form submission
-
-            // Serialize form data
-
-            var formData = $(this).serialize();
-
-            // Make AJAX request
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("AddEditPatientServiceDetails", "ConsultantPatient")',
-                data: formData,
-                success: function (response) {
-                    // Handle success response
-                },
-                error: function (xhr, status, error) {
-                    // Handle error response
-                }
-            });
-        });
-    });
-    $(document).ready(function () {
-        $('#btnSubmit2').on('click', function (e) {
-            debugger
-            e.preventDefault(); // Prevent default form submission
+        $("#btnReset1").click(function (event) {
+            event.preventDefault(); // Prevent the default action of the link
             
-            // Serialize the form data
-            var formData = {
-                Department_Id=@Model.Department_ID,
-                serviceHead_Id=@Model.ServiceHead_Id,
-                Service_Id=@Model.ServiceId,
-                Charges: $('#Charges').val(),
-                Discount1: $('#Discount1').val(),
-                NetAmount: $('#NetAmount').val()
-               
-            };
-            console.log("formData :: ",formData);
-
-            // Make AJAX request
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("AddEditPatientServiceDetails", "ConsultantPatient")', // Use Url.Action to generate the correct URL
-                data: formData,
-                success: function (response) {
-                    alert('Operation successful!');
-                    // Handle success response here
-                    // For example, you can show a success message or redirect the user
-                },
-                error: function (xhr, status, error) {
-                    // Handle error response here
-                }
-            });
+            // Clear validation messages
+            $("#ChiefComplaints").val("");
+            $("#PresentIllness").val("");
+            $("#PastHistory").val("");
+            $("#Remake").val("");
+            $("#FutureHistory").val("");
+            $("#PersonalHistory").val("");
+            $("#TravelHistory").val("");
         });
     });
-
-
+    
+  
     $("#btnReset").click(function () {
         // Reset the form fields
         document.getElementById("AddEditForm").reset();
@@ -1068,7 +1032,7 @@
         function calculateAmounts() {
             
             var consultantCharges = parseFloat($('#Consultant_Charges1').val());
-            var discount = parseFloat($('#Discount').val());
+            var discount = parseFloat($('#Discount1').val());
             var refundAmount = parseFloat($('#RefundAmount1').val());
 
             if (isNaN(discount)) {
@@ -1168,7 +1132,7 @@
             type: 'GET',
             data: { serviceHead_Id: serviceHead_Id },
             success: function (data) {
-                debugger;
+                
                 $("#multipledataview").html(data);
             },
             error: function (xhr, status, error) {
@@ -1212,7 +1176,7 @@
     
 
     $(document).ready(function () {
-        debugger
+        
         $('#serviceheaddropdown').change(function () {
             var ServiceHead_Id = $(this).val();
             var Patient_Id = $("#UHID").val();
@@ -1256,7 +1220,7 @@
     }
 
     function getServiceChargesList() {
-        debugger
+        
         var Service_Id = $("#ServiceDropdwon").val();
 
         // Your AJAX call or other logic here
@@ -1275,7 +1239,7 @@
 
     function calculateAmountsSingle() {        
         var Charges = parseFloat($('#Charges').val());
-        var discount = parseFloat($('#Discount1').val());
+        var discount = parseFloat($('#Discount').val());
 
         if (isNaN(discount)) {
             // If the discount value is NaN, set it to 0
@@ -1292,7 +1256,7 @@
 
 
     $('#checkId').click(function () {
-        debugger
+        
         $('.checkId').prop('checked', this.checked)
     });
 </script>

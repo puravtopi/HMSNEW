@@ -213,7 +213,7 @@ namespace HMS.Controllers
                 {
                     patientMasterModel.User_id = dataConsultant.User_Id;
                     patientMasterModel.Consultant_Charges = dataConsultant.Consultant_Charges;                    
-                    patientMasterModel.Discount = dataConsultant.Discount;
+                    patientMasterModel.Discount1 = dataConsultant.Discount;
                     //patientMasterModel.EmergencyAdminssion = dataConsultant.EmergencyAdminssion;
                     //patientMasterModel.FileChargesApplicable = dataConsultant.FileChargesApplicable;
                     patientMasterModel.RefBy_Address = dataConsultant.RefBy_Address;
@@ -289,9 +289,11 @@ namespace HMS.Controllers
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
             model.MaritalStatusList = _commonService.GetMaritalStatusList();
             patientMasterModel.GenderList = _commonService.GetGenderList();
-            //patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
+            patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
+            
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
+            patientMasterModel.DepartmentList1 = _commonService.GetDepartmentList(SclinicId);
             patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
 
@@ -1029,7 +1031,7 @@ namespace HMS.Controllers
                         else
                         {
                             TempData[Temp_Message.Error] = res.DbMsg;
-                            return RedirectToAction("AddEdit");
+                            //return RedirectToAction("AddEdit");
                         }
                     }
                     else
@@ -1055,7 +1057,7 @@ namespace HMS.Controllers
                         else
                         {
                             TempData[Temp_Message.Error] = res.DbMsg;
-                            return RedirectToAction("AddEdit");
+                            //return RedirectToAction("AddEdit");
 
                         }
                     }
