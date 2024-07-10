@@ -86,7 +86,7 @@
     <script>
        
     $("#ischeckmultiple").on('change', function () {
-       
+        debugger
         if (this.checked) {
             document.getElementById('singleservicediv').style.display = 'block';
             document.getElementById('multipleservicediv').style.display = 'none';
@@ -96,7 +96,7 @@
         }
     });
         $("#btnMultiService").on('click', function () {
-
+        debugger
             document.getElementById('singleservicediv').style.display = 'none';
             document.getElementById('multipleservicediv').style.display = 'block';
         })
@@ -198,6 +198,7 @@
 
 
         $('#checkId').click(function () {
+            debugger
             $('.checkId').prop('checked', this.checked)
         });
     </script>

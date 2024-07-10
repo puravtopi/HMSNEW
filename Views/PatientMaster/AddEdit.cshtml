@@ -414,13 +414,6 @@
 
     });
 
-    @*
-        $(document).ready(function () {
-        $("#AddEditForm").submit(function () {
-        $("#btnSubmit", this).attr("disabled", "disabled");
-        });
-        });
-        *@
         document.getElementById('btnSubmit').addEventListener('click', function (event) {
 
             var Fname = document.getElementById('Fname').value.trim();
@@ -472,7 +465,7 @@
     $(document).ready(function () {
         $('#DepartmentDropdwon').change(function () {
 
-            debugger
+            
             var Department_Id = $(this).val();
             console.log("Selected department ID: " + Department_Id);
             // Your AJAX call or other logic here

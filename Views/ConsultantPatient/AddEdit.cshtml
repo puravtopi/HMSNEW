@@ -3,6 +3,7 @@
 
     Layout = "~/Views/Shared/_CounsultantLayout.cshtml";
     HMS.Common.EncryptDecrypt encryptDecrypt = new HMS.Common.EncryptDecrypt();
+
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
 }
@@ -32,7 +33,7 @@
         <div class="card">
             @using (Html.BeginForm(Action, Controller, FormMethod.Post, new { area = Model.Area, id = "AddEditForm" }))
             {
-                if (Model.Id != null && Model.Id > 0)
+                if (@Model.Id > 0)
                 {
                     <div class="row" id="user-profile">
                         <div class="col-lg-12">
@@ -47,7 +48,9 @@
                                             </div> *@
                                                     <div class="user-wrap mt-lg-0">
                                                         <h4>@Model.Fname  @Model.Lname</h4>
-                                                        <h6 class="text-muted mb-3 font-weight-normal">
+                                                        <h6 class="text-muted mb-3 font-weight-normal"> UHID : @Model.UHID</h6>
+                                                        <h6 class="text-muted mb-3 font-weight-normal"> Consultant Name : @Model.UserName</h6>
+                                                        <h6 class="text-muted mb-3 font-weight-normal">                                                           
                                                             Visit Time: @{
                                                                 var eDate = Convert.ToDateTime(Model.EntryDateTime).ToString("dd/MM/yyyy hh:mm tt");
                                                             } @eDate
@@ -68,9 +71,11 @@
                                             <div class="tabs-menu1">
                                                 <ul class="nav">
                                                     <li class=""><a href="#tab-51" class="active show" data-toggle="tab">Profile</a></li>
-                                                    <li><a href="#tab-61" data-toggle="tab" class="">Address</a></li>
-                                                    <li><a href="#tab-71" data-toggle="tab" class="">General Details</a></li>
-                                                    <li><a href="#tab-81" data-toggle="tab" class="">Consultant Details</a></li>
+                                                    @* <li><a href="#tab-61" data-toggle="tab" class="">Address</a></li>
+                                                    <li><a href="#tab-71" data-toggle="tab" class="">General Details</a></li> *@
+                                                    <li><a href="#tab-61" data-toggle="tab" class="">Consultant Details</a></li>
+                                                    <li><a href="#tab-71" data-toggle="tab" class="">Remarks</a></li>
+                                                    <li><a href="#tab-81" data-toggle="tab" class="">Services</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -117,9 +122,8 @@
                                                     </div>
 
                                                 </div>
-                                            </div>
-                                            <div class="tab-pane" id="tab-61">
-                                                <div id="profile-log-switch">
+                                            
+                                                <div id="profile-log-switch"> 
                                                     <div class="table-responsive mb-5">
                                                         <table class="table row table-borderless w-100 m-0 border">
                                                             <tbody class="col-lg-6 p-0">
@@ -143,11 +147,10 @@
                                                         </table>
                                                     </div>
 
-                                                </div>
-                                            </div>
-                                            <div class="tab-pane" id="tab-71">
-                                                <div id="profile-log-switch">
-                                                    <div class="table-responsive mb-5">
+                                                 </div>
+                                           
+                                                <div id="profile-log-switch"> 
+                                                     <div class="table-responsive mb-5">
                                                         <table class="table row table-borderless w-100 m-0 border">
                                                             <tbody class="col-lg-6 p-0">
                                                                 <tr>
@@ -173,9 +176,9 @@
                                                         </table>
                                                     </div>
 
-                                                </div>
+                                                 </div>
                                             </div>
-                                            <div class="tab-pane" id="tab-81">
+                                            <div class="tab-pane" id="tab-61">
                                                 <div class="wideget-user-followers row">
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="mb-5 border">
@@ -305,79 +308,161 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="tab-pane" id="tab-71">
+                                                <div id="profile-log-switch">
+                                                    <div class="table-responsive mb-5">
+                                                        @using (Html.BeginForm("AddEditPatientInitialAssessment", "ConsultantPatient", FormMethod.Post, new { id = "RemakeForm" }))
+                                                        {
+                                                            <table class="table row table-borderless w-100 m-0 border">
+                                                                <tbody class="col-lg-6 p-0">
+                                                                    @Html.HiddenFor(Model=>Model.Id)
+                                                                    <tr>
+
+                                                                        <td>
+                                                                            <strong>Chief Complaints </strong>
+                                                                            @Html.TextBoxFor(Model => Model.ChiefComplaints, new { @class = "form-control", @id = "ChiefComplaints" })
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <strong>Present Illness </strong>
+                                                                            @Html.TextBoxFor(Model => Model.PresentIllness, new { @class = "form-control", @id = "PresentIllness" })
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <strong>Past History :</strong>
+                                                                            @Html.TextBoxFor(Model => Model.PastHistory, new { @class = "form-control", @id = "PastHistory" })
+                                                                        </td>
+
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <strong>Remake :</strong>
+                                                                            @Html.TextBoxFor(Model => Model.Remake, new { @class = "form-control", @id = "Remake" })
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                                <tbody class="col-lg-6 p-0">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <strong>Future History :</strong>
+                                                                            @Html.TextBoxFor(Model => Model.FutureHistory, new { @class = "form-control", @id = "FutureHistory" })
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <strong>Personal History :</strong>
+                                                                            @Html.TextBoxFor(Model => Model.PersonalHistory, new { @class = "form-control", @id = "PersonalHistory" })
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <strong>Travel History :</strong>
+                                                                            @Html.TextBoxFor(Model => Model.TravelHistory, new { @class = "form-control", @id = "TravelHistory" })
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+                                                                            <a href="#" class="btn btn-secondary" id="btnReset1">Reset</a>
+                                                                            <button class="btn btn-primary" id="btnSubmit1">Save Remake</button>
+
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                        }
+                                                        
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="tab-pane" id="tab-81">
+                                                <div id="profile-log-switch">
+                                                    @* <div class="table-responsive mb-5"> *@
+                                                    @using (Html.BeginForm("AddEditPatientServiceDetails", "ConsultantPatient", FormMethod.Post, new { id = "ServiceForm" }))
+                                                        {
+                                                            <div class="row row-sm">
+                                                                <div class="col-lg-4">
+                                                                    <div class="form-group">
+                                                                    @Html.HiddenFor(Model => Model.Id)
+                                                                @Html.LabelFor(Model => Model.Department, "Department", new { @class = "form-label" })
+                                                                @Html.DropDownListFor(Model => Model.Department, new SelectList(Model.DepartmentList1, "Value", "Text", Model.Department_ID), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwon" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                    <div class="form-group">
+                                                                        @Html.LabelFor(Model => Model.ServiceHead, "Service Head", new { @class = "form-label required-label" })
+                                                                        @Html.DropDownListFor(Model => Model.ServiceHead, new SelectList(Model.ServiceHeadList, "Value", "Text", Model.ServiceHead_Id), new { @class = "form-control select2-list dropdown-validation", @id = "serviceheaddropdown" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                        @Html.LabelFor(Model => Model.Service, "Service", new { @class = "form-label required-label" })
+                                                                    @Html.DropDownListFor(Model => Model.Service, new SelectList(Model.ServiceList, "Value", "Text", Model.ServiceId), new { @class = "form-control select2-list dropdown-validation", @id = "ServiceDropdwon", onchange = "getServiceChargesList()" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                        @Html.LabelFor(Model => Model.Charges, "Charges", new { @class = "form-label" })
+                                                                    @Html.TextBoxFor(Model => Model.Charges, new { @class = "form-control", @id = "Charges", @readonly = "readonly" })
+                                                                </div>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                <div class="form-group" >
+                                                                        @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label" })
+                                                                    @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "calculateAmountsSingle()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                                            </div>
+                                                                </div>
+
+                                                                <div class="col-lg-4">
+                                                                <div class="form-group">
+                                                                        @Html.LabelFor(Model => Model.NetAmount, "Net Amount ", new { @class = "form-label" })
+                                                                        @Html.TextBoxFor(Model => Model.NetAmount, new { @class = "form-control", @id = "NetAmount", @readonly = "readonly" })                                                                        
+                                                                    </div>
+                                                                </div>                                                               
+                                                                
+                                                            </div>
+                                                            <div class="form-group mb-0 justify-content-end">
+                                                                <div class="checkbox">
+                                                                    <div class="custom-checkbox custom-control">
+                                                                        <input type="checkbox" class="custom-control-input" id="ischeckmultiple" name="ischeckmultiple">
+                                                                        <label for="ischeckmultiple" class="custom-control-label mt-1">If you select multiple service then check checkbox</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <div id="multipledataview" style="display:none">
+                                                            @Html.Partial("_ConsultantPatientServiceDetail", Model.serviceMasterLists)
+                                                        </div>
+                                                            <div class="row row-sm">
+                                                                <div class="col-lg-12 justify-content-center" id="btnresertandbtnsubmit">
+                                                                    <a href="@Url.Action("Index","ConsultantPatient")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+                                                                @* <button class="btn btn-primary" id="btnSubmit2" >Save Service</button> *@
+                                                                <button class="btn btn-primary" id="btnSubmit2">Save Service</button>
+
+                                                                </div>
+                                                            </div>
+                                                        }
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="card">
-                                <div class="card-body">
-                                    @if (Model.patientServiceMasters != null)
-                                    {
-                                        <div class="row row-sm">
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.Department, "Department", new { @class = "form-label" })
-                                                    @Html.DropDownListFor(Model => Model.patientServiceMasters.Department, new SelectList(Model.patientServiceMasters.departmentList, "Value", "Text", Model.patientServiceMasters.Department), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwon" })
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.ServiceHead, "Service Head", new { @class = "form-label" })
-                                                    @Html.DropDownListFor(Model => Model.patientServiceMasters.ServiceHead, new SelectList(Model.patientServiceMasters.serviceHeadList, "Value", "Text", Model.patientServiceMasters.ServiceHead), new { @class = "form-control select2-list dropdown-validation", @id = "serviceheaddropdown" })
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.Service, "Service", new { @class = "form-label" })
-                                                    @Html.DropDownListFor(Model => Model.patientServiceMasters.Service, new SelectList(Model.patientServiceMasters.serviceList, "Value", "Text", Model.patientServiceMasters.Service), new { @class = "form-control select2-list dropdown-validation", @id = "ServiceDropdwon", onchange = "getServiceCharges()" })
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.Charges, "Charges", new { @class = "form-label" })
-                                                    @Html.TextBoxFor(Model => Model.patientServiceMasters.Charges, new { @class = "form-control", @id = "Charges", @readonly = "readonly" })
-                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Charges)</p> *@
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.Discount, "Discount", new { @class = "form-label" })
-                                                    @Html.TextBoxFor(Model => Model.patientServiceMasters.Discount, new { @class = "form-control", @id = "Discount", onchange = "calculateAmountsSingle()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
-                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Discount)</p> *@
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(Model => Model.patientServiceMasters.NetAmount, "Net Amount ", new { @class = "form-label" })
-                                                    @Html.TextBoxFor(Model => Model.patientServiceMasters.NetAmount, new { @class = "form-control", @id = "NetAmount" })
-                                                    @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.TotalAmount)</p> *@
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
-
-                                    <div class="form-group mb-0 justify-content-end">
-                                        <div class="checkbox">
-                                            <div class="custom-checkbox custom-control">
-                                                <input type="checkbox" class="custom-control-input" id="ischeckmultiple" name="ischeckmultiple">
-                                                <label for="ischeckmultiple" class="custom-control-label mt-1">If you select multiple service then check checkbox</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-5">
-                                        <div class="col-lg-12 justify-content-center" id="divMasterId">
-                                            <a href="@Url.Action("Index","ConsultantPatient")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
-                                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+                           
                         </div><!-- col end -->
-                    </div>
+                    @* </div> *@
                 }
                 else
                 {
@@ -400,8 +485,6 @@
                                         </div>
                                     </div>
                                     <div class="row row-sm">
-
-
                                         @if (Model.Id > 0)
                                         {
                                             <div class="col-lg-4">
@@ -578,15 +661,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @* <div class="row row-sm">
-                            <div class="col-lg-12 justify-content-center">
-                            <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
-
-                            <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
-
-                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
-                            </div>
-                            </div> *@
+                                   
                                 </div>
                             </div>
 
@@ -632,15 +707,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @* <div class="row row-sm">
-                            <div class="col-lg-12 justify-content-center">
-                            <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
-
-                            <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
-
-                            <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
-                            </div>
-                            </div> *@
                                 </div>
                             </div>
                             <div class="card">
@@ -652,13 +718,13 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 @Html.LabelFor(Model => Model.Departments, new { @class = "form-label " })
-                                                @Html.DropDownListFor(Model => Model.Departments, new SelectList(Model.departmentList, "Value", "Text", Model.Department_id), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwon" })
+                                                @Html.DropDownListFor(Model => Model.Departments, new SelectList(Model.departmentList, "Value", "Text", Model.Department_id), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwonList" })
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 @Html.LabelFor(Model => Model.User_id, "Name", new { @class = "form-label required-label" })
-                                                @Html.DropDownListFor(Model => Model.User_id, new SelectList(Model.User_DesignationList, "Value", "Text", Model.User_id), new { @class = "form-control select2-list dropdown-validation", @id = "userdropdown", onchange = "getConsultantCharges()" })
+                                                @Html.DropDownListFor(Model => Model.User_id, new SelectList(Model.User_DesignationList, "Value", "Text", Model.User_id), new { @class = "form-control select2-list dropdown-validation", @id = "userdropdownList", onchange = "getConsultantCharges()" })
                                                 <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.User_id)</p>
                                             </div>
                                         </div>
@@ -674,21 +740,21 @@
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 @Html.LabelFor(Model => Model.Consultant_Charges, "Consultant Charges", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.Consultant_Charges, new { @class = "form-control", @id = "Consultant_Charges", @readonly = "readonly" })
+                                                @Html.TextBoxFor(Model => Model.Consultant_Charges, new { @class = "form-control", @id = "Consultant_Charges1", @readonly = "readonly" })
                                                 @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Charges)</p> *@
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
-                                                @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "calculateAmounts()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                                @Html.LabelFor(Model => Model.Discount1, "Discount", new { @class = "form-label" })
+                                                @Html.TextBoxFor(Model => Model.Discount1, new { @class = "form-control", @id = "Discount1", onchange = "calculateAmounts()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
                                                 @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Discount)</p> *@
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
                                             <div class="form-group">
                                                 @Html.LabelFor(Model => Model.RefundAmount, "Refund Amount", new { @class = "form-label" })
-                                                @Html.TextBoxFor(Model => Model.RefundAmount, new { @class = "form-control", @id = "RefundAmount", onchange = "calculateAmounts()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                                @Html.TextBoxFor(Model => Model.RefundAmount, new { @class = "form-control", @id = "RefundAmount1", onchange = "calculateAmounts()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
                                                 @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.RefundAmount)</p> *@
                                             </div>
                                         </div>
@@ -755,8 +821,92 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 <!-- jQuery Unobtrusive Validation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
     <script>
+    $(document).ready(function () {
+        $('#btnSubmit2').click(function () {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Serialize form data
+            var formData = $('#ServiceForm').serialize();
+            console.log(formData);
+            // Send data via AJAX to the controller
+            $.ajax({
+                url: '/ConsultantPatient/AddEditPatientServiceDetails', // URL of your controller's action
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Handle success
+                    alert('Service saved successfully!');
+                },
+                error: function (xhr, status, error) {
+                    
+                    // Handle error
+                    console.error('Error saving service:', error);
+                    alert('An error occurred while saving the service.');
+                }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $('#btnSubmit1').click(function () {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Serialize form data from the form with ID "RemakeForm"
+            var serializedFormData = $('#RemakeForm').serialize();
+            // Additional data to append to the serialized form data
+            var additionalData = {
+                Patient_Id: @Model.Id,
+                ChiefComplaints: $('#ChiefComplaints').val(),
+                PresentIllness: $('#PresentIllness').val(),
+                PastHistory: $('#PastHistory').val(),
+                Remake: $('#Remake').val(),
+                FutureHistory: $('#FutureHistory').val(),
+                PersonalHistory: $('#PersonalHistory').val(),
+                TravelHistory: $('#TravelHistory').val()
+            };
+            // Convert additionalData object to query string
+            var additionalDataStr = $.param(additionalData);
+
+            // Append additional data to the serialized form data
+            var formData = serializedFormData + '&' + additionalDataStr;
+
+            // var formData = $('#RemakeForm').serialize();
+            console.log(formData);
+            // Send data via AJAX to the controller
+            $.ajax({
+                url: '/ConsultantPatient/AddEditPatientInitialAssessment', // URL of your controller's action
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    // Handle success
+                    alert('Remake saved successfully!');
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $("#btnReset1").click(function (event) {
+            event.preventDefault(); // Prevent the default action of the link
+            
+            // Clear validation messages
+            $("#ChiefComplaints").val("");
+            $("#PresentIllness").val("");
+            $("#PastHistory").val("");
+            $("#Remake").val("");
+            $("#FutureHistory").val("");
+            $("#PersonalHistory").val("");
+            $("#TravelHistory").val("");
+        });
+    });
+    
+  
     $("#btnReset").click(function () {
         // Reset the form fields
         document.getElementById("AddEditForm").reset();
@@ -766,14 +916,7 @@
 
 
     });
-
-    @*
-        $(document).ready(function () {
-        $("#AddEditForm").submit(function () {
-        $("#btnSubmit", this).attr("disabled", "disabled");
-        });
-        });
-        *@
+        
         document.getElementById('btnSubmit').addEventListener('click', function (event) {
             var Fname = document.getElementById('Fname').value.trim();
             if (Fname === '') {
@@ -821,10 +964,40 @@
         });
 
 
+    $(document).ready(function () {
+        
+        $('#DepartmentDropdwonList').change(function () {
+
+            var Department_Id = $(this).val();
+            console.log("Selected department ID: " + Department_Id);
+            // Your AJAX call or other logic here
+            $.ajax({
+                url: '/UserMaster/GetBYDepartmentIdWiseUserData',
+                type: 'GET',
+                data: { Department_Id: Department_Id },
+                success: function (data) {
+                    PopulateSubProductDropDown("#userdropdownList", data)
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                }
+            });
+        });
+    });
+
+    function PopulateSubProductDropDown(dropDownId, list, selectedId) {
+        $(dropDownId).empty();
+        $(dropDownId).append("<option value='0'>Select</option>")
+        $.each(list, function (index, row) {
+            $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
+        });
+    }
+
+
 
     function getConsultantCharges() {
-
-        var userId = $("#userdropdown").val();
+        
+        var userId = $("#userdropdownList").val();
 
         // Your AJAX call or other logic here
         $.ajax({
@@ -832,10 +1005,7 @@
             type: 'GET',
             data: { User_Id: userId },
             success: function (data) {
-                debugger
-
-
-                $("#Consultant_Charges").val(data.opD_Charge)
+                $("#Consultant_Charges1").val(data.opD_Charge)
                 $("#TotalAmount").val(data.opD_Charge)
 
 
@@ -860,10 +1030,10 @@
         }
     @* Discount Amount Count Function *@
         function calculateAmounts() {
-            debugger;
-            var consultantCharges = parseFloat($('#Consultant_Charges').val());
-            var discount = parseFloat($('#Discount').val());
-            var refundAmount = parseFloat($('#RefundAmount').val());
+            
+            var consultantCharges = parseFloat($('#Consultant_Charges1').val());
+            var discount = parseFloat($('#Discount1').val());
+            var refundAmount = parseFloat($('#RefundAmount1').val());
 
             if (isNaN(discount)) {
                 // If the discount value is NaN, set it to 0
@@ -874,12 +1044,6 @@
                 refundAmount = 0;
             }
 
-            // Calculate the refund amount
-            // var refundAmount = (consultantCharges * discount)/100;
-
-            // // Update the RefundAmount textbox with the calculated value
-            // $('#RefundAmount').val(refundAmount.toFixed(2));
-
             // Calculate the total amount
             var totalAmount = consultantCharges - discount - refundAmount;
 
@@ -889,14 +1053,14 @@
 
 
     function getEmergencyCharges() {
-        var userId = $("#userdropdown").val();
+        var userId = $("#userdropdownList").val();
         $.ajax({
             url: '/UserMaster/GetChargesByUserId',
             type: 'GET',
             data: { User_Id: userId },
             success: function (data) {
-                debugger
-                $("#Consultant_Charges").val(data.emergency_Charge)
+                
+                $("#Consultant_Charges1").val(data.emergency_Charge)
                 $("#EmergencyAdminssion").val(true);
                 $("#FileChargesApplicable").val(false);
                 calculateAmounts();
@@ -905,14 +1069,14 @@
         });
     }
     function getNightCharges() {
-        var userId = $("#userdropdown").val();
+        var userId = $("#userdropdownList").val();
         $.ajax({
             url: '/UserMaster/GetChargesByUserId',
             type: 'GET',
             data: { User_Id: userId },
             success: function (data) {
-                debugger
-                $("#Consultant_Charges").val(data.night_Charge);
+                
+                $("#Consultant_Charges1").val(data.night_Charge);
                 $("#EmergencyAdminssion").val(true);
                 $("#FileChargesApplicable").val(false);
                 calculateAmounts();
@@ -921,6 +1085,66 @@
         });
     }
 
+
+    // Get the current date and time
+    var currentDateTime = new Date();
+
+    // Format the current date and time to match the expected format for datetime-local input
+    var year = currentDateTime.getFullYear().toString();
+    var month = (currentDateTime.getMonth() + 1).toString().padStart(2, "0");
+    var day = currentDateTime.getDate().toString().padStart(2, "0");
+    var hours = currentDateTime.getHours().toString().padStart(2, "0");
+    var minutes = currentDateTime.getMinutes().toString().padStart(2, "0");
+
+    // Set the default value of the datetime-local input
+    document.getElementById("EntryDateTime").value = `${year}-${month}-${day} ${hours}:${minutes}`;
+</script>
+    <script>
+    
+    $("#ischeckmultiple").on('change', function () {        
+        if (this.checked) {
+            document.getElementById('multipledataview').style.display = 'block';
+            // document.getElementById('divMasterId').style.display = 'none';
+            document.getElementById('ServiceDropdwon').style.display = 'none';
+            document.getElementById('Charges').style.display = 'none';
+            document.getElementById('NetAmount').style.display = 'none';
+            document.getElementById('Discount1').style.display = 'none';
+            document.getElementById('btnresertandbtnsubmit').style.display = 'none';
+
+        } else {
+            document.getElementById('multipledataview').style.display = 'none';
+            // document.getElementById('divMasterId').style.display = 'block';
+            document.getElementById('ServiceDropdwon').style.display = 'block';
+            document.getElementById('Charges').style.display = 'block';
+            document.getElementById('NetAmount').style.display = 'block';
+            document.getElementById('Discount1').style.display = 'block';
+            document.getElementById('btnresertandbtnsubmit').style.display = 'block';
+        }
+    });
+    $("#openinfomodel").on('click', function () {        
+        document.getElementById('singleservicediv').style.display = 'block';
+        document.getElementById('multipleservicediv').style.display = 'none';
+        var serviceHead_Id = $("#serviceheaddropdown").val();
+        console.log(serviceHead_Id);
+        // Your AJAX call or other logic here
+        $.ajax({
+            url: '/ConsultantPatient/PatientServiceMasterDetails',
+            type: 'GET',
+            data: { serviceHead_Id: serviceHead_Id },
+            success: function (data) {
+                
+                $("#multipledataview").html(data);
+            },
+            error: function (xhr, status, error) {
+                // Handle errors
+            }
+        });
+    })
+
+    $("#btnMultiService").on('click', function () {        
+        document.getElementById('singleservicediv').style.display = 'none';
+        document.getElementById('multipleservicediv').style.display = 'block';
+    })
 
     $(document).ready(function () {
         $('#DepartmentDropdwon').change(function () {
@@ -949,9 +1173,10 @@
             $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
         });
     }
-    ServiceDropdwon
+    
 
     $(document).ready(function () {
+        
         $('#serviceheaddropdown').change(function () {
             var ServiceHead_Id = $(this).val();
             var Patient_Id = $("#UHID").val();
@@ -967,7 +1192,7 @@
 
                     PopulateSubProductDropDown("#ServiceDropdwon", data);
                     $.ajax({
-                        url: '/PatientMaster/PatientServiceMasterDetails',
+                        url: '/ConsultantPatient/PatientServiceMasterDetails',
                         type: 'GET',
                         data: { serviceHead_Id: ServiceHead_Id },
                         success: function (data) {
@@ -986,7 +1211,7 @@
         });
     });
 
-    function PopulateSubProductDropDown(dropDownId, list, selectedId) {
+    function PopulateSubProductDropDown(dropDownId, list, selectedId) {        
         $(dropDownId).empty();
         $(dropDownId).append("<option value='0'>Select</option>")
         $.each(list, function (index, row) {
@@ -994,8 +1219,8 @@
         });
     }
 
-    function getServiceCharges() {
-
+    function getServiceChargesList() {
+        
         var Service_Id = $("#ServiceDropdwon").val();
 
         // Your AJAX call or other logic here
@@ -1004,8 +1229,7 @@
             type: 'GET',
             data: { Service_Id: Service_Id },
             success: function (data) {
-
-                $("#Charges").val(data.charges);
+                $("#Charges").val(data.charges);               
             },
             error: function (xhr, status, error) {
                 // Handle errors
@@ -1013,7 +1237,7 @@
         });
     }
 
-    function calculateAmountsSingle() {
+    function calculateAmountsSingle() {        
         var Charges = parseFloat($('#Charges').val());
         var discount = parseFloat($('#Discount').val());
 
@@ -1029,18 +1253,10 @@
         $('#NetAmount').val(totalAmount.toFixed(2));
     }
 
-</script>
-<script>
-    // Get the current date and time
-    var currentDateTime = new Date();
 
-    // Format the current date and time to match the expected format for datetime-local input
-    var year = currentDateTime.getFullYear().toString();
-    var month = (currentDateTime.getMonth() + 1).toString().padStart(2, "0");
-    var day = currentDateTime.getDate().toString().padStart(2, "0");
-    var hours = currentDateTime.getHours().toString().padStart(2, "0");
-    var minutes = currentDateTime.getMinutes().toString().padStart(2, "0");
 
-    // Set the default value of the datetime-local input
-    document.getElementById("EntryDateTime").value = `${year}-${month}-${day} ${hours}:${minutes}`;
+    $('#checkId').click(function () {
+        
+        $('.checkId').prop('checked', this.checked)
+    });
 </script>

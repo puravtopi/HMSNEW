@@ -13,6 +13,8 @@ namespace HMS.Common
         public static string SessionClinicDesignation = "ClinicDesig";
         public static string SessionUserId = "UserId";
         public static string SessionUserName = "UserName";
+        public static string SessionpatientInitialAssessment_Id = "patientInitialAssessment_Id";
         
+
     }
 }

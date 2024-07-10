@@ -32,16 +32,6 @@ namespace HMS.Models
         public string ServiceChangeDirection { get; set; }
         public float ServicePercentageChange { get; set; }
 
-        public List<ReceptionWiseCountModel> ReceptionWiseCount { get; set; }
-
-    }
-
-    public class ReceptionWiseCountModel
-    {
-        public int Id { get; set; }
-        public int AvgCount { get; set; }
-        public int TotalCount { get; set; }
-        public string Name { get; set; }
     }
     public class ActiveClient 
     {

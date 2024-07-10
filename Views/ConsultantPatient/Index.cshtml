@@ -19,17 +19,6 @@
 
     });
 
-    function ShowPopupQPToPatient(id, patientId) {
-        debugger;
-        $.get("/PatientMaster/PatientServiceDetails?Patient_Id=" + patientId + "&Id=" + id + "", function (data) {
-            $("#PatientServiceModel").html(data);
-            $("#ModelPatientService").modal("show");
-        });
-    }
-    $("#btnclosePatientService").on("click", function (event) {
-        $("#ModelPatientService").modal("hide");
-
-    });
 </script>
 
 
@@ -126,11 +115,10 @@
                                             }
 
 
-                                            <a class="btn btn-info btn-sm text-white mr-2" href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"><i class="fa fa-edit"></i></a>
+                                            @* <a class="btn btn-info btn-sm text-white mr-2" href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"><i class="fa fa-edit"></i></a> *@
                                             <a class="btn btn-danger btn-sm text-white mr-2" data-toggle="modal" data-target=@hrefid><i class="fa fa-trash-o"></i></a>
-                                            <a onclick="ShowPopupQP(0,@Model.patientMastersList[i].Id.ToString())" class="btn btn-warning btn-sm text-white mr-2"><i class="fa fa-wheelchair"></i></a>
-                                            <a onclick="ShowPopupQPToPatient(0,@Model.patientMastersList[i].Id.ToString())" class="btn btn-secondary btn-sm text-white mr-2"><i class="fa fa-stethoscope"></i></a>
-
+                                            @* <a onclick="ShowPopupQP(0,@Model.patientMastersList[i].Id.ToString())" class="btn btn-warning btn-sm text-white mr-2"><i class="fa fa-wheelchair"></i></a> *@
+                                            
                                         </td>
                                        @*  <td>
                                             <a href="@Url.Action("CreatePDFDocument","PatientMaster",new { patientId = @Model.patientMastersList[i].Id.ToString() })"><i class="fas fa-arrow-alt-circle-down"></i></a>
@@ -139,8 +127,8 @@
                                         <td>@Model.patientMastersList[i].ReceiptNo</td>
                                         <td>@Model.patientMastersList[i].UHID</td>                                        
                                         <td>@Model.patientMastersList[i].EntryDateTime</td>
-                                        <td>@Model.patientMastersList[i].Fname</td>
-                                        <td>@Model.patientMastersList[i].Lname</td>
+                                        <td><a href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"><strong>@Model.patientMastersList[i].Fname</strong></a></td>
+                                        <td><a href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"><strong>@Model.patientMastersList[i].Lname</strong></a></td>
                                        
                                         <td>@Model.patientMastersList[i].BloodGroup</td>
                                         
@@ -177,10 +165,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
-
-
-
                                 }
                             }
                             else
@@ -200,6 +184,4 @@
     </div>
 </div>
 <div id="RevisitDetailModel">
-</div>
-<div id="PatientServiceModel">
 </div>

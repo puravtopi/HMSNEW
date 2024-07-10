@@ -1,6 +1,6 @@
 ﻿@model HMS.Models.ReceptionistDashboardModel
 @{
-    Layout = "~/Views/Shared/_ClinicLayout.cshtml";
+    Layout = "~/Views/Shared/_ReceptionistLayout.cshtml";
     HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();

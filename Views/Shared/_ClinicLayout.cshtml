@@ -7,7 +7,6 @@
 @{
     string currentAction = ViewContext.RouteData.Values["action"].ToString();
     string controllerName = ViewContext.RouteData.Values["controller"].ToString();
-    var currentRole = _httpContextAccessor.HttpContext.Session.GetString(SessionHelper.SessionClinicDesignation);
 
 }
 <!DOCTYPE html>
@@ -138,28 +137,17 @@
                     <li class="slide">
                         <a class="side-menu__item" data-toggle="slide" href="#"><span class="icon-menu-img"><img src="../assets/images/svgs/homepage.svg" class="side_menu_img svg-1" alt="image"></span><span class="side-menu__label">CRM</span><i class="angle fa fa-angle-right"></i></a>
                         <ul class="slide-menu">
-
-                            @{
-                                if (currentRole.ToLower() == "clinic master")
-                                {
-                                    <li><a class="slide-item" href="@Url.Action("Index","ClinicDashboard"@* , new { area = "Clinic" } *@)"><span>Dashboard</span></a></li>
-                                    <li><a class="slide-item" href="@Url.Action("Index","ClinicDepartmentMaster")"><span>Department</span></a></li>
-                                    <li><a class="slide-item" href="@Url.Action("Index","ClinicDesignationMaster")"><span>Designation</span></a></li>
-                                    <li><a class="slide-item" href="@Url.Action("Index","ClinicUserMaster")"><span>User</span></a></li>
-                                    <li><a class="slide-item" href="@Url.Action("Index","PatientMaster")"><span>Patient</span></a></li>
-                                    <li><a class="slide-item" href="@Url.Action("Index","ServiceHeadMaster")"><span>Service Head</span></a></li>
-                                    <li><a class="slide-item" href="@Url.Action("Index","ServiceMaster")"><span>Services</span></a></li>
-                                    @* <li><a class="slide-item" href="@Url.Action("Index","ConsultantMaster")"><span>Consultant</span></a></li> *@
-                                }
-                                else if (currentRole.ToLower() == "receptionist")
-                                {
-                                    <li><a class="slide-item" href="@Url.Action("Index","ReceptionistDashboard"@* , new { area = "Clinic" } *@)"><span>Dashboard</span></a></li>
-                                    <li><a class="slide-item" href="@Url.Action("Index","PatientMaster")"><span>Patient</span></a></li>
-                                }
-                            }
-
+                            <li><a class="slide-item" href="@Url.Action("Index","ClinicDashboard"@* , new { area = "Clinic" } *@)"><span>Dashboard</span></a></li>
+                            <li><a class="slide-item" href="@Url.Action("Index","ClinicDepartmentMaster")"><span>Department</span></a></li>
+                            <li><a class="slide-item" href="@Url.Action("Index","ClinicDesignationMaster")"><span>Designation</span></a></li>
+                            <li><a class="slide-item" href="@Url.Action("Index","ClinicUserMaster")"><span>User</span></a></li>
+                            <li><a class="slide-item" href="@Url.Action("Index","PatientMaster")"><span>Patient</span></a></li>
+                            <li><a class="slide-item" href="@Url.Action("Index","ServiceHeadMaster")"><span>Service Head</span></a></li>
+                            <li><a class="slide-item" href="@Url.Action("Index","ServiceMaster")"><span>Services</span></a></li>
+                            <li><a class="slide-item" href="@Url.Action("Index","ActivityMaster")"><span>Activity</span></a></li>
+                            <li><a class="slide-item" href="@Url.Action("Index","ActivityMasterDetails")"><span>Activity Details</span></a></li>
                         </ul>
-                    </li>
+                    </li>                  
                 </ul>
             </aside>
 
@@ -743,8 +731,8 @@
                 error: function (error) {
                     alert("error");
                 }
-                                                                                    });
-                                                                                }
+                                                    });
+                                                }
         $(document).ready(function () {
             if ($('.dataTables_empty').is(':visible')) {
                 // Check if btn-excel class is visible
