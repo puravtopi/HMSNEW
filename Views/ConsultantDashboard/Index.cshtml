@@ -5,6 +5,12 @@
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
 }
+<style>
+    .pricing-table:hover > .panel > .panel-body-landing > .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+        font-weight: 600 !important;
+        -webkit-transition: all .3s ease;
+    }
+</style>
 <div class="page-header">
     <div class="page-leftheader">
         <h4 class="page-title mb-0">DashBoard </h4>
@@ -14,245 +20,327 @@
 @using (Html.BeginForm(Action, Controller, null, FormMethod.Post))
 {
     <div class="row">
-	    <div class="col-xl-12">
-		    <div class="banner banner-color mt-0">
-			    <div class="col-xl-2 col-lg-3 col-md-12">
-				    <img src="../assets/images/svg/new_message.svg" alt="image" class="image">
-			    </div>
-			    <div class="page-content col-xl-7 col-lg-6 col-md-12">
-				    <h3 class="mb-1">Welcome back!  @ViewBag.Consultantname </h3>
-				    <p class="mb-0 fs-16">@ViewBag.Currentdate &ensp;||&ensp; Start Time :-@ViewBag.StartedTime &ensp;-&ensp; End Time :-@ViewBag.EndedTime</p>
-			    </div>			   
-		    </div>
-	    </div>
+        <div class="col-xl-12">
+            <div class="banner banner-color mt-0">
+                <div class="col-xl-2 col-lg-3 col-md-12">
+                    <img src="../assets/images/svg/new_message.svg" alt="image" class="image">
+                </div>
+                <div class="page-content col-xl-7 col-lg-6 col-md-12">
+                    <h3 class="mb-1">Welcome back!  @ViewBag.Consultantname </h3>
+                    <p class="mb-0 fs-16">@ViewBag.Currentdate &ensp;||&ensp; Start Time :-@ViewBag.StartedTime &ensp;-&ensp; End Time :-@ViewBag.EndedTime</p>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- row opened -->
-	<div class="row">
-	    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-		    <div class="card overflow-hidden">
-			    <div class="card-body">
-				    <div class="d-flex">
-					    <div class="">
-						    <p class="mb-2 h6">Active Client</p>
-    						<h2 class="mb-1 ">@ViewBag.totalPatient</h2>
+    <div class="row">
 
-                            @if(@ViewBag.ChangeDirection=="Increase")
+        <!-- row opened -->
+        <div class="row">
+            <div class="col-md-12 col-lg-6 col-xl-3">
+                <div class="card overflow-hidden">
+                    <div class="card-body pb-0 d-flex">
+                        <div>
+                            <h6 class="fs-13 mb-2 text-primary">Active Client</h6>
+                            <h3 class="mb-0">@ViewBag.totalPatient</h3>
+                        </div>
+                        <div class="ml-auto text-right">
+                            @if (@ViewBag.ChangeDirection == "Increase")
                             {
                                 <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.PercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.ChangeDirection</p>
                             }
-                             else if(@ViewBag.ChangeDirection=="Decrease")
+                            else if (@ViewBag.ChangeDirection == "Decrease")
                             {
                                 <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.PercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.ChangeDirection</p>
-                            } 
+                            }
                             else
                             {
                                 <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.PercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.ChangeDirection</p>
                             }
+
                         </div>
-			    		<div class=" my-auto ml-auto">
-						<div class="chart-wrapper text-center">
-							<canvas id="areaChart1" class="areaChart2 chartjs-render-monitor chart-dropshadow-primary overflow-hidden mx-auto"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-        </div>
-    </div>
-	<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-		<div class="card overflow-hidden">
-			<div class="card-body">
-				<div class="d-flex">
-					<div class="">
-						<p class="mb-2 h6">Total Revenue</p>
-						<h2 class="mb-1 ">$@ViewBag.netamount</h2>
-                            @if(@ViewBag.RevenueChangeDirection=="Increase")
+                    </div>
+                    <div class="chart-wrapper ">
+                        <canvas id="cryptoChart" class="chart-dropshadow-primary cryptoChart overflow-hidden"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6 col-xl-3">
+                <div class="card overflow-hidden">
+                    <div class="card-body pb-0 d-flex">
+                        <div>
+                            <h6 class="fs-13 mb-2 text-primary">Total Revenue</h6>
+                            <h3 class="mb-0">$@ViewBag.netamount</h3>
+                        </div>
+                        <div class="ml-auto text-right">
+                            @if (@ViewBag.RevenueChangeDirection == "Increase")
                             {
                                 <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.RevenuePercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.RevenueChangeDirection</p>
                             }
-                             else if(@ViewBag.RevenueChangeDirection=="Decrease")
+                            else if (@ViewBag.RevenueChangeDirection == "Decrease")
                             {
                                 <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
-                            } 
+                            }
                             else
                             {
                                 <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
                             }
-					</div>
-					<div class=" my-auto ml-auto">
-						<div class="chart-wrapper">
-							<canvas id="areaChart2" class="areaChart2 chartjs-render-monitor chart-dropshadow-secondary overflow-hidden"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-		<div class="card overflow-hidden">
-			<div class="card-body">
-				<div class="d-flex">
-					<div class="">
-						<p class="mb-2 h6">Services</p>
-						<h2 class="mb-1 ">@ViewBag.TodayServiceCount</h2>
-						@if(@ViewBag.ServiceChangeDirection=="Increase")
+                        </div>
+                    </div>
+                    <div class="chart-wrapper ">
+                        <canvas id="cryptoChart3" class="chart-dropshadow-secondary cryptoChart3 overflow-hidden"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6 col-xl-3">
+                <div class="card overflow-hidden">
+                    <div class="card-body pb-0 d-flex">
+                        <div>
+                            <h6 class="fs-13 mb-2 text-primary">Services</h6>
+                            <h3 class="mb-0">@ViewBag.TodayServiceCount</h3>
+                        </div>
+                        <div class="ml-auto text-right">
+                            @if (@ViewBag.ServiceChangeDirection == "Increase")
                             {
                                 <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.ServicePercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.ServiceChangeDirection</p>
                             }
-                             else if(@ViewBag.RevenueChangeDirection=="Decrease")
+                            else if (@ViewBag.RevenueChangeDirection == "Decrease")
                             {
                                 <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.ServicePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
-                            } 
+                            }
                             else
                             {
                                 <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.ServicePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
                             }
-					</div>
-					<div class="my-auto ml-auto">
-						<div class="chart-wrapper">
-							<canvas id="areaChart3" class="areaChart3 chartjs-render-monitor chart-dropshadow-info overflow-hidden"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-sm-12 col-md-12 col-lg-6 col-xl-3">
-		<div class="card overflow-hidden">
-			<div class="card-body">
-				<div class="d-flex">
-					<div class="">
-						<p class="mb-2 h6">Pending Patient</p>
-						<h2 class="mb-1 ">@ViewBag.PatienIsCheckedpending</h2>
-						<p class="mb-0 text-muted"><span class="text-danger">(+0.42%)</span><i class="fe fe-arrow-down text-danger"></i>Decrease</p>
-					</div>
-					<div class="my-auto ml-auto">
-						<div class="chart-wrapper">
-							<canvas id="areaChart4" class="areaChart4 chartjs-render-monitor chart-dropshadow-success overflow-hidden"></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	</div>
-	<!-- row closed -->
-	
-   <div class="row">
-        <div class="col-xl-12 product">
+                        </div>
+                    </div>
+                    <div class="chart-wrapper ">
+                        <canvas id="cryptoChart2" class="chart-dropshadow-info cryptoChart2 overflow-hidden"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6 col-xl-3">
+                <div class="card overflow-hidden">
+                    <div class="card-body pb-0 d-flex">
+                        <div>
+                            <h6 class="fs-13 mb-2 text-primary">Pending Patient</h6>
+                            <h3 class="mb-0">@ViewBag.PatienIsCheckedpending</h3>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper ">
+                        <canvas id="cryptoChart4" class="chart-dropshadow-success cryptoChart4 overflow-hidden"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- row closed -->
+
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 hidden">
+            <div class="card overflow-hidden">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="">
+                            <p class="mb-2 h6">Active Client</p>
+                            <h2 class="mb-1 ">@ViewBag.totalPatient</h2>
+
+                            @if (@ViewBag.ChangeDirection == "Increase")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.PercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.ChangeDirection</p>
+                            }
+                            else if (@ViewBag.ChangeDirection == "Decrease")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.PercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.ChangeDirection</p>
+                            }
+                            else
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.PercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.ChangeDirection</p>
+                            }
+                        </div>
+                        <div class=" my-auto ml-auto">
+                            <div class="chart-wrapper text-center">
+                                <canvas id="areaChart1" class="areaChart2 chartjs-render-monitor chart-dropshadow-primary overflow-hidden mx-auto"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 hidden">
+            <div class="card overflow-hidden">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="">
+                            <p class="mb-2 h6">Total Revenue</p>
+                            <h2 class="mb-1 ">$@ViewBag.netamount</h2>
+                            @if (@ViewBag.RevenueChangeDirection == "Increase")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.RevenuePercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.RevenueChangeDirection</p>
+                            }
+                            else if (@ViewBag.RevenueChangeDirection == "Decrease")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                            }
+                            else
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                            }
+                        </div>
+                        <div class=" my-auto ml-auto">
+                            <div class="chart-wrapper">
+                                <canvas id="areaChart2" class="areaChart2 chartjs-render-monitor chart-dropshadow-secondary overflow-hidden"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 hidden">
+            <div class="card overflow-hidden">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="">
+                            <p class="mb-2 h6">Services</p>
+                            <h2 class="mb-1 ">@ViewBag.TodayServiceCount</h2>
+                            @if (@ViewBag.ServiceChangeDirection == "Increase")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.ServicePercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.ServiceChangeDirection</p>
+                            }
+                            else if (@ViewBag.RevenueChangeDirection == "Decrease")
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.ServicePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                            }
+                            else
+                            {
+                                <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.ServicePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                            }
+                        </div>
+                        <div class="my-auto ml-auto">
+                            <div class="chart-wrapper">
+                                <canvas id="areaChart3" class="areaChart3 chartjs-render-monitor chart-dropshadow-info overflow-hidden"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 hidden">
+            <div class="card overflow-hidden">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <div class="">
+                            <p class="mb-2 h6">Pending Patient</p>
+                            <h2 class="mb-1 ">@ViewBag.PatienIsCheckedpending</h2>
+                            <p class="mb-0 text-muted"><span class="text-danger">(+0.42%)</span><i class="fe fe-arrow-down text-danger"></i>Decrease</p>
+                        </div>
+                        <div class="my-auto ml-auto">
+                            <div class="chart-wrapper">
+                                <canvas id="areaChart4" class="areaChart4 chartjs-render-monitor chart-dropshadow-success overflow-hidden"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- row closed -->
+
+    <div class="row">
+
+        <div class="col-xl-6 col-xl-12">
             <div class="card">
                 <div class="card-body">
-                    <table id="example1" class="table table-striped table-dashboard-two mg-b-0" style="border:1px">
-                        <thead class="h4">
-                            <tr>
-                                <th class="wd-lg-25p" style="font:bold">@Html.ActionLink("Receipt No", "Index", "ReceiptNo", new { sortField = "ReceiptNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-10p">UHID.</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Entry Date-Time ", "Index", "ConsultantPatient", new { sortField = "EntryDateTime", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("First Name", "Index", "ConsultantPatient", new { sortField = "Fname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "ConsultantPatient", new { sortField = "Lname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Blood Group", "Index", "ConsultantPatient", new { sortField = "BloodGroup", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Email", "Index", "ConsultantPatient", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("ContactNo", "Index", "ConsultantPatient", new { sortField = "ContactNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Date Of Birth", "Index", "ConsultantPatient", new { sortField = "DOB", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>                                
-                            </tr>
-                        </thead>                        
-                        <tbody>
-                            @if(ViewBag.PatientList!=null)
-                            {
-                                <tr>
-                                    <td><a href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@ViewBag.PatientList.Id.ToString()) })">@ViewBag.PatientList.ReceiptNo</a></td>                                    
-                                    <td>@ViewBag.PatientList.UHID</td>
-                                    <td>@ViewBag.PatientList.EntryDateTime</td>
-                                    <td>@ViewBag.PatientList.Fname</td>
-                                    <td>@ViewBag.PatientList.Lname</td>
-                                    <td>@ViewBag.PatientList.BloodGroup</td>
-                                    <td>@ViewBag.PatientList.Email</td>
-                                    <td>@ViewBag.PatientList.ContactNo</td>
-                                    <td>@ViewBag.PatientList.DOB.ToString("dd-MM-yyyy")</td>
-                                    
-                                </tr>                      
-                            }
-                            else
-                            {
-                                <tr class="odd">
-                                    <td valign="top" colspan="10" class="dataTables_empty"><div class="card mg-b-20 text-center"><div class="card-body h-100"><img src="~/assets/img/svgicons/no-data.svg" alt="" class="wd-10p"><h5 class="mg-b-10 mg-t-15 tx-18">Its Empty In Here</h5><a href="javascript:void(0);" class="text-dark">@ViewBag.ErroMsg</a></div></div></td>
-                                </tr>
-                            }
-                     </tbody>
-                    </table>
+                    <h4 class="card-title">Receipt</h4>
+                    <div class="table-responsive">
+                        @if (ViewBag.PatientList != null)
+                        {
+                            <table class="table card-table table-striped text-nowrap table-bordered border-top">
+                                <thead>
+                                    <tr>
+                                        <th>@Html.ActionLink("Receipt No", "Index", "ReceiptNo", new { sortField = "ReceiptNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                        <th>UHID.</th>
+                                        <th>@Html.ActionLink("Entry Date-Time ", "Index", "ConsultantPatient", new { sortField = "EntryDateTime", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                        <th>@Html.ActionLink("Name", "Index", "ConsultantPatient", new { sortField = "Fname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                        <th>@Html.ActionLink("Blood Group", "Index", "ConsultantPatient", new { sortField = "BloodGroup", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                        <th>@Html.ActionLink("Email", "Index", "ConsultantPatient", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                        <th>@Html.ActionLink("ContactNo", "Index", "ConsultantPatient", new { sortField = "ContactNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                        <th>@Html.ActionLink("DOB", "Index", "ConsultantPatient", new { sortField = "DOB", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@ViewBag.PatientList.Id.ToString()) })">@ViewBag.PatientList.ReceiptNo</a>
+                                        </td>
+                                        <td>
+                                            <span class="ml-2 text-primary">@ViewBag.PatientList.UHID</span>
+                                        </td>
+                                        <td><span><i class="fa fa-clock-o" aria-hidden="true"></i></span> @ViewBag.PatientList.EntryDateTime</td>
+                                        <td>@ViewBag.PatientList.Fname @ViewBag.PatientList.Lname</td>
+                                        <td>
+                                            <span class="badge badge-success-light">@ViewBag.PatientList.BloodGroup</span>
+                                        </td>
+                                        <td>@ViewBag.PatientList.Email</td>
+                                        <td>@ViewBag.PatientList.ContactNo</td>
+                                        <td>@ViewBag.PatientList.DOB.ToString("dd-MM-yyyy")</td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <div class="card mg-b-20 text-center">
+                                <div class="card-body h-100">
+                                    <img src="~/assets/img/svgicons/no-data.svg" alt="" class="wd-10p">
+                                    <h5 class="mg-b-10 mg-t-15 tx-18">Its Empty In Here</h5>
+                                    <a href="javascript:void(0);" class="text-dark">@ViewBag.ErroMsg</a>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 
 
 
     <div class="row">
-        <div class="col-xl-12 product">
+        <div class="col-lg-6 col-md-12 product">
             <div class="card">
-                <div class="card-body" style="text-align:center;" >
-                    <label for="yearDropdown">Select Year : </label>
-                    <select id="yearDropdown" name="year"></select>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xl-6 product">
-            <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex">
                     <h3 class="card-title">Total Patients</h3>
-                    <div class="card-options ">
-                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                        <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
-                        <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-xl-12">
-                            <div class="chart-wrapper">
-                                <div class="chart-wrapper">
-
-                                    <canvas id="TotalPatientChart" class="chartjs-render-monitor chart-dropshadow2 overflow-hidden"></canvas>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6 product">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Total Collection</h3>
-                    <div class="card-options ">
-                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                        <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
-                        <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
-                    </div>
-                </div>
-                <div class="card-body">
-                    @* <div class="row">
-                        <label for="yearDropdown">Select Year:</label>
+                    <div class="card-body" style="text-align:center;">
+                        <label for="yearDropdown">Select Year : </label>
                         <select id="yearDropdown" name="year"></select>
-                    </div> *@
-                    <div class="row">
-                        <div class="col-lg-12 col-xl-12">
-                            <div class="chart-wrapper">
-                                <div class="chart-wrapper">
-                                    <canvas id="AmountChart" class="chartjs-render-monitor chart-dropshadow2 overflow-hidden"></canvas>
-                                </div>
-
-                            </div>
-                        </div>
-
                     </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="TotalPatientChart" class="h-230 "></canvas>
                 </div>
             </div>
         </div>
+        
+        <!-- row closed -->
+        <div class="col-lg-6 col-md-12 product">
+            <div class="card">
+                <div class="card-header d-flex">
+                    <h3 class="card-title">Total Collection</h3>
+                    <div class="card-body" style="text-align:center;">
+                        <label for="totalamountyearDropdown">Select Year : </label>
+                        <select id="totalamountyearDropdown" name="year"></select>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="AmountChart" class="h-230 "></canvas>
+                </div>
+            </div>
+        </div>
+
     </div>
     <div class="row">
         <div class="col-xl-4 col-lg-6 col-md-12">
@@ -341,25 +429,26 @@
                     <small class="">Weekly Earning Report</small>
                     <div class="d-flex mb-4">
                         <div class="d-flex  align-items-center">
-                            <h2 class="">$7450.40<span class="font-weight-normal text-muted fs-13">/ per month</span></h2>
+                            <h2 class="">@ViewBag.MonthlyCollection<span class="font-weight-normal text-muted fs-13">/ per month</span></h2>
                         </div>
                         <span class="text-success ml-auto"><i class="fe fe-arrow-up mr-2"></i>24.05%</span>
                     </div>
 
                 </div>
-                <div class="chart-wrapper ">
-                    <canvas id="earning" class="earning chart-dropshadow-primary mb-3 mt-2 h-50"></canvas>
+                <div class="chart-wrapper">
+                    <canvas id="earning12" class="earning chart-dropshadow-primary mb-3 mt-2 h-50"></canvas>
                 </div>
                 <div class="row mb-5">
                     <div class="col-6 text-center border-right">
                         <div class="text-muted fs-14">Daily Profit</div>
-                        <div class="h3 mt-1 mb-0">$540</div>
-                        <span class="text-muted mb-0 fs-14"><span class="text-success mr-1"><i class="fe fe-arrow-up ml-1"></i>34.5%</span>increase</span>
+                        <div class="h3 mt-1 mb-0">@ViewBag.TodayTotalAmount</div>
+
+                        <span class="text-muted mb-0 fs-14"><span class="text-success mr-1"><i class="fe fe-arrow-up ml-1"></i>@ViewBag.RevenuePercentageChange%</span>@ViewBag.RevenueChangeDirection</span>
                     </div>
                     <div class="col-6 text-center">
                         <div class="text-muted fs-14">Last Month Profit</div>
-                        <div class="h3 mt-1 mb-0">36</div>
-                        <span class="text-muted mb-0 fs-14"><span class="text-danger mr-1"><i class="fe fe-arrow-down ml-1"></i>34.5%</span>Decrease</span>
+                        <div class="h3 mt-1 mb-0">@ViewBag.LastMonthlyCollection</div>
+                        <span class="text-muted mb-0 fs-14"><span class="text-danger mr-1"><i class="fe fe-arrow-down ml-1"></i>@ViewBag.RevenuePercentageChange%</span>@ViewBag.RevenueChangeDirection</span>
                     </div>
                 </div>
             </div>
@@ -389,57 +478,18 @@
                                     </div>
                                 </div>
                                 <div class="progress progress-xs mt-2">
-                                    <div class="progress-bar   bg-primary" style="width:@item.AvgCount% !important"></div>
+                                    <div class="progress-bar bg-primary" style="width:@item.AvgCount% !important"></div>
                                 </div>
                             </div>
                         }
                     }
-                   
-                   
+
+
                 </div>
             </div>
         </div>
     </div>
 
-   @*   <div class="row">
-        <div class="col-xl-6 product">
-            <div class="card overflow-hidden">
-                <div class="card-header border-bottom-0">
-                    <div class="card-title d-block">Earnings</div>
-                    <div class="card-options">
-                    </div>
-                </div>
-                <div class="card-body pt-0 pb-0">
-                    <small class="">Monthly Earning Report</small>
-                    <div class="d-flex mb-4">
-                        <div class="d-flex  align-items-center">
-                            <h2 class="">@ViewBag.MonthlyCollection<span class="font-weight-normal text-muted fs-13">/ per month</span></h2>
-                        </div>
-                        <span class="text-success ml-auto"><i class="fe fe-arrow-up mr-2"></i>24.05%</span>
-                    </div>
-
-                </div>
-                <div class="col-lg-50 col-xl-50">
-                    <div class="chart-wrapper ">
-                        <canvas id="earning" class="earning chart-dropshadow-primary mb-3 mt-2 h-50"></canvas>
-                    </div>
-                </div>
-                <div class="row mb-5">
-                    <div class="col-6 text-center border-right">
-                        <div class="text-muted fs-14">Daily Profit</div>
-                        <div class="h3 mt-1 mb-0">@ViewBag.TodayTotalAmount</div>
-
-                        <span class="text-muted mb-0 fs-14"><span class="text-success mr-1"><i class="fe fe-arrow-up ml-1"></i>@ViewBag.RevenuePercentageChange%</span>@ViewBag.RevenueChangeDirection</span>
-                    </div>
-                    <div class="col-6 text-center">
-                        <div class="text-muted fs-14">Last Month Profit</div>
-                        <div class="h3 mt-1 mb-0">@ViewBag.LastMonthlyCollection</div>
-                        <span class="text-muted mb-0 fs-14"><span class="text-danger mr-1"><i class="fe fe-arrow-down ml-1"></i>@ViewBag.RevenuePercentageChange%</span>@ViewBag.RevenueChangeDirection</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> *@
 
 }
 <style>
@@ -477,7 +527,11 @@
 <!-- jQuery (optional if you want to use jQuery) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script>
+<!-- Echart js -->
+<script src="../assets/plugins/echarts/echarts.js"></script>
+<script src="../assets/js/echarts.js"></script>
+
+<script>
     $(document).ready(function () {
         var netAmountValue = '@ViewBag.netamount';  // Store the original net amount
         $('#toggleIcon').click(function () {
@@ -510,12 +564,28 @@
         }
     }
 
+    function populateTotalAmountYearDropdown(startYear, endYear) {
+        const totalamountyearDropdown = document.getElementById('totalamountyearDropdown');
+        const currentYear = new Date().getFullYear();
+
+        for (let year = startYear; year <= endYear; year++) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            if (year === currentYear) {
+                option.selected = true;
+            }
+            totalamountyearDropdown.appendChild(option);
+        }
+    }
+
     window.onload = function () {
         const currentYear = new Date().getFullYear();
         populateYearDropdown(currentYear - 10, currentYear);  // Example: last 100 years and next 10 years
+        populateTotalAmountYearDropdown(currentYear - 10, currentYear);
     }
 
-  
+
     document.addEventListener('DOMContentLoaded', function () {
         // Function to update chart data based on selected year
         function updateChartData(year) {
@@ -527,7 +597,7 @@
                     var labels = chartData.map(item => item.months);
                     var totalMonthCountData = chartData.map(item => item.totalMonthCount);
                     var sumOfTotalAmountData = chartData.map(item => item.sumOfTotalAmount);
-                 console.log(chartData);
+                    console.log(chartData);
                     // Update the first chart with new data
                     barChart.data.labels = labels;
                     barChart.data.datasets[0].data = totalMonthCountData;
@@ -542,47 +612,12 @@
         }
 
         // Initialize the first chart
-        var ctx = document.getElementById('TotalPatientChart').getContext('2d');
+
         var initialChartData = JSON.parse('@Html.Raw(ViewBag.Chartdata)');
         var initialLabels = initialChartData.map(item => item.Months);
         var initialTotalMonthCountData = initialChartData.map(item => item.TotalMonthCount);
 
-        var config = {
-            type: 'bar',
-            data: {
-                labels: initialLabels,
-                datasets: [{
-                    label: 'Total Count',
-                    data: initialTotalMonthCountData,
-                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Months'
-                        }
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: 'Total Count'
-                        },
-                        min: 0,
-                        max: 10,
-                        ticks: {
-                            stepSize: 1
-                        }
-                    }
-                }
-            }
-        };
 
-        var barChart = new Chart(ctx, config);
 
         // Initialize the second chart
         var ctx1 = document.getElementById('AmountChart').getContext('2d');
@@ -632,46 +667,621 @@
         });
     });
 
-    // var ctx = document.getElementById('earning').getContext('2d');
-    // var initialChartData = JSON.parse('@Html.Raw(ViewBag.Chartdata)');
-    // var initialSumOfTotalAmountData = initialChartData.map(item => item.SumOfTotalAmount);
-    // var initialLabels = initialChartData.map(item => item.Months);
-    
 
-    // var earningChart = new Chart(ctx, {
-    //     type: 'line', // Line chart type
-    //     data: {
-    //         labels: initialLabels,            
-    //         datasets: [{
-    //             label: 'Earnings',
-    //             data: initialSumOfTotalAmountData,
-    //             backgroundColor: 'rgba(54, 162, 235, 0.2)',
-    //             borderColor: 'rgba(54, 162, 235, 1)',
-    //             borderWidth: 1,
-    //             fill: false, // Ensures the area under the line is not filled
-    //             tension: 0.4 // Smoothes the line
+    /* Chartjs (#areachart1) */
+    var ctx = document.getElementById("areaChart1");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Date 1', 'Date 2', 'Date 3', 'Date 4', 'Date 5', 'Date 6', 'Date 7', 'Date 8', 'Date 9', 'Date 10', 'Date 11', 'Date 12', 'Date 13', 'Date 14', 'Date 15', 'Date 16', 'Date 17'],
+            type: 'line',
+            datasets: [{
+                data: [45, 23, 32, 67, 49, 72, 52, 55, 46, 54, 32, 74, 88, 36, 36, 32, 48, 54, 110],
+                label: 'Admissions',
+                backgroundColor: 'transparent',
+                borderColor: '#007bff',
+                borderWidth: '2.5',
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: 'transparent',
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            responsive: true,
+            tooltips: {
+                enabled: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: 'transparent',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks: {
+                        fontSize: 2,
+                        fontColor: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        display: false,
+                    }
+                }]
+            },
+            title: {
+                display: false,
+            },
+            elements: {
+                line: {
+                    borderWidth: 1
+                },
+                point: {
+                    radius: 4,
+                    hitRadius: 10,
+                    hoverRadius: 4
+                }
+            }
+        }
+    });
 
-    //         }]
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         scales: {
-    //             x: {
-                    
-    //                 display: false // Hides the x-axis
-    //             },
-    //             y: {
-                    
-    //                 display: false // Hides the y-axis
-    //             }
-    //         },
-    //         plugins: {
-    //             legend: {
-                    
-    //                 display: false // Hides the legend
-    //             }
-    //         }
-    //     }
-    // });
+    /* Chartjs (#earning) */
+    var ctx = document.getElementById("earning12");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [@Html.Raw(ViewBag.Month)],
+            type: 'line',
+            datasets: [{
+                data: [@Html.Raw(ViewBag.Data)],
+                backgroundColor: 'transparent',
+                borderColor: '#2205bf',
+                borderWidth: 4,
+                pointBorderWidth: 0,
+                pointRadius: 0,
+                pointHoverRadius: 0,
+                pointBackgroundColor: '#fff',
+            },]
+        },
+        options: {
+
+            maintainAspectRatio: true,
+            legend: {
+                display: false
+            },
+            responsive: true,
+            tooltips: {
+                mode: 'index',
+                titleFontSize: 12,
+                titleFontColor: '#000',
+                bodyFontColor: '#000',
+                backgroundColor: '#fff',
+                cornerRadius: 0,
+                intersect: false,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: 'transparent',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks: {
+                        fontSize: 2,
+                        fontColor: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        display: false,
+                    }
+                }]
+            },
+            title: {
+                display: false,
+            },
+            elements: {
+                line: {
+                    borderWidth: 3
+                },
+                point: {
+                    radius: 0,
+                    hitRadius: 10,
+                    hoverRadius: 4
+                }
+            }
+        }
+    });
+    /* Chartjs (#earning) */
+
+    /* Chartjs (#areachart2) */
+    var ctx = document.getElementById("areaChart2");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Date 1', 'Date 2', 'Date 3', 'Date 4', 'Date 5', 'Date 6', 'Date 7', 'Date 8', 'Date 9', 'Date 10', 'Date 11', 'Date 12', 'Date 13', 'Date 14', 'Date 15', 'Date 16', 'Date 17'],
+            type: 'line',
+            datasets: [{
+                data: [28, 56, 36, 32, 48, 54, 37, 58, 66, 53, 21, 24, 14, 45, 0, 32, 67, 49, 52, 55, 46, 54, 130],
+                label: 'Admissions',
+                backgroundColor: 'transparent',
+                borderColor: '#f88a61',
+                borderWidth: '2.5',
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: 'transparent',
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            responsive: true,
+            tooltips: {
+                enabled: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: 'transparent',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks: {
+                        fontSize: 2,
+                        fontColor: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        display: false,
+                    }
+                }]
+            },
+            title: {
+                display: false,
+            },
+            elements: {
+                line: {
+                    borderWidth: 1
+                },
+                point: {
+                    radius: 4,
+                    hitRadius: 10,
+                    hoverRadius: 4
+                }
+            }
+        }
+    });
+    /* Chartjs (#areachart2) closed */
+
+    /* Chartjs (#areachart3) */
+    var ctx = document.getElementById("areaChart3");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Date 1', 'Date 2', 'Date 3', 'Date 4', 'Date 5', 'Date 6', 'Date 7', 'Date 8', 'Date 9', 'Date 10', 'Date 11', 'Date 12', 'Date 13', 'Date 14', 'Date 15', 'Date 16', 'Date 17', 'Date 18', 'Date 19'],
+            type: 'line',
+            datasets: [{
+                data: [58, 78, 55, 41, 31, 45, 54, 51, 32, 48, 88, 66, 36, 32, 48, 24, 14, 45, 0, 32, 67, 49, 54, 87, 130],
+                label: 'Admissions',
+                backgroundColor: 'transparent',
+                borderColor: '#09b0ec',
+                borderWidth: '2.5',
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: 'transparent',
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            responsive: true,
+            tooltips: {
+                enabled: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: 'transparent',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks: {
+                        fontSize: 2,
+                        fontColor: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        display: false,
+                    }
+                }]
+            },
+            title: {
+                display: false,
+            },
+            elements: {
+                line: {
+                    borderWidth: 1
+                },
+                point: {
+                    radius: 4,
+                    hitRadius: 10,
+                    hoverRadius: 4
+                }
+            }
+        }
+    });
+    /* Chartjs (#areachart3) closed */
+    /* Chartjs (#areachart4) */
+    var ctx = document.getElementById("areaChart4");
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Date 1', 'Date 2'],
+            type: 'line',
+            datasets: [{
+                data: [11, 5],
+                label: 'Admissions',
+                backgroundColor: 'transparent',
+                borderColor: '#1dab2d',
+                borderWidth: '3',
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: 'transparent',
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            responsive: true,
+            tooltips: {
+                enabled: false
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: 'transparent',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks: {
+                        fontSize: 2,
+                        fontColor: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        display: false,
+                    }
+                }]
+            },
+            title: {
+                display: false,
+            },
+            elements: {
+                line: {
+                    borderWidth: 1
+                },
+                point: {
+                    radius: 4,
+                    hitRadius: 10,
+                    hoverRadius: 4
+                }
+            }
+        }
+    });
+    /* Chartjs (#areachart4 closed) */
+
+    /* Chartjs (#cryptochart) */
+    var ctx = document.getElementById("cryptoChart");
+    ctx.height = "120";
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [@Html.Raw(ViewBag.ActiveMonth)],
+            type: 'line',
+            datasets: [{
+                data: [@Html.Raw(ViewBag.ActiveData)],
+                label: 'Client',
+                backgroundColor: 'rgb(34, 5, 191,0.2)',
+                borderColor: '#2205bf',
+                borderWidth: '2',
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: 'transparent',
+            }
+            ]
+        },
+        options: {
+
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            responsive: true,
+            tooltips: {
+                mode: 'index',
+                titleFontSize: 12,
+                titleFontColor: '#7886a0',
+                bodyFontColor: '#7886a0',
+                backgroundColor: '#fff',
+                titleFontFamily: 'Montserrat',
+                bodyFontFamily: 'Montserrat',
+                cornerRadius: 3,
+                intersect: false,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: 'transparent',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks: {
+                        fontSize: 2,
+                        fontColor: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        display: false,
+                    }
+                }]
+            },
+            title: {
+                display: false,
+            },
+            elements: {
+                line: {
+                    borderWidth: 1
+                },
+                point: {
+                    radius: 4,
+                    hitRadius: 10,
+                    hoverRadius: 4
+                }
+            }
+        }
+    });
+    /* Chartjs (#cryptochart) closed */
+
+    /* Chartjs (#cryptochart3) */
+    var ctx = document.getElementById("cryptoChart3");
+    ctx.height = "120";
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [@Html.Raw(ViewBag.TotalRevenueMonth)],
+            type: 'line',
+            datasets: [{
+                data: [@Html.Raw(ViewBag.TotalRevenueData)],
+                label: 'Revenue',
+                backgroundColor: 'rgb(250, 113, 59,0.2)',
+                borderColor: '#fa713b',
+                borderWidth: '2',
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: 'transparent',
+            }
+            ]
+        },
+        options: {
+
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            responsive: true,
+            tooltips: {
+                mode: 'index',
+                titleFontSize: 12,
+                titleFontColor: '#7886a0',
+                bodyFontColor: '#7886a0',
+                backgroundColor: '#fff',
+                titleFontFamily: 'Montserrat',
+                bodyFontFamily: 'Montserrat',
+                cornerRadius: 3,
+                intersect: false,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: 'transparent',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks: {
+                        fontSize: 2,
+                        fontColor: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        display: false,
+                    }
+                }]
+            },
+            title: {
+                display: false,
+            },
+            elements: {
+                line: {
+                    borderWidth: 1
+                },
+                point: {
+                    radius: 4,
+                    hitRadius: 10,
+                    hoverRadius: 4
+                }
+            }
+        }
+    });
+    /* Chartjs (#cryptochart3)  closed */
+    /* Chartjs (#cryptochart4) */
+    var ctx = document.getElementById("cryptoChart4");
+    ctx.height = "120";
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [@Html.Raw(ViewBag.TotalPatientMonth)],
+            type: 'line',
+            datasets: [{
+                data: [@Html.Raw(ViewBag.TotalPatientData)],
+                label: 'Bitcon',
+                backgroundColor: 'rgb(54, 179, 126,0.2)',
+                borderColor: '#36b37e',
+                borderWidth: '2',
+                pointBorderColor: 'transparent',
+                pointBackgroundColor: 'transparent',
+            }
+            ]
+        },
+        options: {
+
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            responsive: true,
+            tooltips: {
+                mode: 'index',
+                titleFontSize: 12,
+                titleFontColor: '#7886a0',
+                bodyFontColor: '#7886a0',
+                backgroundColor: '#fff',
+                titleFontFamily: 'Montserrat',
+                bodyFontFamily: 'Montserrat',
+                cornerRadius: 3,
+                intersect: false,
+            },
+            scales: {
+                xAxes: [{
+                    gridLines: {
+                        color: 'transparent',
+                        zeroLineColor: 'transparent'
+                    },
+                    ticks: {
+                        fontSize: 2,
+                        fontColor: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    display: false,
+                    ticks: {
+                        display: false,
+                    }
+                }]
+            },
+            title: {
+                display: false,
+            },
+            elements: {
+                line: {
+                    borderWidth: 1
+                },
+                point: {
+                    radius: 4,
+                    hitRadius: 10,
+                    hoverRadius: 4
+                }
+            }
+        }
+    });
+    /* Chartjs (#cryptochart4) closed */
+
+    /* Chartjs (#total-customers) */
+    var myCanvas = document.getElementById('TotalPatientChart');
+    var initialChartData = JSON.parse('@Html.Raw(ViewBag.Chartdata)');
+    var initialLabelsdata = initialChartData.map(item => item.Months);
+    var initialTotalMonthCountData = initialChartData.map(item => item.TotalMonthCount);
+    myCanvas.height = "233";
+
+    var myCanvasContext = myCanvas.getContext("2d");
+    var gradientStroke1 = myCanvasContext.createLinearGradient(0, 0, 0, 380);
+    gradientStroke1.addColorStop(0, '#fa713b');
+    gradientStroke1.addColorStop(1, '#fa713b');
+
+    var myChart = new Chart(myCanvas, {
+        type: 'bar',
+        data: {
+            labels: initialLabelsdata,
+            datasets: [{
+                label: 'Revenue',
+                data: initialTotalMonthCountData,
+                backgroundColor: gradientStroke1,
+                hoverBackgroundColor: gradientStroke1,
+                hoverBorderWidth: 2,
+                hoverBorderColor: 'gradientStroke1'
+            }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            tooltips: {
+                mode: 'index',
+                titleFontSize: 12,
+                titleFontColor: '#000',
+                bodyFontColor: '#000',
+                backgroundColor: '#fff',
+                cornerRadius: 3,
+                intersect: false,
+            },
+            legend: {
+                display: false,
+                labels: {
+                    usePointStyle: true,
+                },
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    gridLines: {
+                        display: true,
+                        color: 'rgb(142, 156, 173,0.1)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        fontColor: '#8e9cad',
+                        autoSkip: true,
+                        maxTicksLimit: 9,
+                        maxRotation: 0,
+                        labelOffset: 10
+                    },
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'Month',
+                        fontColor: 'transparent'
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        fontColor: "#8e9cad",
+                    },
+                    display: true,
+                    gridLines: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    scaleLabel: {
+                        display: false,
+                        labelString: 'sales',
+                        fontColor: 'transparent'
+                    }
+                }]
+            },
+            title: {
+                display: false,
+                text: 'Normal Legend'
+            }
+        }
+    });
+    /* Chartjs (#total-customers) closed */
+
 </script>
 

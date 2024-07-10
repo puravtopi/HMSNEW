@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace HMS.Models
 {
@@ -41,5 +42,20 @@ namespace HMS.Models
         public int AvgCount { get; set; }
         public int TotalCount { get; set; }
         public string Name { get; set; }
+    }
+    public class ActiveClient 
+    {
+        public DateTime Date { get; set; }
+        public int NumberOfActiveCustomers { get; set; }
+    }
+    public class TotalRevenue
+    {
+        public DateTime Date { get; set; }
+        public decimal TotalIncome { get; set; }
+    }
+    public class TotalPatientPending
+    {
+        public DateTime Date { get; set; }
+        public decimal PatientIsCheckedPendingCount { get; set; }
     }
 }

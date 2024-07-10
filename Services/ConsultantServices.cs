@@ -2,6 +2,7 @@
 using HMS.Common;
 using HMS.Interface;
 using HMS.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -42,6 +43,25 @@ namespace HMS.Services
          
             return _dapper.Get<ConsultantDashboardModel>("usp_Consultant_Dashboard_Count", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
+        }    
+        public List<ActiveClient> ConsultantActiveClient(int UserId,DateTime FDate,DateTime TDate)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@UserId", UserId, DbType.Int32);
+                dbparams.Add("@FDate", FDate, DbType.DateTime);
+                dbparams.Add("@TDate", TDate, DbType.DateTime);
+                //return _dapper.GetAll<ActiveClient>("usp_ConsultantActiveClient", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+                var data= _dapper.GetAll<ActiveClient>("usp_ConsultantActiveClient", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+                return data;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
         }
 
         public List<ReceptionWiseCountModel> GetReceptionWiseCounts(int ClinicId, int UserId)
@@ -50,6 +70,43 @@ namespace HMS.Services
             dbparams.Add("@clinicId", ClinicId, DbType.Int32);
             dbparams.Add("@userId", UserId, DbType.Int32);
             return _dapper.GetAll<ReceptionWiseCountModel>(CommonSp.getConsultantDashboardReceptionistCount, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+
+        }
+
+        public List<TotalRevenue> ConsultantTotalRevenue(int UserId, DateTime FDate, DateTime TDate)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@UserId", UserId, DbType.Int32);
+                dbparams.Add("@FDate", FDate, DbType.DateTime);
+                dbparams.Add("@TDate", TDate, DbType.DateTime);
+                var data = _dapper.GetAll<TotalRevenue>("usp_ConsultantTotalRevenue", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+                return data;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+        public List<TotalPatientPending> ConsultantTotalPatientPending(int UserId, DateTime FDate, DateTime TDate)
+        {
+            try
+            {
+                var dbparams = new DynamicParameters();
+                dbparams.Add("@UserId", UserId, DbType.Int32);
+                dbparams.Add("@FDate", FDate, DbType.DateTime);
+                dbparams.Add("@TDate", TDate, DbType.DateTime);
+                var data = _dapper.GetAll<TotalPatientPending>("usp_ConsultantTotalPatientPending", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+                return data;
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
         }
     }
