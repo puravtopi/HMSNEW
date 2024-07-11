@@ -69,7 +69,7 @@ namespace HMS.Services
             var dbparams = new DynamicParameters();
             dbparams.Add("@clinicId", ClinicId, DbType.Int32);
             dbparams.Add("@userId", UserId, DbType.Int32);
-            return _dapper.GetAll<ReceptionWiseCountModel>(CommonSp.getConsultantDashboardReceptionistCount, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+            return _dapper.GetAll<ReceptionWiseCountModel>("usp_Consultant_Dashboard_Receptionist_Count", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
         }
 

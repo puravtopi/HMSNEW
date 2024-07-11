@@ -174,6 +174,8 @@ namespace HMS.Common
         public const string deleteByIdPatientInitialAssessmentMaster = "usp_PatientInitialAssessmentMaster_DeleteById";
         public const string getByIdPatientInitialAssessmentMaster = "usp_PatientInitialAssessmentMaster_GetById";
         public const string getByPatientIdWisePatientInitialAssessmentMaster  = "usp_PatientInitialAssessmentMaster_GetBy_PatientId";
+
+        public const string getConsultantDashboardReceptionistCount = "usp_Consultant_Dashboard_Receptionist_Count";
     }
     public class PageSizeDdl : BaseResponseModel
     {

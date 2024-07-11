@@ -25,6 +25,7 @@ namespace HMS.Controllers
         private readonly IPatientConsultantMasterServices _patientConsultantMasterServices;
         private readonly IUserMasterServices _userMasterServices;
         private readonly IConsultantServices _consultantServices;
+        private readonly IReceptionistMasterServices _receptionistMasterServices;
         ConsultantDashboardModel consultantDashboard = new ConsultantDashboardModel();
 
         public ConsultantDashboardController(
@@ -32,7 +33,8 @@ namespace HMS.Controllers
           IConsultantServices consultantServices,
           IPatientGeneralDetailMasterServices patientGeneralDetailMasterServices,
           ICommonService commonService, IRevisitDetailMasterServices revisitDetailMasterServices,
-          IPatientConsultantMasterServices patientConsultantMasterServices, IUserMasterServices userMasterServices
+          IPatientConsultantMasterServices patientConsultantMasterServices, IUserMasterServices userMasterServices,
+          IReceptionistMasterServices receptionistMasterServices
           )
         {
             _patientGeneralDetailMasterServices = patientGeneralDetailMasterServices;
@@ -42,12 +44,14 @@ namespace HMS.Controllers
             _patientConsultantMasterServices = patientConsultantMasterServices;
             _userMasterServices = userMasterServices;
             _consultantServices = consultantServices;
+            _receptionistMasterServices = receptionistMasterServices;
         }
 
 
         public IActionResult Index()
         {
             int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
+            int SessionClinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
 
             if (SessionUser > 0 && SessionUser != null)
             {
@@ -63,7 +67,7 @@ namespace HMS.Controllers
             var year =DateTime.Now.ToString("yyyy");
 
             var result = _consultantServices.GetDashboardCount(SessionUser);
-
+            
             var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser,Int32.Parse(year));
             string CurrentMonth = String.Format("{0:MMMM}", DateTime.Now);
             string LastMonth = String.Format("{0:MMMM}", DateTime.Now.AddMonths(-1));
@@ -148,7 +152,8 @@ namespace HMS.Controllers
 
             var AvrageCount = _consultantServices.GetDashboardAvrageCount(SessionUser);
             var patientMaster = _patientMasterServices.GetConsultantPatient(SessionUser, DateTime.Now.ToString("yyyy-MM-dd"));
-            
+            var ReceptionistDashboardCount = _consultantServices.GetReceptionWiseCounts(SessionClinicId, SessionUser);
+
             ViewBag.PatientList= patientMaster;
             ViewBag.todayPatient = result.TotalPatient;
             //ViewBag.netamount = result.TotalIncome;
@@ -170,6 +175,7 @@ namespace HMS.Controllers
             ViewBag.TodayServiceCount = AvrageCount.TodayServiceCount;
             ViewBag.TodayTotalAmount = AvrageCount.TodayRevenue;
             ViewBag.YesterdayTotalAmount = AvrageCount.YesterdayRevenue;
+            ViewBag.ReceptionistCount = ReceptionistDashboardCount;
 
             float ServiceCount=float.Parse(AvrageCount.ServicePercentageChange.ToString().TrimStart('-'));
             if (ServiceCount > 100)

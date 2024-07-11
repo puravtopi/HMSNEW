@@ -339,7 +339,7 @@
                     <canvas id="TotalPatientChart" class="h-230 "></canvas>
                 </div>
             </div>
-        </div>
+       @*  </div> *@
         
         <!-- row closed -->
         <div class="col-lg-6 col-md-12 product">
@@ -357,7 +357,7 @@
             </div>
         </div>
 
-    </div>
+   @*  </div> *@
     <div class="row">
         <div class="col-xl-4 col-lg-6 col-md-12">
             <div class="card overflow-hidden">
@@ -481,8 +481,9 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @{
-                        foreach (var item in Model.ReceptionWiseCount)
+                    @if (ViewBag.ReceptionistCount.Count > 0 && ViewBag.ReceptionistCount != null)
+                    {
+                        foreach (var item in ViewBag.ReceptionistCount)
                         {
                             <div class="mb-4">
                                 <div class="clearfix mb-4">
@@ -498,7 +499,9 @@
                                 </div>
                             </div>
                         }
+                    
                     }
+                    
 
 
                 </div>
