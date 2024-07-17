@@ -764,7 +764,7 @@ namespace HMS.Controllers
                 {
                     patientServiceMaster.UHID = patientMasterModel.UHID;
                     patientServiceMaster.PatientName = patientMasterModel.Fname + " " + patientMasterModel.Lname;
-                    patientServiceMaster.DepartmentName = patientServiceMaster.Department_Id.ToString();
+                    patientServiceMaster.Department = patientServiceMaster.Department_Id.ToString();
                     patientServiceMaster.ServiceHeadName = patientServiceMaster.ServiceHead_Id.ToString();
                     patientServiceMaster.ServiceName = patientServiceMaster.Service_Id.ToString();
 
@@ -811,12 +811,10 @@ namespace HMS.Controllers
                     }
                     var getTopOneRevisitDetail = _revisitDetailMasterServices.GetTopOneRevisitDetail();
 
-
-                    model.Department_Id = int.Parse(model.Department);
-                    model.ServiceHead_Id = int.Parse(model.ServiceHead);
+                    model.Department_Id = int.Parse(model.DepartmentName);
+                    model.ServiceHead_Id = int.Parse(model.ServiceHeadName);
                     model.Consultant_Id = model.Consultant_Id;
-                    model.Revisit_Id = getTopOneRevisitDetail.Id    ;
-                    //model.Service_Id = int.Parse(model.ServiceName);
+                    model.Revisit_Id = getTopOneRevisitDetail.Id;
                     if (model.Id == 0)
                     {
                         model.CreatedBy = SessionUser;
@@ -843,7 +841,7 @@ namespace HMS.Controllers
                             modelServiceMasterModel.CreatedBy = SessionUser;
                             modelServiceMasterModel.Active = true;
                             modelServiceMasterModel.PatientServiceMasterId = res.DbCode;
-                            modelServiceMasterModel.ServiceId = int.Parse(model.Service);
+                            modelServiceMasterModel.ServiceId = int.Parse(model.ServiceName);
                             modelServiceMasterModel.Discount = model.Discount;
                             modelServiceMasterModel.Charges = model.Charges;
                             modelServiceMasterModel.NetAmount = decimal.Parse(model.NetAmount);

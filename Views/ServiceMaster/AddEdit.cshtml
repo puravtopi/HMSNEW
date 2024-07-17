@@ -49,7 +49,7 @@
                         <div class="col-lg-4">
                             <div class="form-group">
 
-                                @Html.LabelFor(Model => Model.ServiceHead, "Service Head", new { @class = "form - label" })
+                                @Html.LabelFor(Model => Model.ServiceHead, "Service Head", new { @class = "form-label" })
                                 @Html.DropDownListFor(Model => Model.ServiceHead, new SelectList(Model.ServiceHeadList, "Value", "Text", Model.ServiceHead_Id), new { @class = "form-control select2-list dropdown-validation", @id = "serviceheaddropdown", onchange = "getConsultantCharges()" })                                
                             </div>
                         </div>

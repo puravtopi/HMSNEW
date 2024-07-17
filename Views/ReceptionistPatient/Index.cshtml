@@ -38,16 +38,16 @@
     <div class="page-leftheader">
         <h4 class="page-title mb-0">Patient List</h4>
     </div>
-    @* <div class="page-rightheader">
+    <div class="page-rightheader">
          <div class="ml-3 ml-auto d-flex">
             <div class="d-flex align-items-center flex-wrap text-nowrap">
-                <a href="@Url.Action("AddEdit","ReceptionistPatient")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                <a href="@Url.Action("ReceptionistPatientAddEdit","ReceptionistPatient")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
                     <i class="fa fa-plus "></i>
                     Add New
                 </a>
             </div>
         </div> 
-    </div> *@
+    </div>
 </div>
 
 
@@ -88,16 +88,16 @@
                                
                                 <th class="wd-lg-25p">@Html.ActionLink("Receipt No", "Index", "ReceiptNo", new { sortField = "ReceiptNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-10p">UHID.</th>                                
-                                <th class="wd-lg-25p">@Html.ActionLink("Entry Date-Time ", "Index", "ConsultantPatient", new { sortField = "EntryDateTime", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("First Name", "Index", "ConsultantPatient", new { sortField = "Fname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "ConsultantPatient", new { sortField = "Lname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Entry Date-Time ", "Index", "ReceptionistPatient", new { sortField = "EntryDateTime", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("First Name", "Index", "ReceptionistPatient", new { sortField = "Fname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Last Name", "Index", "ReceptionistPatient", new { sortField = "Lname", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                
                                 
-                                <th class="wd-lg-25p">@Html.ActionLink("Blood Group", "Index", "ConsultantPatient", new { sortField = "BloodGroup", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Blood Group", "Index", "ReceptionistPatient", new { sortField = "BloodGroup", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 
-                                <th class="wd-lg-25p">@Html.ActionLink("Email", "Index", "ConsultantPatient", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("ContactNo", "Index", "ConsultantPatient", new { sortField = "ContactNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Date Of Birth", "Index", "ConsultantPatient", new { sortField = "DOB", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Email", "Index", "ReceptionistPatient", new { sortField = "Email", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("ContactNo", "Index", "ReceptionistPatient", new { sortField = "ContactNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th class="wd-lg-25p">@Html.ActionLink("Date Of Birth", "Index", "ReceptionistPatient", new { sortField = "DOB", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Payment Mood", "Index", "PaymentMode", new { sortField = "PaymentMode", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 
                                 @*<th class="wd-lg-25p">Is Deleted </th>*@
@@ -126,7 +126,7 @@
                                             }
 
 
-                                            <a class="btn btn-info btn-sm text-white mr-2" href="@Url.Action("AddEdit","ConsultantPatient",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"><i class="fa fa-edit"></i></a>
+                                            <a class="btn btn-info btn-sm text-white mr-2" href="@Url.Action("ReceptionistPatientAddEdit","ReceptionistPatient",new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"><i class="fa fa-edit"></i></a>
                                             <a class="btn btn-danger btn-sm text-white mr-2" data-toggle="modal" data-target=@hrefid><i class="fa fa-trash-o"></i></a>
                                             <a onclick="ShowPopupQP(0,@Model.patientMastersList[i].Id.ToString())" class="btn btn-warning btn-sm text-white mr-2"><i class="fa fa-wheelchair"></i></a>
                                             <a onclick="ShowPopupQPToPatient(0,@Model.patientMastersList[i].Id.ToString())" class="btn btn-secondary btn-sm text-white mr-2"><i class="fa fa-stethoscope"></i></a>
@@ -172,7 +172,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                                    <a href="@Url.Action("Delete","ConsultantPatient",new { deleteId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })" type="button" class="btn btn-primary">Yes</a>
+                                                    <a href="@Url.Action("Delete","ReceptionistPatient",new { deleteId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })" type="button" class="btn btn-primary">Yes</a>
                                                 </div>
                                             </div>
                                         </div>

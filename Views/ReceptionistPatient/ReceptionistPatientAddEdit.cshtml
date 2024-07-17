@@ -1,0 +1,624 @@
+﻿@model HMS.Models.PatientMasterModel
+@{
+
+    Layout = "~/Views/Shared/_ReceptionistLayout.cshtml";
+    HMS.Common.EncryptDecrypt encryptDecrypt = new HMS.Common.EncryptDecrypt();
+    string Action = ViewContext.RouteData.Values["action"].ToString();
+    string Controller = ViewContext.RouteData.Values["controller"].ToString();
+}
+@if (TempData["Temp_Error"] != null)
+{
+
+}
+
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title mb-0">Patient</h4>
+    </div>
+    <div class="page-rightheader">
+        <div class="ml-3 ml-auto d-flex">
+            <div class="d-flex align-items-center flex-wrap text-nowrap">
+                <a href="@Url.Action("Index","ReceptionistPatient")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
+                    <i class="fa fa-plus "></i>
+                    Back
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+@using (Html.BeginForm(Action, Controller, FormMethod.Post, new { area = Model.Area, id = "AddEditForm" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
+            <!--div-->
+            <div class="card">
+                <div class="card-body">
+                    <div class="main-content-label mg-b-5">
+                        Patient
+                    </div>
+                    <p class="mg-b-20"></p>
+                    <div class="row row-sm">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.EntryDateTime, "Entry DateTime", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.EntryDateTime, "{0:yyyy-MM-ddTHH:mm}", new { @class = "form-control", @type = "datetime-local", @id = "EntryDateTime" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.EntryDateTime)</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-sm">
+
+
+                        @if (Model.Id > 0)
+                        {
+                            <div class="col-lg-4">
+                                <div class="form-group">
+
+                                    @Html.LabelFor(Model => Model.ReceiptNo, "Receipt No.", new { @class = "form-label" })
+                                    @Html.TextBoxFor(Model => Model.ReceiptNo, new { @class = "form-control", @id = "ReceiptNo" })
+                                </div>
+                            </div>
+                        }
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.HiddenFor(Model => Model.Id)
+                                @Html.LabelFor(Model => Model.Fname, "First Name", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.Fname, new { @class = "form-control", @id = "Fname", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Fname)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Lname, "Last Name", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.Lname, new { @class = "form-control", @id = "Lname", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Lname)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Father_HusbandName, "Father/Husband Name ", new { @class = "form-label  required-label" })
+                                @Html.TextBoxFor(Model => Model.Father_HusbandName, new { @class = "form-control", @id = "Father_HusbandName", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Father_HusbandName)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.MotherName, "Mother Name ", new { @class = "form-label  required-label" })
+                                @Html.TextBoxFor(Model => Model.MotherName, new { @class = "form-control", @id = "MotherName", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.MotherName)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.MaritalStatus, new { @class = "form-label" })
+                                @Html.DropDownListFor(Model => Model.MaritalStatus, new SelectList(Model.MaritalStatusList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.BloodGroup, new { @class = "form-label " })
+                                @Html.DropDownListFor(Model => Model.BloodGroup, new SelectList(Model.BloodGroupList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Email, new { @class = "form-label  required-label" })
+                                @Html.TextBoxFor(Model => Model.Email, new { @class = "form-control", @placeholder = "Example:aaa@gmail.com" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Email)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.ContactNo, "Contact No", new { @class = "form-label  required-label" })
+                                @Html.TextBoxFor(Model => Model.ContactNo, new { @class = "form-control", @maxlength = "10", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.ContactNo)</p>
+                            </div>
+                        </div>
+                        @* Thiscondition is use to Set DOB for mate to Add/Edit time *@
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.DOB, "Date Of Birth", new { @class = "form-label  required-label" })
+                                @if (Model.Id > 0)
+                                {
+                                    @Html.TextBoxFor(Model => Model.DOB, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "Date", @id = "DOB", onchange = "calculateAge()" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(Model => Model.DOB, "{0:dd-MM-yyyy}", new { @class = "form-control", @type = "Date", @id = "DOB", onchange = "calculateAge()" })
+                                }
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.DOB)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Age, new { @class = "form-label " })
+                                @Html.TextBoxFor(Model => Model.Age, new { @class = "form-control", @id = "Age", @readonly = "readonly" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Age)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Gender, new { @class = "form-label" })
+                                @Html.DropDownListFor(Model => Model.Gender, new SelectList(Model.GenderList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Nationality, "Nationality ", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Nationality, new { @class = "form-control", @id = "Nationality", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Nationality)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Occupation, "Occupation ", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Occupation, new { @class = "form-control", @id = "Occupation", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Occupation)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
+                                @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="main-content-label mg-b-5">
+                        Address Details
+                    </div>
+                    <div class="row row-sm">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Address, new { @class = "form-label" })
+                                @Html.TextAreaFor(Model => Model.Address, new { @class = "form-control" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Address)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Houseno, "House No", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Houseno, new { @class = "form-control", @id = "Houseno " })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Houseno)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Area, "Area", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Area, new { @class = "form-control", @id = "Area", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Area)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.City, new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.City, new { @class = "form-control", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.City)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.State, new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.State, new { @class = "form-control", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.State)</p> *@
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.District, "District ", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.District, new { @class = "form-control", @id = "District ", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.District)</p> *@
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Pincode, new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Pincode, new { @class = "form-control", @maxlength = "6", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Pincode)</p> *@
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="row row-sm">
+                <div class="col-lg-12 justify-content-center">
+                <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+
+                <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+
+                <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                </div>
+                </div> *@
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="main-content-label mg-b-5">
+                        Patient General Details
+                    </div>
+                    <div class="row row-sm">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Temperature, "Temperature", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Temperature, new { @class = "form-control" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Temperature)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.AdharCard, "Adhar Card No.", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.AdharCard, new { @class = "form-control", @id = "AdharCard ", @maxlength = "12", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.AdharCard)</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Weight, "Weight", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Weight, new { @class = "form-control", @id = "Weight", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Weight)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Bloodpressure, "Blood Pressure", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Bloodpressure, new { @class = "form-control", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Bloodpressure)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Remark, "Remark", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Remark, new { @class = "form-control" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Remark)</p> *@
+                            </div>
+                        </div>
+                    </div>
+                    @* <div class="row row-sm">
+                <div class="col-lg-12 justify-content-center">
+                <a href="@Url.Action("Index","PatientMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+
+                <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+
+                <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                </div>
+                </div> *@
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="main-content-label mg-b-5">
+                        Patient Consultantion Details
+                    </div>
+                    <div class="row row-sm">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Departments, new { @class = "form-label " })
+                                @Html.DropDownListFor(Model => Model.Departments, new SelectList(Model.departmentList, "Value", "Text", Model.Department_id), new { @class = "form-control select2-list dropdown-validation", @id = "DepartmentDropdwon" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.User_id, "Name", new { @class = "form-label required-label" })
+                                @Html.DropDownListFor(Model => Model.User_id, new SelectList(Model.User_DesignationList, "Value", "Text", Model.User_id), new { @class = "form-control select2-list dropdown-validation", @id = "userdropdown", onchange = "getConsultantCharges()" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.User_id)</p>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4" style="display:none">
+                            <div class="form-group">
+                                <label class="">Consultant Code</label>
+                                <input type="text" id="txtCode" class="form-control" readonly="readonly" value="@ViewBag.Consultant_Code" />
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Charges)</p> *@
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Consultant_Charges, "Consultant Charges", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Consultant_Charges, new { @class = "form-control", @id = "Consultant_Charges", @readonly = "readonly" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Consultant_Charges)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Discount, "Discount", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.Discount, new { @class = "form-control", @id = "Discount", onchange = "calculateAmounts()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Discount)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.RefundAmount, "Refund Amount", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.RefundAmount, new { @class = "form-control", @id = "RefundAmount", onchange = "calculateAmounts()", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.RefundAmount)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.TotalAmount, "Total Amount ", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.TotalAmount, new { @class = "form-control", @readonly = "readonly" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.TotalAmount)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.RefBy_Name, "RefBy:Name", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.RefBy_Name, new { @class = "form-control", @id = "RefBy_Name", @oninput = "this.value = this.value.replace(/[^a-zA-Z]/g, '')" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.RefBy_Name)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.RefBy_Address, "RefBy:Address", new { @class = "form-label" })
+                                @Html.TextBoxFor(Model => Model.RefBy_Address, new { @class = "form-control" })
+                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.RefBy_Address)</p> *@
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.PaymentMode, new { @class = "form-label" })
+                                @Html.DropDownListFor(Model => Model.PaymentMode, new SelectList(Model.PaymentModeList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                @Html.RadioButtonFor(Model => Model.Patient_Charges, true, new { @id = "Patient_Charges", @name = "Emergency Charges", onclick = "getEmergencyCharges()" }) Emergency Charges
+                            </div>
+                            <div class="form-group">
+                                @Html.RadioButtonFor(Model => Model.Patient_Charges, false, new { @id = "Patient_Charges", @name = "Night Charges", onclick = "getNightCharges()" }) Night Charges
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-sm">
+
+                        <div class="col-lg-12 justify-content-center">
+                            <a href="@Url.Action("Index","ReceptionistPatient")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
+                            <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
+
+                            <button class="btn btn-primary" id="btnSubmit">Save</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/div-->
+    </div>
+
+    <input type="hidden" id="@Model.EmergencyAdminssion" />
+    <input type="hidden" id="@Model.FileChargesApplicable" />
+}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- jQuery Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+<!-- jQuery Unobtrusive Validation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+<script>
+    $("#btnReset").click(function () {
+        // Reset the form fields
+        document.getElementById("AddEditForm").reset();
+
+        // Clear validation messages
+        $(".text-danger").text("");
+
+
+    });
+
+    document.getElementById('btnSubmit').addEventListener('click', function (event) {
+
+        var Fname = document.getElementById('Fname').value.trim();
+        if (Fname === '') {
+            document.getElementById('FnameError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('FnameError').style.display = 'none';
+
+        }
+
+        var Lname = document.getElementById('Lname').value.trim();
+        if (Lname === '') {
+            document.getElementById('LnameError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('LnameError').style.display = 'none';
+        }
+
+        var Father_HusbandName = document.getElementById('Father_HusbandName').value.trim();
+        if (Father_HusbandName === '') {
+            document.getElementById('Father_HusbandNameError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('Father_HusbandNameError').style.display = 'none';
+        } var MotherName = document.getElementById('MotherName').value.trim();
+        if (MotherName === '') {
+            document.getElementById('MotherNameError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('MotherNameError').style.display = 'none';
+        } var DOB = document.getElementById('DOB').value.trim();
+        if (DOB === '') {
+            document.getElementById('DOBError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('DOBError').style.display = 'none';
+        }
+        var AdharCard = document.getElementById('AdharCard').value.trim();
+        if (AdharCard === '') {
+            document.getElementById('AdharCardError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('AdharCardError').style.display = 'none';
+        }
+
+    });
+
+    $(document).ready(function () {
+        $('#DepartmentDropdwon').change(function () {
+
+
+            var Department_Id = $(this).val();
+            console.log("Selected department ID: " + Department_Id);
+            // Your AJAX call or other logic here
+            $.ajax({
+                url: '/UserMaster/GetBYDepartmentIdWiseUserData',
+                type: 'GET',
+                data: { Department_Id: Department_Id },
+                success: function (data) {
+                    debugger
+                    PopulateSubProductDropDown("#userdropdown", data)
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors
+                }
+            });
+        });
+    });
+
+    function PopulateSubProductDropDown(dropDownId, list, selectedId) {
+        $(dropDownId).empty();
+        $(dropDownId).append("<option value='0'>Select</option>")
+        $.each(list, function (index, row) {
+            debugger
+            $(dropDownId).append("<option value='" + row.value + "'>" + row.text + "</option>")
+        });
+    }
+
+    function getConsultantCharges() {
+
+        var userId = $("#userdropdown").val();
+
+        // Your AJAX call or other logic here
+        $.ajax({
+            url: '/UserMaster/GetChargesByUserId',
+            type: 'GET',
+            data: { User_Id: userId },
+            success: function (data) {
+                debugger
+
+
+                $("#Consultant_Charges").val(data.opD_Charge)
+                $("#TotalAmount").val(data.opD_Charge)
+
+
+            },
+            error: function (xhr, status, error) {
+                // Handle errors
+            }
+        });
+    }
+
+    @* Age Count Function *@
+        function calculateAge() {
+            var dob = document.getElementById('DOB').value;
+            var today = new Date();
+            var birthDate = new Date(dob);
+            var age = today.getFullYear() - birthDate.getFullYear();
+            var m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            document.getElementById('Age').value = age;
+        }
+    @* Discount Amount Count Function *@
+        function calculateAmounts() {
+            debugger;
+            var consultantCharges = parseFloat($('#Consultant_Charges').val());
+            var discount = parseFloat($('#Discount').val());
+            var refundAmount = parseFloat($('#RefundAmount').val());
+
+            if (isNaN(discount)) {
+                // If the discount value is NaN, set it to 0
+                discount = 0;
+            }
+            if (isNaN(refundAmount)) {
+                // If the discount value is NaN, set it to 0
+                refundAmount = 0;
+            }
+
+            // Calculate the refund amount
+            // var refundAmount = (consultantCharges * discount)/100;
+
+            // // Update the RefundAmount textbox with the calculated value
+            // $('#RefundAmount').val(refundAmount.toFixed(2));
+
+            // Calculate the total amount
+            var totalAmount = consultantCharges - discount - refundAmount;
+
+            // Update the TotalAmount textbox with the calculated value
+            $('#TotalAmount').val(totalAmount.toFixed(2));
+        }
+
+
+    function getEmergencyCharges() {
+        var userId = $("#userdropdown").val();
+        $.ajax({
+            url: '/UserMaster/GetChargesByUserId',
+            type: 'GET',
+            data: { User_Id: userId },
+            success: function (data) {
+                debugger
+                $("#Consultant_Charges").val(data.emergency_Charge)
+                $("#EmergencyAdminssion").val(true);
+                $("#FileChargesApplicable").val(false);
+                calculateAmounts();
+            },
+            error: function (xhr, status, error) { }
+        });
+    }
+    function getNightCharges() {
+        var userId = $("#userdropdown").val();
+        $.ajax({
+            url: '/UserMaster/GetChargesByUserId',
+            type: 'GET',
+            data: { User_Id: userId },
+            success: function (data) {
+                debugger
+                $("#Consultant_Charges").val(data.night_Charge);
+                $("#EmergencyAdminssion").val(true);
+                $("#FileChargesApplicable").val(false);
+                calculateAmounts();
+            },
+            error: function (xhr, status, error) { }
+        });
+    }
+
+
+    document.getElementById('btnSubmit').addEventListener('click', function () {
+        // Simulating a successful save
+        var dataSavedSuccessfully = true;
+
+        if (dataSavedSuccessfully) {
+
+            alert('Data saved successfully!');
+        } else {
+
+            alert('Failed to save data. Please try again.');
+        }
+    });
+</script>
+
+
+<script>
+    // Get the current date and time
+    var currentDateTime = new Date();
+
+    // Format the current date and time to match the expected format for datetime-local input
+    var year = currentDateTime.getFullYear().toString();
+    var month = (currentDateTime.getMonth() + 1).toString().padStart(2, "0");
+    var day = currentDateTime.getDate().toString().padStart(2, "0");
+    var hours = currentDateTime.getHours().toString().padStart(2, "0");
+    var minutes = currentDateTime.getMinutes().toString().padStart(2, "0");
+
+    // Set the default value of the datetime-local input
+    document.getElementById("EntryDateTime").value = `${year}-${month}-${day} ${hours}:${minutes}`;
+</script>
