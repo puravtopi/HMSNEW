@@ -33,15 +33,12 @@
         </div>
     </div>
     <!-- row opened -->
-    <div class="row">
-
-        <!-- row opened -->
-        <div class="row">
+    <div class="row">        
             <div class="col-md-12 col-lg-6 col-xl-3">
                 <div class="card overflow-hidden">
                     <div class="card-body pb-0 d-flex">
                         <div>
-                            <h6 class="fs-13 mb-2 text-primary">Active Client</h6>
+                            <h6 class="fs-13 mb-2 text-primary">Active Patient</h6>
                             <h3 class="mb-0">@ViewBag.totalPatient</h3>
                         </div>
                         <div class="ml-auto text-right">
@@ -133,14 +130,14 @@
                 </div>
             </div>
         </div>
-        <!-- row closed -->
-
+<!-- row opened -->
+        <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 hidden">
             <div class="card overflow-hidden">
                 <div class="card-body">
                     <div class="d-flex">
                         <div class="">
-                            <p class="mb-2 h6">Active Client</p>
+                            <p class="mb-2 h6">Active Patients</p>
                             <h2 class="mb-1 ">@ViewBag.totalPatient</h2>
 
                             @if (@ViewBag.ChangeDirection == "Increase")
