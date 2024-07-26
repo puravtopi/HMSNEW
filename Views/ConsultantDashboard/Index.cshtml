@@ -5,12 +5,129 @@
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
 }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
 <style>
+    /* Basic styling for the toggle switch */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 34px;
+        height: 20px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 34px;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+        input:checked + .slider:before {
+            transform: translateX(14px);
+        }
+</style>
+@* <style>
     .pricing-table:hover > .panel > .panel-body-landing > .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
         font-weight: 600 !important;
         -webkit-transition: all .3s ease;
     }
-</style>
+
+    /* .switch-container {
+        position: absolute;
+        top: 10px;
+        right: 1090px;
+    } */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+       
+    }
+    .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+        
+    }
+
+   /*  .switch-container{
+        margin-left: 1090px;
+    } */
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style> *@ 
 <div class="page-header">
     <div class="page-leftheader">
         <h4 class="page-title mb-0">DashBoard </h4>
@@ -32,14 +149,28 @@
             </div>
         </div>
     </div>
+    @* <label class="switch">
+        <input type="checkbox" name="acceptRules" class="inline checkbox" id="checkbox1" value="true">
+        <span class="slider round"></span>
+    </label>
+    <input type="hidden" id="AllCountBitHidden" name="AllCountBitHidden" value="false">
+
+    <div id="checkbox-value"></div> *@
+
+    <label class="switch">
+        <input type="checkbox" id="toggleSwitch" onchange="toggleSwitchChanged()">
+        <span class="slider"></span>
+    </label>
+
     <!-- row opened -->
-    <div class="row">        
+    <div class="row">       
+        
             <div class="col-md-12 col-lg-6 col-xl-3">
                 <div class="card overflow-hidden">
                     <div class="card-body pb-0 d-flex">
                         <div>
                             <h6 class="fs-13 mb-2 text-primary">Active Patient</h6>
-                            <h3 class="mb-0">@ViewBag.totalPatient</h3>
+                        <h3 class="mb-0">@ViewBag.totalPatient</h3>
                         </div>
                         <div class="ml-auto text-right">
                             @if (@ViewBag.ChangeDirection == "Increase")
@@ -67,7 +198,7 @@
                     <div class="card-body pb-0 d-flex">
                         <div>
                             <h6 class="fs-13 mb-2 text-primary">Total Revenue</h6>
-                            <h3 class="mb-0">$@ViewBag.netamount</h3>
+                        <h3 class="mb-0">$@ViewBag.netamount</h3>
                         </div>
                         <div class="ml-auto text-right">
                             @if (@ViewBag.RevenueChangeDirection == "Increase")
@@ -130,8 +261,8 @@
                 </div>
             </div>
         </div>
-<!-- row opened -->
-        <div class="row">
+    <!-- row opened -->
+    <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-6 col-xl-3 hidden">
             <div class="card overflow-hidden">
                 <div class="card-body">
@@ -240,7 +371,6 @@
         </div>
     </div>
     <!-- row closed -->
-
     <div class="row">
 
         <div class="col-xl-6 col-xl-12">
@@ -302,9 +432,7 @@
         </div>
 
 
-    </div>
-
-    
+    </div>    
     
     <div class="row">
         <div class="col-lg-6 col-md-12 product">
@@ -338,8 +466,8 @@
             </div>
        @*  </div> *@
         
-        <!-- row closed -->
-        <div class="col-lg-6 col-md-12 product">
+    <!-- row closed -->
+    <div class="col-lg-6 col-md-12 product">
             <div class="card">
                 <div class="card-header d-flex">
                     <h3 class="card-title">Total Collection</h3>
@@ -495,13 +623,9 @@
                                     <div class="progress-bar bg-primary" style="width:@item.AvgCount% !important"></div>
                                 </div>
                             </div>
-                        }
-                    
+                        }                    
                     }
-                    
-
-
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -551,6 +675,7 @@
     $(document).ready(function () {
         var netAmountValue = '@ViewBag.netamount';  // Store the original net amount
         $('#toggleIcon').click(function () {
+            debugger;
             var netAmountSpan = $('#netAmount');
             if (netAmountSpan.data('visible')) {
                 netAmountSpan.text('*******');
@@ -1298,6 +1423,53 @@
         }
     });
     /* Chartjs (#total-customers) closed */
+  
 
+    function toggleSwitchChanged() {
+        debugger;
+        const isChecked = document.getElementById('toggleSwitch').checked ? true : false;
+
+        fetch('/ConsultantDashboard/Index?AllCountBit=' + isChecked, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.json())
+            .then(data => {
+                // Handle response if needed
+                console.log(data);
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    @*  $(document).ready(function () {
+        $('#checkbox1').change(function () {
+        // Get the checkbox state
+        var isChecked = $(this).is(':checked');
+
+        // Make the AJAX call
+        $.ajax({
+        url: '/CounsltantDashboard/Index',
+        type: 'POST',
+        data: {
+        toggleState: isChecked
+        },
+        success: function (response) {
+        // Handle success response
+        console.log('Success:', response);
+        },
+        error: function (xhr, status, error) {
+        // Handle error response
+        console.log('Error:', error);
+        }
+        });
+        });
+        }); *@
 </script>
 
+
+
+
+
+  

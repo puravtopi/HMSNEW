@@ -44,14 +44,20 @@ namespace HMS.Services
             return _dapper.Get<ConsultantDashboardModel>("usp_Consultant_Dashboard_Count", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
         }    
-        public List<ActiveClient> ConsultantActiveClient(int UserId,DateTime FDate,DateTime TDate)
-        {
+        public List<ActiveClient> ConsultantActiveClient(int UserId,DateTime? FDate,DateTime? TDate, bool AllBitCount)
+            {
             try
             {
+                if (AllBitCount == true)
+                {
+                    FDate = null;
+                    TDate = null;
+                }
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@UserId", UserId, DbType.Int32);
                 dbparams.Add("@FDate", FDate, DbType.DateTime);
                 dbparams.Add("@TDate", TDate, DbType.DateTime);
+                dbparams.Add("@AllBitCount", AllBitCount, DbType.Boolean);
                 //return _dapper.GetAll<ActiveClient>("usp_ConsultantActiveClient", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
                 var data= _dapper.GetAll<ActiveClient>("usp_ConsultantActiveClient", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
                 return data;
@@ -73,14 +79,20 @@ namespace HMS.Services
 
         }
 
-        public List<TotalRevenue> ConsultantTotalRevenue(int UserId, DateTime FDate, DateTime TDate)
+        public List<TotalRevenue> ConsultantTotalRevenue(int UserId, DateTime? FDate, DateTime? TDate, bool AllBitCount)
         {
             try
             {
+                if (AllBitCount == true)
+                {
+                    FDate = null;
+                    TDate = null;
+                }
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@UserId", UserId, DbType.Int32);
                 dbparams.Add("@FDate", FDate, DbType.DateTime);
                 dbparams.Add("@TDate", TDate, DbType.DateTime);
+                dbparams.Add("@AllBitCount", AllBitCount, DbType.Boolean);
                 var data = _dapper.GetAll<TotalRevenue>("usp_ConsultantTotalRevenue", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
                 return data;
 
@@ -91,14 +103,20 @@ namespace HMS.Services
             }
 
         }
-        public List<TotalPatientPending> ConsultantTotalPatientPending(int UserId, DateTime FDate, DateTime TDate)
+        public List<TotalPatientPending> ConsultantTotalPatientPending(int UserId, DateTime? FDate, DateTime? TDate,bool AllBitCount)
         {
             try
             {
+                if (AllBitCount == true)
+                {
+                    FDate = null;
+                    TDate = null;
+                }
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@UserId", UserId, DbType.Int32);
                 dbparams.Add("@FDate", FDate, DbType.DateTime);
                 dbparams.Add("@TDate", TDate, DbType.DateTime);
+                dbparams.Add("@AllBitCount", AllBitCount, DbType.Boolean);
                 var data = _dapper.GetAll<TotalPatientPending>("usp_ConsultantTotalPatientPending", dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
                 return data;
 

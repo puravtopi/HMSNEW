@@ -48,7 +48,7 @@ namespace HMS.Controllers
         }
 
 
-        public IActionResult Index()
+        public IActionResult Index(bool AllCountBit)
         {
             int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
             int SessionClinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
@@ -60,27 +60,25 @@ namespace HMS.Controllers
                 {
                     var firstname = data.FirstName != null ? data.FirstName : "";
                     var lastname = data.LastName != null ? data.LastName : "";
-                    ViewBag.Consultantname =  firstname + " " + lastname;
+                    ViewBag.Consultantname = firstname + " " + lastname;
                 }
-
             }
-            var year =DateTime.Now.ToString("yyyy");
 
+            var year = DateTime.Now.ToString("yyyy");
             var result = _consultantServices.GetDashboardCount(SessionUser);
-            
-            var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser,Int32.Parse(year));
+            var ChartCount = _consultantServices.GetDashboardChartCount(SessionUser, Int32.Parse(year));
+
             string CurrentMonth = String.Format("{0:MMMM}", DateTime.Now);
             string LastMonth = String.Format("{0:MMMM}", DateTime.Now.AddMonths(-1));
 
             string months = string.Empty;
             for (int i = 0; i < ChartCount.Count; i++)
             {
-                
                 if (ChartCount[i].RevisitCount > 0)
                 {
                     ChartCount[i].SumOfTotalAmount = ChartCount[i].SumOfTotalAmount + ChartCount[i].RevisitCount;
                 }
-                
+
                 if (ChartCount[i].Months == CurrentMonth)
                 {
                     ViewBag.MonthlyCollection = ChartCount[i].SumOfTotalAmount;
@@ -89,82 +87,75 @@ namespace HMS.Controllers
                 {
                     ViewBag.LastMonthlyCollection = ChartCount[i].SumOfTotalAmount;
                 }
-                months= ChartCount[i].Months.Substring(0, 3);
+                months = ChartCount[i].Months.Substring(0, 3);
 
-                if (i == 11) 
+                if (i == 11)
                 {
-                    ViewBag.Month +="'"+ ChartCount[i].Months.Substring(0,3)+ "'";
-                    ViewBag.Data +=  "'"+ChartCount[i].RevisitCount+"'";
+                    ViewBag.Month += "'" + ChartCount[i].Months.Substring(0, 3) + "'";
+                    ViewBag.Data += "'" + ChartCount[i].RevisitCount + "'";
                 }
-                else 
+                else
                 {
-                   ViewBag.Month += "'" + ChartCount[i].Months.Substring(0, 3) + "',";
-                   ViewBag.Data += "'" + ChartCount[i].RevisitCount + "',";
+                    ViewBag.Month += "'" + ChartCount[i].Months.Substring(0, 3) + "',";
+                    ViewBag.Data += "'" + ChartCount[i].RevisitCount + "',";
                 }
                 ChartCount[i].Months = months;
             }
+
             DateTime tDate = DateTime.Now;
             DateTime fDate = tDate.AddDays(-7);
             string fromdate = fDate.ToString("yyyy-MM-dd");
             string todate = tDate.ToString("yyyy-MM-dd");
 
-            //Start Active Client Chart Data create by vanita 06-06-2024
+            // Fetch Active Client data
             decimal totalPatient = 0;
-            List<ActiveClient> activeClient = _consultantServices.ConsultantActiveClient(SessionUser, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate));
-            for (int i = 0; i < activeClient.Count; i++) 
+            List<ActiveClient> activeClient = _consultantServices.ConsultantActiveClient(SessionUser, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate), AllCountBit);
+            for (int i = 0; i < activeClient.Count; i++)
             {
-                
                 ViewBag.ActiveData += "'" + activeClient[i].NumberOfActiveCustomers + "',";
-                totalPatient += activeClient[i].NumberOfActiveCustomers +0;
-                
+                totalPatient += activeClient[i].NumberOfActiveCustomers + 0;
+
                 ViewBag.ActiveMonth += "'" + i + "',";
             }
             ViewBag.totalPatient = totalPatient;
-            //End Active Client
 
-            //Start Total Revenue Chart Data create by vanita 06-06-2024
+            // Fetch Total Revenue data
             decimal totalRevenueCount = 0;
-            List<TotalRevenue> totalRevenue = _consultantServices.ConsultantTotalRevenue(SessionUser, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate));
+            List<TotalRevenue> totalRevenue = _consultantServices.ConsultantTotalRevenue(SessionUser, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate), AllCountBit);
             for (int i = 0; i < totalRevenue.Count; i++)
             {
-               
                 ViewBag.TotalRevenueData += "'" + totalRevenue[i].TotalIncome + "',";
                 totalRevenueCount += totalRevenue[i].TotalIncome + 0;
-                
+
                 ViewBag.TotalRevenueMonth += "'" + i + "',";
             }
             ViewBag.netamount = totalRevenueCount;
-            //End Total Revenue
 
-            //Start Total pending Patient Data create by vanita 06-06-2024
+            // Fetch Pending Patient data
             decimal totalPendingPatientCount = 0;
-            List<TotalPatientPending> pendingPatient = _consultantServices.ConsultantTotalPatientPending(SessionUser, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate));
+            List<TotalPatientPending> pendingPatient = _consultantServices.ConsultantTotalPatientPending(SessionUser, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate),AllCountBit);
             for (int i = 0; i < pendingPatient.Count; i++)
             {
-                
                 ViewBag.TotalPatientData += "'" + pendingPatient[i].PatientIsCheckedPendingCount + "',";
                 totalPendingPatientCount += pendingPatient[i].PatientIsCheckedPendingCount + 0;
-                
+
                 ViewBag.TotalPatientMonth += "'" + i + "',";
             }
             ViewBag.PatienIsCheckedpending = totalPendingPatientCount;
-            //End Total Revenue
 
             var AvrageCount = _consultantServices.GetDashboardAvrageCount(SessionUser);
             var patientMaster = _patientMasterServices.GetConsultantPatient(SessionUser, DateTime.Now.ToString("yyyy-MM-dd"));
             var ReceptionistDashboardCount = _consultantServices.GetReceptionWiseCounts(SessionClinicId, SessionUser);
 
-            ViewBag.PatientList= patientMaster;
-            ViewBag.todayPatient = result.TotalPatient;
-            //ViewBag.netamount = result.TotalIncome;
+            ViewBag.PatientList = patientMaster;
+            //ViewBag.todayPatient = result.TotalPatient;
             ViewBag.todayAppointments = 0;
             ViewBag.revisitCount = 0;
-            ViewBag.totalServices = 0;
-            ViewBag.totalPatient = result.TotalPatient + 0;
-            ViewBag.Chartdata= JsonConvert.SerializeObject(ChartCount);
+            //ViewBag.totalServices = 0;
+            //ViewBag.totalPatient = result.TotalPatient + 0;
+            ViewBag.Chartdata = JsonConvert.SerializeObject(ChartCount);
             ViewBag.patientIsChecked = result.PatientIsCheckedCount;
-            //ViewBag.PatienIsCheckedpending = result.PatientIsCheckedPendingCount;
-            ViewBag.Currentdate = DateAndTime.Now.ToString("dd-MM-yyyy");
+            ViewBag.Currentdate = DateTime.Now.ToString("dd-MM-yyyy");
             ViewBag.StartedTime = result.StartedTime;
             ViewBag.EndedTime = result.EndedTime;
             ViewBag.PercentageChange = AvrageCount.PercentageChange;
@@ -177,15 +168,16 @@ namespace HMS.Controllers
             ViewBag.YesterdayTotalAmount = AvrageCount.YesterdayRevenue;
             ViewBag.ReceptionistCount = ReceptionistDashboardCount;
 
-            float ServiceCount=float.Parse(AvrageCount.ServicePercentageChange.ToString().TrimStart('-'));
+            float ServiceCount = float.Parse(AvrageCount.ServicePercentageChange.ToString().TrimStart('-'));
             if (ServiceCount > 100)
             {
                 AvrageCount.ServicePercentageChange = ServiceCount / 10;
             }
-            ViewBag.ServicePercentageChange = AvrageCount.ServicePercentageChange;         
-            
+            ViewBag.ServicePercentageChange = AvrageCount.ServicePercentageChange;
+
             return View();
         }
+
         public IActionResult GetDataForYear(int year)
         {
             int sessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);

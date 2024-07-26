@@ -12,8 +12,8 @@ namespace HMS.Interface
         public ConsultantDashboardModel GetDashboardAvrageCount(int UserId);
 
         public List<ReceptionWiseCountModel> GetReceptionWiseCounts(int ClinicId, int UserId);
-        public List<ActiveClient> ConsultantActiveClient(int UserId, DateTime FDate, DateTime TDate);
-        public List<TotalRevenue> ConsultantTotalRevenue(int UserId, DateTime FDate, DateTime TDate);
-        public List<TotalPatientPending> ConsultantTotalPatientPending(int UserId, DateTime FDate, DateTime TDate);
+        public List<ActiveClient> ConsultantActiveClient(int UserId, DateTime? FDate, DateTime? TDate, bool AllBitCount);
+        public List<TotalRevenue> ConsultantTotalRevenue(int UserId, DateTime? FDate, DateTime? TDate, bool AllBitCount);
+        public List<TotalPatientPending> ConsultantTotalPatientPending(int UserId, DateTime? FDate, DateTime? TDate, bool AllBitCount);
     }
 }

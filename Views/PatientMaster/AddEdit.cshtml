@@ -415,11 +415,14 @@
     });
 
         document.getElementById('btnSubmit').addEventListener('click', function (event) {
+            debugger
+            var isFormValid = true;
 
             var Fname = document.getElementById('Fname').value.trim();
             if (Fname === '') {
                 document.getElementById('FnameError').style.display = 'block';
-                event.preventDefault(); // Prevent form submission
+                //event.preventDefault(); 
+                isFormValid = false;        
             } else {
                 document.getElementById('FnameError').style.display = 'none';
 
@@ -428,7 +431,8 @@
             var Lname = document.getElementById('Lname').value.trim();
             if (Lname === '') {
                 document.getElementById('LnameError').style.display = 'block';
-                event.preventDefault(); // Prevent form submission
+                //event.preventDefault();
+            isFormValid = false;
             } else {
                 document.getElementById('LnameError').style.display = 'none';
             }
@@ -436,29 +440,40 @@
             var Father_HusbandName = document.getElementById('Father_HusbandName').value.trim();
             if (Father_HusbandName === '') {
                 document.getElementById('Father_HusbandNameError').style.display = 'block';
-                event.preventDefault(); // Prevent form submission
+               // event.preventDefault();
+                isFormValid = false;
             } else {
                 document.getElementById('Father_HusbandNameError').style.display = 'none';
-            } var MotherName = document.getElementById('MotherName').value.trim();
+            } 
+            var MotherName = document.getElementById('MotherName').value.trim();
             if (MotherName === '') {
                 document.getElementById('MotherNameError').style.display = 'block';
-                event.preventDefault(); // Prevent form submission
+               // event.preventDefault(); 
+                isFormValid = false;
             } else {
                 document.getElementById('MotherNameError').style.display = 'none';
-            } var DOB = document.getElementById('DOB').value.trim();
+            } 
+            var DOB = document.getElementById('DOB').value.trim();
             if (DOB === '') {
                 document.getElementById('DOBError').style.display = 'block';
-                event.preventDefault(); // Prevent form submission
+                //event.preventDefault(); 
+                isFormValid = false;
             } else {
                 document.getElementById('DOBError').style.display = 'none';
             }
             var AdharCard = document.getElementById('AdharCard').value.trim();
             if (AdharCard === '') {
                 document.getElementById('AdharCardError').style.display = 'block';
-                event.preventDefault(); // Prevent form submission
+                event.preventDefault(); 
+                isFormValid = false;
             } else {
                 document.getElementById('AdharCardError').style.display = 'none';
             }
+            if (!isFormValid) {
+                //event.preventDefault(); 
+                Console.log('Please fill in all required fields.');
+            }
+
 
         });
 
@@ -593,18 +608,18 @@
     }
 
 
-    document.getElementById('btnSubmit').addEventListener('click', function () {
-        // Simulating a successful save
-        var dataSavedSuccessfully = true;
+    // document.getElementById('btnSubmit').addEventListener('click', function () {
+    //     // Simulating a successful save
+    //     var dataSavedSuccessfully = true;
 
-        if (dataSavedSuccessfully) {
+    //     if (dataSavedSuccessfully) {
             
-            alert('Data saved successfully!');
-        } else {
+    //         alert('Data saved successfully!');
+    //     } else {
 
-            alert('Failed to save data. Please try again.');
-        }
-    });
+    //         alert('Failed to save data. Please try again.');
+    //     }
+    // });
 </script>
             
 
