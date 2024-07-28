@@ -63,12 +63,7 @@ namespace HMS.Controllers
 
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             serviceHeadmodel.departmentList = _commonService.GetDepartmentList(SclinicId);
-            for (int i = 0; i < res.Count; i++)
-            {
-                //int deptid = Convert.ToInt32(serviceHeadmodel.departmentList[i].Value);
-                var data = _DepartmentMasterServices.GetById(res[i].Department_Id);
-                res[i].DepartmentName = data.DepartmentName;
-            }
+           
 
             if (res[0].DbCode == -1)
             {
@@ -79,6 +74,13 @@ namespace HMS.Controllers
             {
                 count = res.Count;
                 serviceHeadmodel.serviceHeadsList = res;
+
+                for (int i = 0; i < res.Count; i++)
+                {
+                    //int deptid = Convert.ToInt32(serviceHeadmodel.departmentList[i].Value);
+                    var data = _DepartmentMasterServices.GetById(res[i].Department_Id);
+                    res[i].DepartmentName = data.DepartmentName;
+                }
             }
             serviceHeadmodel.Pager = new JW.Pager(TotalCount, currentPage, PageSizeId);
             if (TempData[Temp_Message.Success] != null)

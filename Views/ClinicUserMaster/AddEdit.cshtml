@@ -223,24 +223,24 @@
         $('#consultantCard').hide();
 
         // Check the default selected value of the dropdown
-        var selectedValue = $('#designationDropdown').val();
+        var selectedValue = $('#designationDropdown option:selected').text();      
 
         // Check if the default value is "11"
-        if (selectedValue === "11") {
+        if (selectedValue === "Consultant") {
             // If selected, show the card
             $('#consultantCard').show();
         }
 
         // Event listener for dropdown change
-        $('#designationDropdown').change(handleDropdownChange);
+        //$('#designationDropdown').change(handleDropdownChange);
     });
 
     function handleDropdownChange() {
         // Check the selected value of the dropdown
-        var selectedValue = $('#designationDropdown').val();
-
+        var selectedValue = $('#designationDropdown option:selected').text();
+              
         // Check if "Consultant" is selected
-        if (selectedValue === "11") {
+        if (selectedValue === "Consultant") {
             // If selected, show the card
             $('#consultantCard').show(); // Show the card using its id
         } else {

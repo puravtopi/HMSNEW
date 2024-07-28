@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="form-group">
-                                        @Html.HiddenFor(Model => Model.Patient_Id)
+                                      
                                         @Html.LabelFor(Model => Model.PatientName, "Patient Name", new { @class = "form-label required-label" })
                                         @Html.TextBoxFor(Model => Model.PatientName, new { @class = "form-control", @id = "PatientName", @readonly = "readonly" })
                                         <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.PatientName)</p>
@@ -275,7 +275,7 @@
             var ServiceHead_Id = $(this).val();
             var Patient_Id = $("#UHID").val();
             localStorage.setItem("Patient_Id", Patient_Id);
-            $('#Patient_Id').val(Patient_Id);
+            // $('#Patient_Id').val(Patient_Id);
             console.log("Selected serviceHead ID: " + ServiceHead_Id);
             // Your AJAX call or other logic here
             $.ajax({

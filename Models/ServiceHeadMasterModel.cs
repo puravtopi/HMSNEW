@@ -18,6 +18,7 @@ namespace HMS.Models
         public bool Active { get; set; }
         public bool IsDelete { get; set; }
         public int? DeletedBy { get; set; }
+        public int? Clinic_Id { get; set; }
         public DateTime? DeletedDate { get; set; }
         public List<SelectListItem> lstStatus { get; set; }
         public List<ServiceHeadMasterModel> serviceHeadsList { get; set; }

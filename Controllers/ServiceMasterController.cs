@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace HMS.Controllers
 {
@@ -64,14 +65,7 @@ namespace HMS.Controllers
 
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             servicemodel.departmentList = _commonService.GetDepartmentList(SclinicId);
-            for (int i = 0; i < res.Count; i++)
-            {
-                //int deptid = Convert.ToInt32(serviceHeadmodel.departmentList[i].Value);
-                var data = _DepartmentMasterServices.GetById(res[i].Department_Id);
-                res[i].DepartmentName = data.DepartmentName;
             
-                
-            }
 
            
 
@@ -84,6 +78,14 @@ namespace HMS.Controllers
             {
                 count = res.Count;
                 servicemodel.serviceMasterList = res;
+                for (int i = 0; i < res.Count; i++)
+                {
+                    //int deptid = Convert.ToInt32(serviceHeadmodel.departmentList[i].Value);
+                    var data = _DepartmentMasterServices.GetById(res[i].Department_Id);
+                    res[i].DepartmentName = data.DepartmentName;
+
+
+                }
             }
             servicemodel.Pager = new JW.Pager(TotalCount, currentPage, PageSizeId);
             if (TempData[Temp_Message.Success] != null)
@@ -157,6 +159,7 @@ namespace HMS.Controllers
                         }
                         model.ServiceHead_Id = Int32.Parse(model.ServiceHead);
                         model.Department_Id = Int32.Parse(model.Departments);
+                        model.Clinic_Id = SclinicId;
                         var res = _serviceMaster.Insert(model);
                         if (res.DbCode == 1)
                         {

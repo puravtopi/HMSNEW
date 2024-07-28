@@ -43,10 +43,10 @@ namespace HMS.Models
 
         public List<PatientMasterModel> patientMastersList { get; set; }
         [Display(Name = "Father/Husband Name")]
-        [Required(ErrorMessage = "This field is required.")]
+
         public string Father_HusbandName { get; set; }
         [Display(Name = "Mother Name")]
-        [Required(ErrorMessage = "This field is required.")]
+
         public string MotherName { get; set; }
         public string BloodGroup { get; set; }
         public string MaritalStatus { get; set; }
@@ -61,7 +61,6 @@ namespace HMS.Models
 
         //PatientGeneralDetailMasterModel Fields
         public Decimal Temperature { get; set; }
-        [Required(ErrorMessage = "This field is required.")]
         public string AdharCard { get; set; }
         public string Weight { get; set; }
         public string Bloodpressure { get; set; }
@@ -129,7 +128,7 @@ namespace HMS.Models
         public string ServiceHeadName { get; set; }
         public decimal Charges { get; set; }
         public string Discount1 { get; set; }
-        public decimal NetAmount { get; set; }        
+        public decimal NetAmount { get; set; }
         public int PatientServiceMasterId { get; set; }
         public int Patient_Id { get; set; }
         public int ServiceId { get; set; }

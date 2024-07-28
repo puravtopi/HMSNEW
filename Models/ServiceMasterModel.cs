@@ -42,5 +42,8 @@ namespace HMS.Models
         public int Patient_Id { get; set; }
 
         public int ServiceId { get; set; }
+        public int? Clinic_Id { get; set; }
     }
+
+
 }

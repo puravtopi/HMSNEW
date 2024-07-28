@@ -74,8 +74,8 @@ namespace HMS.Services
             //dbparams.Add("@Discount", model.Discount, DbType.String);
             //dbparams.Add("@NetAmount", model.NetAmount, DbType.String);
             dbparams.Add("@ReceiptNo", model.ReceiptNo, DbType.String);
-            dbparams.Add("@ServiceDate", model.ServiceDate, DbType.String);
-            dbparams.Add("@RefundDate", model.RefundDate, DbType.String);
+            dbparams.Add("@ServiceDate", model.ServiceDate, DbType.DateTime);
+            dbparams.Add("@RefundDate", model.RefundDate, DbType.DateTime);
             dbparams.Add("@CreatedBy", model.CreatedBy, DbType.Int32);
             dbparams.Add("@Active", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);
