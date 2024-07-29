@@ -72,7 +72,7 @@ namespace HMS.Services
             dbparams.Add("@CreatedBy", model.CreatedBy, DbType.Int32);
             dbparams.Add("@Active", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);            
-            dbparams.Add("@Clinic_Id", model.Clinic_Id, DbType.Int32);            
+            //dbparams.Add("@Clinic_Id", model.Clinic_Id, DbType.Int32);            
             return _dapper.Update<ServiceMasterModel>(CommonSp.saveServiceMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
         }

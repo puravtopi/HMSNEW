@@ -21,6 +21,7 @@
     <meta name="Keywords" content="admin,admin dashboard,admin dashboard template,admin panel template,admin template,admin theme,bootstrap 4 admin template,bootstrap 4 dashboard,bootstrap admin,bootstrap admin dashboard,bootstrap admin panel,bootstrap admin template,bootstrap admin theme,bootstrap dashboard,bootstrap form template,bootstrap panel,bootstrap ui kit,dashboard bootstrap 4,dashboard design,dashboard html,dashboard template,dashboard ui kit,envato templates,flat ui,html,html and css templates,html dashboard template,html5,jquery html,premium,premium quality,sidebar bootstrap 4,template admin bootstrap 4" />
     <!--- Favicon --->
     <link rel="icon" href="~/assets/img/brand/favicon.png" type="image/x-icon" />
+
     <!-- Bootstrap css -->
     <link href="../assets/plugins/bootstrap-4.1.3/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -42,8 +43,14 @@
     <!-- Bootstrap-datepicker css -->
     <link rel="stylesheet" href="../assets/plugins/bootstrap-datepicker/bootstrap-datepicker.css">
 
+    <!-- Prism css -->
+    <link href="../assets/plugins/prism/prism.css" rel="stylesheet">
+
     <!-- Custom scroll bar css -->
     <link href="../assets/plugins/scroll-bar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+
+    <!-- Sidemenu-repsonsive-tabs  css -->
+    <link href="../assets/plugins/sidemenu-responsive-tabs/css/sidemenu-responsive-tabs.css" rel="stylesheet">
 
     <!-- P-scroll css -->
     <link href="../assets/plugins/p-scroll/p-scroll.css" rel="stylesheet" type="text/css">
@@ -53,6 +60,9 @@
 
     <!-- Rightsidebar css -->
     <link href="../assets/plugins/sidebar/sidebar.css" rel="stylesheet">
+
+    <!-- Accordion Css -->
+    <link href="../assets/plugins/accordion/accordion.css" rel="stylesheet" />
 
     <!-- Nice-select css  -->
     <link href="../assets/plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet" />
@@ -74,15 +84,17 @@
     </style>
 </head>
 <body class="app sidebar-mini">
+
     <!-- Loader -->
     <div id="loading">
         <img src="../assets/images/other/loader.svg" class="loader-img" alt="Loader">
     </div>
+    <!-- /Loader -->
 
 
-    <!-- main-header -->
     <div class="page">
         <div class="page-main">
+            <!-- Top-header opened -->
             <div class="header-main header sticky">
                 <div class="app-header header top-header navbar-collapse ">
                     <div class="container-fluid">
@@ -100,96 +112,46 @@
                     </div>
                 </div>
             </div>
-        
-           
-        </div>
-    </div>
-    <div class="page">
-        <div class="page-main">
-            @if (ViewData["Dashboard"] == null)
-            {
-                <div class="breadcrumb-header justify-content-between">
-                    <div class="breadcrumb-style3">
-                        @* <h4 class="content-title mb-2">Hi, Welcome back!</h4> *@
-                        <ol class="breadcrumb1">
-                            @if (ViewBag.Breadcrumbs != null)
-                            {
-                                for (int i = 0; i < ViewBag.Breadcrumbs.Count; i++)
-                                {
-                                    var breadcrumb = ViewBag.Breadcrumbs[i];
-                                    <li>
-                                        <a href="@(breadcrumb.Url != null ? breadcrumb.Url : "javascript:void(0);")" class="breadcrumb-link">@breadcrumb.Text</a>
-                                        @if (i < ViewBag.Breadcrumbs.Count - 1)
-                                        {
-                                            <span class="separator">>></span>
-                                        }
-                                    </li>
-                                }
-                            }
-                        </ol>
+            <!-- Top-header closed -->
+            <!-- Sidebar menu-->
+            <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+            <aside class="app-sidebar toggle-sidebar">
+                <div class="app-sidebar__user">
+                    <div class="user-body">
+                        <img src="data:image/png;base64,@_httpContextAccessor.HttpContext.Session.GetString("userphoto")" alt="profile-img" class="rounded-circle w-25">
+                    </div>
+                    <div class="user-info">
+                        <a href="#" class="">
+                            <span class="app-sidebar__user-name font-weight-semibold"> @_httpContextAccessor.HttpContext.Session.GetString("username")</span><br>
+                            <span class="text-muted app-sidebar__user-designation text-sm">@_httpContextAccessor.HttpContext.Session.GetString("desination")</span>
+                            <span class="text-muted app-sidebar__user-designation text-sm">@_httpContextAccessor.HttpContext.Session.GetString("department")</span>
+                        </a>
+                    </div>
+                </div>
+                <ul class="side-menu toggle-menu">
+                    <li class="slide">
+                       @*  <a class="side-menu__item" data-toggle="slide" href="#"><span class="icon-menu-img"><img src="../assets/images/svgs/homepage.svg" class="side_menu_img svg-1" alt="image"></span><span class="side-menu__label">CRM</span><i class="angle fa fa-angle-right"></i></a> *@
+                       
 
-                    </div>
+                            <a class="side-menu__item" href="@Url.Action("Index","ClinicMaster")">
+                                <span class="icon-menu-img">
+                                    <img src="../assets/images/svgs/homepage.svg" class="side_menu_img svg-1" alt="image">
+                                </span>
+                                <span class="side-menu__label">Clinic</span>
+                            </a>
+                        
+                    </li>
+                </ul>
+                
+            </aside>
 
+            <div class="app-content icon-content">
+                <div class="section">
+                    @RenderBody()
                 </div>
-            }
-            <!-- /breadcrumb -->
-            <!-- Row -->
-            @if (TempData[Temp_Message.Success] != null)
-            {
-                <div class="col-xl-4 col-lg-4 col-md-6" id="success-alert">
-                    <!--Page Widget Error-->
-                    <div class="card bd-0 mg-b-20 bg-success-transparent alert p-0">
-                        <div class="card-header text-success font-weight-bold">
-                            <i class="far fa-check-circle"></i> Success
-                            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"><span aria-hidden="true">×</span></button>
-                        </div>
-                        <div class="card-body text-success">
-                            <strong>@TempData[Temp_Message.Success] </strong>
-                        </div>
-                    </div>
-                    <!--Page Widget Error-->
-                </div>
-                <script>
-                    var successAlert = document.getElementById('success-alert');
-                    if (successAlert) {
-                        setTimeout(function () {
-                            successAlert.style.display = 'none';
-                        }, 3000);
-                    }
-                </script>
-            }
-            @if (TempData[Temp_Message.Error] != null)
-            {
-                <div class="col-xl-4 col-lg-4 col-md-6" id="error-alert">
-                    <!--Page Widget Error-->
-                    <div class="card bd-0 mg-b-20 bg-danger-transparent alert p-0">
-                        <div class="card-header text-danger font-weight-bold">
-                            <i class="far fa-times-circle"></i> Error Data
-                            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"><span aria-hidden="true">×</span></button>
-                        </div>
-                        <div class="card-body text-danger">
-                            <strong>@TempData[Temp_Message.Error]</strong>
-                        </div>
-                    </div>
-                    <!--Page Widget Error-->
-                </div>
-                <script>
-                    var errorAlert = document.getElementById('error-alert');
-                    if (errorAlert) {
-                        setTimeout(function () {
-                            errorAlert.style.display = 'none';
-                        }, 3000);
-                    }</script>
-            }
-            @if (ViewData["Dashboard"] == null)
-            {
-                @RenderBody()
-            }
-            else
-            {
-                @RenderBody()
-            }
+            </div>
         </div>
+        <!-- Footer opened -->
         <footer class="footer-main icon-footer">
             <div class="container">
                 <div class="  mt-2 mb-2 text-center">
@@ -232,7 +194,7 @@
 
                         </a>
                     </div>
-                    @Html.Partial("~/Views/Shared/_CommonHeaderMenu.cshtml")
+                    @* @Html.Partial("~/Views/Shared/_CommonHeaderMenu.cshtml") *@
                 </div>
                 @Html.Partial("~/Views/Shared/_CommonHeaderRight.cshtml")
                 <button class="navbar-toggler nav-link icon navresponsive-toggler vertical-icon ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
@@ -285,218 +247,7 @@
                         </div>
                     </div>
                     <div class="slide-left disabled" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"><path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" /></svg></div>
-                    <ul class="side-menu ">
-                        <li class="slide @((controllerName=="Dashboard" && currentAction=="Index")?"is-expanded":"")">
-                            <a class="side-menu__item" href="@Url.Action("Index","Dashboard", new { area = "Admin" })"><i class="side-menu__icon fas fa-tachometer-alt"></i><span class="side-menu__label">Dashboard</span></a>
-                        </li>
-                        <li class="slide @((controllerName=="ClinicMaster" && currentAction=="Index")?"is-expanded":"")">
-                            <a class="side-menu__item" href="@Url.Action("Index","ClinicMaster")"><i class="side-menu__icon fas fa-tachometer-alt"></i><span class="side-menu__label">Clinic Master</span></a>
-                        </li>
-                        <li class="slide @((controllerName=="DepartmentMaster" && currentAction=="Index")?"is-expanded":"")">
-                            <a class="side-menu__item" href="@Url.Action("Index","DepartmentMaster")"><i class="side-menu__icon fas fa-tachometer-alt"></i><span class="side-menu__label">Department Master</span></a>
-                        </li>
-                        <li class="slide @((controllerName=="DesignationMaster" && currentAction=="Index")?"is-expanded":"")">
-                            <a class="side-menu__item" href="@Url.Action("Index","DesignationMaster")"><i class="side-menu__icon fas fa-tachometer-alt"></i><span class="side-menu__label">Designation Master</span></a>
-                        </li>
-                        <li class="slide @((controllerName=="Home" && currentAction=="Index")?"is-expanded":"")">
-                            <a class="side-menu__item" href="@Url.Action("LogOut","Home")"><i class="side-menu__icon fas fa-tachometer-alt"></i><span class="side-menu__label">Logout</span></a>
-                        </li>
-                        @*  @foreach (var item in listMenu.Where(item => item.ParentMenuID == 0 && item.Active))
-                        {
-                        if (item.MenuName == "Electronics Production")
-                        {
-                        <li class="slide">
-                        <a class="side-menu__item" href="@item.Controller">
-                        <i class="side-menu__icon @item.Icon"></i>
-                        <span class="side-menu__label">@item.MenuName</span>
-                        </a>
 
-                        </li>
-                        }
-                        else
-                        {
-                        <li class="slide">
-                        <a class="side-menu__item" data-bs-toggle="slide" href="javascript:void(0);">
-                        <i class="side-menu__icon @item.Icon"></i>
-                        <span class="side-menu__label">@item.MenuName</span>
-                        <i class="angle fe fe-chevron-down"></i>
-                        </a>
-                        @Html.Raw(RenderMenu(listMenu, item.MenuID))
-                        </li>
-                        }
-
-                        } *@
-                        @*  @functions {
-                        HtmlString RenderMenu(List<AdminMenuModel> menuItems, int parentMenuId = 0)
-                        {
-                        var childMenuItems = menuItems.Where(item => item.ParentMenuID == parentMenuId && item.Active).ToList();
-
-                        if (childMenuItems.Any())
-                        {
-                        var menuHtml = new StringBuilder();
-
-                        menuHtml.Append("<ul class='slide-menu'>");
-
-                        foreach (var item in childMenuItems)
-                        {
-                        var menuItemHtml = new StringBuilder();
-
-                        menuItemHtml.Append("<li class='sub-slide'>");
-
-                        if (menuItems.Any(menu => menu.ParentMenuID == item.MenuID && menu.Active))
-                        {
-                        // If there are submenus, render the submenu toggle button
-                        menuItemHtml.Append("<a class='slide-item' data-bs-toggle='sub-slide' href='javascript:void(0);'>");
-                        menuItemHtml.Append($"<span class='sub-side-menu__label'>{item.MenuName}</span><i class='sub-angle fe fe-chevron-down'></i></a>");
-                        }
-                        else
-                        {
-                        // If no submenus, render a regular link
-                        //menuItemHtml.Append($"<a class='slide-item {(item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Action == ViewContext.RouteData.Values["action"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString() ? "active" : "")}' href='{Url.Action(item.Action, item.Controller, new { area = item.Area })}'>{item.MenuName}</a>");
-
-                        if (item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString() && (item.Action == ViewContext.RouteData.Values["action"].ToString() || ViewContext.RouteData.Values["action"].ToString() == "AddEdit"))
-                        {
-                        menuItemHtml.Append($"<a class='slide-item active'");
-                        }
-                        else
-                        {
-                        menuItemHtml.Append($"<a class='slide-item '");
-                        }
-                        //{((item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Action == ViewContext.RouteData.Values["action"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString()) ? ((item.Controller == ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "") : ((item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString()) ? "active" : ""))}
-                        menuItemHtml.Append($" href='{Url.Action(item.Action, item.Controller, new { area = item.Area })}'>{item.MenuName}</a>");
-
-                        }
-
-                        // Recursively render submenus
-                        if (menuItems.Any(menu => menu.ParentMenuID == item.MenuID && menu.Active))
-                        {
-                        menuItemHtml.Append(RenderSubMenu(menuItems, item.MenuID));
-                        }
-
-                        menuItemHtml.Append("</li>");
-                        menuHtml.Append(menuItemHtml);
-                        }
-
-                        menuHtml.Append("</ul>");
-                        return new HtmlString(menuHtml.ToString());
-                        }
-
-                        return HtmlString.Empty;
-                        }
-                        HtmlString RenderSubMenu(List<AdminMenuModel> menuItems, int parentMenuId = 0)
-                        {
-                        var childMenuItems = menuItems.Where(item => item.ParentMenuID == parentMenuId && item.Active).ToList();
-
-                        if (childMenuItems.Any())
-                        {
-                        var menuHtml = new StringBuilder();
-
-                        menuHtml.Append("<ul class='sub-slide-menu'>");
-
-                        foreach (var item in childMenuItems)
-                        {
-                        var menuItemHtml = new StringBuilder();
-
-                        menuItemHtml.Append("<li class='sub-slide'>");
-
-                        if (menuItems.Any(menu => menu.ParentMenuID == item.MenuID && menu.Active))
-                        {
-                        // If there are submenus, render the submenu toggle button
-                        menuItemHtml.Append("<a class='slide-item' data-bs-toggle='sub-slide' href='javascript:void(0);'>");
-                        menuItemHtml.Append($"<span class='sub-side-menu__label'>{item.MenuName}</span><i class='sub-angle fe fe-chevron-down'></i></a>");
-                        }
-                        else
-                        {
-                        // If no submenus, render a regular link
-                        //menuItemHtml.Append($"<a class='slide-item {(item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Action == ViewContext.RouteData.Values["action"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString() ? "active" : "")}' href='{Url.Action(item.Action, item.Controller, new { area = item.Area })}'>{item.MenuName}</a>");
-                        if (item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString() && (item.Action == ViewContext.RouteData.Values["action"].ToString() || ViewContext.RouteData.Values["action"].ToString() == "AddEdit"))
-                        {
-                        menuItemHtml.Append($"<a class='slide-item active'");
-                        }
-                        else
-                        {
-                        menuItemHtml.Append($"<a class='slide-item '");
-                        }
-                        menuItemHtml.Append($" href='{Url.Action(item.Action, item.Controller, new { area = item.Area })}'>{item.MenuName}</a>");
-                        //menuItemHtml.Append($"<a class='slide-item {((item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Action == ViewContext.RouteData.Values["action"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString()) ? ((item.Controller == ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "") : ((item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString()) ? "active" : ""))}' href='{Url.Action(item.Action, item.Controller, new { area = item.Area })}'>{item.MenuName}</a>");
-                        }
-
-                        // Recursively render submenus
-                        if (menuItems.Any(menu => menu.ParentMenuID == item.MenuID && menu.Active))
-                        {
-                        menuItemHtml.Append(RenderSubPageMenu(menuItems, item.MenuID));
-                        }
-
-                        menuItemHtml.Append("</li>");
-                        menuHtml.Append(menuItemHtml);
-                        }
-
-                        menuHtml.Append("</ul>");
-                        return new HtmlString(menuHtml.ToString());
-                        }
-
-                        return HtmlString.Empty;
-                        }
-                        HtmlString RenderSubPageMenu(List<AdminMenuModel> menuItems, int parentMenuId = 0)
-                        {
-                        var childMenuItems = menuItems.Where(item => item.ParentMenuID == parentMenuId && item.Active).ToList();
-
-                        if (childMenuItems.Any())
-                        {
-                        var menuHtml = new StringBuilder();
-
-                        menuHtml.Append("<ul class='sub-slide-menu'>");
-
-                        foreach (var item in childMenuItems)
-                        {
-                        var menuItemHtml = new StringBuilder();
-
-                        menuItemHtml.Append("<li class='sub-slide2'>");
-
-                        if (menuItems.Any(menu => menu.ParentMenuID == item.MenuID && menu.Active))
-                        {
-                        // If there are submenus, render the submenu toggle button
-                        menuItemHtml.Append("<a class='slide-item-menu__item' data-bs-toggle='sub-slide2' href='javascript:void(0);'>");
-                        menuItemHtml.Append($"<span class='sub-side-menu__label'>{item.MenuName}</span><i class='sub-angle fe fe-chevron-down'></i></a>");
-                        }
-                        else
-                        {
-                        // If no submenus, render a regular link
-                        //menuItemHtml.Append($"<a class='sub-slide-item {(item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Action == ViewContext.RouteData.Values["action"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString() ? "active" : "")}' href='{Url.Action(item.Action, item.Controller, new { area = item.Area })}'>{item.MenuName}</a>");
-
-                        if (item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString() && (item.Action == ViewContext.RouteData.Values["action"].ToString() || ViewContext.RouteData.Values["action"].ToString() == "AddEdit"))
-                        {
-                        menuItemHtml.Append($"<a class='slide-item active'");
-                        }
-                        else
-                        {
-                        menuItemHtml.Append($"<a class='slide-item '");
-                        }
-                        menuItemHtml.Append($" href='{Url.Action(item.Action, item.Controller, new { area = item.Area })}'>{item.MenuName}</a>");
-                        //menuItemHtml.Append($"<a class='slide-item {((item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Action == ViewContext.RouteData.Values["action"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString()) ? ((item.Controller == ViewContext.RouteData.Values["controller"].ToString()) ? "active" : "") : ((item.Controller == ViewContext.RouteData.Values["controller"].ToString() && item.Area == ViewContext.RouteData.Values["area"].ToString()) ? "active" : ""))}' href='{Url.Action(item.Action, item.Controller, new { area = item.Area })}'>{item.MenuName}</a>");
-                        }
-
-                        // Recursively render submenus
-                        if (menuItems.Any(menu => menu.ParentMenuID == item.MenuID && menu.Active))
-                        {
-                        menuItemHtml.Append(RenderSubMenu(menuItems, item.MenuID));
-                        }
-
-                        menuItemHtml.Append("</li>");
-                        menuHtml.Append(menuItemHtml);
-                        }
-
-                        menuHtml.Append("</ul>");
-                        return new HtmlString(menuHtml.ToString());
-                        }
-
-                        return HtmlString.Empty;
-                        }
-                        } *@
-                        <li class="slide" style="display:none;">
-                            <a class="side-menu__item" href="http://elindia/Elect_Prod/"><i class="side-menu__icon fa fa-bolt"></i><span class="side-menu__label">Electronic Producation</span></a>
-                        </li>
-                    </ul>
                     <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" /></svg></div>
                 </div>
             </aside>
@@ -504,10 +255,7 @@
         <!-- main-sidebar -->
         <!-- main-content -->
 
-
-        
-
-        <div class="main-content app-content" style="display:none">
+        <div class="main-content app-content">
             <!-- container -->
             <div class="main-container container-fluid">
                 <!-- breadcrumb -->
@@ -620,7 +368,6 @@
     <!--- Back-to-top --->
     <a href="#top" id="back-to-top"><i class="las la-angle-double-up"></i></a>
 
-    <!--- JQuery min js --->
     <!-- Jquery-scripts -->
     <script src="../assets/js/vendors/jquery-3.2.1.min.js"></script>
 
@@ -654,6 +401,7 @@
 
     <!-- Custom scroll bar js-->
     <script src="../assets/plugins/scroll-bar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="../assets/plugins/scroll-bar/jquery.mCustomScrollbar.js"></script>
 
     <!-- Nice-select js-->
     <script src="../assets/plugins/jquery-nice-select/js/jquery.nice-select.js"></script>
@@ -666,25 +414,20 @@
     <!-- Sidemenu js-->
     <script src="../assets/plugins/sidemenu/icon-sidemenu.js"></script>
 
-    <!-- JQVMap -->
-    <script src="../assets/plugins/jqvmap/jquery.vmap.js"></script>
-    <script src="../assets/plugins/jqvmap/maps/jquery.vmap.world.js"></script>
-    <script src="../assets/plugins/jqvmap/jquery.vmap.sampledata.js"></script>
+    <!-- Sidemenu-respoansive-tabs js -->
+    <script src="../assets/plugins/sidemenu-responsive-tabs/js/sidemenu-responsive-tabs.js"></script>
 
-    <!-- Apexchart js-->
-    <script src="../assets/js/apexcharts.js"></script>
-
-    <!-- Chart js-->
-    <script src="../assets/plugins/chart/chart.min.js"></script>
-
-    <!-- Index js -->
-    <script src="../assets/js/index.js"></script>
-    <script src="../assets/js/index-map.js"></script>
+    <!-- Leftmenu js -->
+    <script src="../assets/js/left-menu.js"></script>
 
     <!-- Rightsidebar js -->
     <script src="../assets/plugins/sidebar/sidebar.js"></script>
 
-    <!-- Custom js -->
+    <!---Accordion Js-->
+    <script src="../assets/plugins/accordion/accordion.min.js"></script>
+    <script src="../assets/js/accor.js"></script>
+
+    <!-- Custom Js-->
     <script src="../assets/js/custom.js"></script>
     <script>
 
@@ -718,8 +461,8 @@
                 error: function (error) {
                     alert("error");
                 }
-                                                                                    });
-                                                                                }
+                                                                    });
+                                                                }
         $(document).ready(function () {
             if ($('.dataTables_empty').is(':visible')) {
                 // Check if btn-excel class is visible
