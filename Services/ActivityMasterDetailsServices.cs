@@ -67,6 +67,7 @@ namespace HMS.Services
             dbparams.Add("@CreatedBy", model.CreatedBy, DbType.Int32);
             dbparams.Add("@Active", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);
+            //dbparams.Add("@CurrentUser", model.CreatedBy, DbType.Int32);
             return _dapper.Update<ActivityMasterDetailsModel>(CommonSp.saveActivityMasterDetails, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
         }
 
@@ -84,6 +85,14 @@ namespace HMS.Services
             dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);
             dbparams.Add("@UpdatedBy", model.UpdatedBy, DbType.Int32);
             return _dapper.Insert<ActivityMasterDetailsModel>(CommonSp.updateActivityMasterDetails, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+        }
+
+        public List<ActivityMasterDetailsModel> GetByActivityTypeIdWiseActivityList(int ActivityTypeId)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@ActivityTypeId", ActivityTypeId, DbType.Int32);
+            var res = _dapper.GetAll<ActivityMasterDetailsModel>(CommonSp.getActivityIdActivityMasterDetailWise, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+            return res;
         }
 
     }

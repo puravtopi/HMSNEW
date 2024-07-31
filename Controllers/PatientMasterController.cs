@@ -325,7 +325,8 @@ namespace HMS.Controllers
                     }
 
                     model.ReceiptNo = _commonService.GenerateReciptNo();
-
+                    model.ActivityBy = SessionUser;
+                    model.ActivityDate = DateTime.Now;
                     var res = _patientMasterServices.Insert(model);
 
                     if (res.DbCode == 1)
@@ -434,6 +435,7 @@ namespace HMS.Controllers
             if (dId != 0)
             {
                 int Deleted_By = SessionUser;
+               // var ActivityTypeId = deleteId;
                 var res = _patientMasterServices.DeleteById(dId, Deleted_By);
                 if (res.DbCode == 1)
                 {
@@ -834,6 +836,7 @@ namespace HMS.Controllers
                        
                         model.ServiceDate = DateTime.Now;
                         model.RefundDate = DateTime.Now;
+                        model.CreatedBy = SessionUser;
                         var res = _patientServiceMasterServices.Insert(model);
                         if (res.DbCode >= 1)
                         {
@@ -854,6 +857,7 @@ namespace HMS.Controllers
                                 modelServiceMasterModel.IsDelete = true;
                             }
                             modelServiceMasterModel.CreatedDate = DateTime.Now;
+                            modelServiceMasterModel.CreatedBy = SessionUser;
                             var ress = _serviceMasterService.InsertPatientServiceMasterDetails(modelServiceMasterModel);
                             //TempData[Temp_Message.Success] = res.DbMsg;
                             //return RedirectToAction("Index");

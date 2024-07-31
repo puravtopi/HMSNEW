@@ -59,6 +59,15 @@ namespace HMS.Controllers
             }
             var res = _activityMasterDetailsServices.GetAll(ref TotalCount, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
+            for (int i = 1; i < res.Count; i++)
+            {
+                if (res[i].ActivityTypeId != null)
+                {
+                    var data = _activityMasterDetailsServices.GetByActivityTypeIdWiseActivityList(res[i].ActivityTypeId);
+                    res[i].ActivityName = data[0].ActivityName;
+                }
+
+            }
             
                        
 

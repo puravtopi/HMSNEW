@@ -104,6 +104,7 @@ namespace HMS.Services
             dbparams.Add("@NetAmount", model.NetAmount, DbType.String);
             dbparams.Add("@Active", model.Active, DbType.Int32);
             dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);
+            dbparams.Add("@CurrentUser", model.CreatedBy, DbType.Int32);
             return _dapper.Update<ServiceMasterModel>(CommonSp.savePatientServiceMasterDetails, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
         }
 

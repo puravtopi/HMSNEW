@@ -167,6 +167,7 @@ namespace HMS.Common
         public const string updateActivityMasterDetails = "usp_ActivityMasterDetails_Update";
         public const string deleteByIdActivityMasterDetails = "usp_ActivityMasterDetails_DeleteById";
         public const string getByIdActivityMasterDetails = "usp_ActivityMasterDetails_GetById";
+        public const string getActivityIdActivityMasterDetailWise = "usp_ActivityMasterDetail_ActivityId_Wise";
         // Patient Initial Assessment Master
         public const string getAllPatientInitialAssessmentMaster = "usp_PatientInitialAssessmentMaster_GetAll";
         public const string savePatientInitialAssessmentMaster = "usp_PatientInitialAssessmentMaster_Insert";

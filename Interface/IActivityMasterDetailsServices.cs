@@ -11,5 +11,6 @@ namespace HMS.Interface
         public ActivityMasterDetailsModel Insert(ActivityMasterDetailsModel model);
         public ActivityMasterDetailsModel Update(ActivityMasterDetailsModel model);
         public ActivityMasterDetailsModel DeleteById(int Id, int DeletedBy);
+        public List<ActivityMasterDetailsModel> GetByActivityTypeIdWiseActivityList(int ActivityTypeId);
     }
 }

@@ -24,5 +24,6 @@ namespace HMS.Models
         public List<SelectListItem> lstStatus { get; set; }
 
         public List<ActivityMasterDetailsModel> activityMasterDetailsList { get; set; }
+        public string ActivityName { get; set; }
     }
 }

@@ -355,7 +355,6 @@ namespace HMS.Controllers
                     model.ReceiptNo = _commonService.GenerateReciptNo();
 
                     //ActivityMasterDetails
-                    model.ActivityTypeId = 1;
                     model.ActivityBy = SessionUser;
                     model.Description = null;
 

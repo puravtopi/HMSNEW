@@ -129,9 +129,11 @@ namespace HMS.Services
             dbparams.Add("@EmergencyAdminssion ", model.EmergencyAdminssion, DbType.Boolean);
             dbparams.Add("@FileChargesApplicable ", model.FileChargesApplicable, DbType.Boolean);
 
-            dbparams.Add("@ActivityTypeId ", model.ActivityTypeId, DbType.Int32);
+            dbparams.Add("@ActivityTypeId", model.ActivityTypeId, DbType.Int32);
+            //dbparams.Add("@ActivityName ", model.ActivityName, DbType.String);
             dbparams.Add("@ActivityBy ", model.ActivityBy, DbType.Int32);
             dbparams.Add("@Description ", model.Description, DbType.String);
+            dbparams.Add("@currentUser ", model.CreatedBy, DbType.Int32);
 
             return _dapper.Update<PatientMasterModel>(CommonSp.savePatientMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
@@ -165,8 +167,7 @@ namespace HMS.Services
             dbparams.Add("@Area   ", model.Area, DbType.String);
             dbparams.Add("@Active ", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete ", model.IsDelete, DbType.Boolean);
-            dbparams.Add("@UpdatedBy", model.UpdatedBy, DbType.Int32);
-           
+            dbparams.Add("@UpdatedBy", model.UpdatedBy, DbType.Int32);           
 
             return _dapper.Insert<PatientMasterModel>(CommonSp.updatePatientMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 

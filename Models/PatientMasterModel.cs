@@ -103,9 +103,10 @@ namespace HMS.Models
         public PatientServiceMasterModel patientServiceMasters { get; set; }
 
         public int ActivityTypeId { get; set; }
+        //public string ActivityName { get; set; }
         public int ActivityBy { get; set; }
         public int ActivityFor { get; set; }
-        public string ActivityDate { get; set; }
+        public DateTime ActivityDate { get; set; }
         public string Description { get; set; }
 
         //
