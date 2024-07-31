@@ -26,7 +26,7 @@ namespace HMS.Controllers
             _activityMasterDetailsServices = activityMasterDetailsServices;
         }
 
-        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "Id")
+        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "CI.Id")
         {
             var breadcrumbs = new List<Breadcrumb>
                 {
@@ -41,8 +41,8 @@ namespace HMS.Controllers
             ViewBag.PageSizeId = PageSizeId;
             if (string.IsNullOrEmpty(sortField))
             {
-                ViewBag.SortField = "Id";
-                ViewBag.SortOrder = "Asc";
+                ViewBag.SortField = "CI.Id";
+                ViewBag.SortOrder = "DESC";
             }
             else
             {
@@ -58,17 +58,7 @@ namespace HMS.Controllers
                 searchString = searchString.Trim();
             }
             var res = _activityMasterDetailsServices.GetAll(ref TotalCount, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
-            int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
-            for (int i = 1; i < res.Count; i++)
-            {
-                if (res[i].ActivityTypeId != null)
-                {
-                    var data = _activityMasterDetailsServices.GetByActivityTypeIdWiseActivityList(res[i].ActivityTypeId);
-                    res[i].ActivityName = data[0].ActivityName;
-                }
-
-            }
-            
+                 
                        
 
             if (res[0].DbCode == -1)

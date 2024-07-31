@@ -10,7 +10,7 @@ namespace HMS.Models
         public int ActivityTypeId {  get; set; }
         public int ActivityBy {  get; set; }
         public int ActivityFor { get; set; }
-        public string ActivityDate { get; set; }
+        public DateTime? ActivityDate { get; set; }
         public string Description { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? CreatedBy { get; set; }
@@ -25,5 +25,7 @@ namespace HMS.Models
 
         public List<ActivityMasterDetailsModel> activityMasterDetailsList { get; set; }
         public string ActivityName { get; set; }
+        public string FirstName { get; set; }
+        public string Fname {  get; set; }
     }
 }

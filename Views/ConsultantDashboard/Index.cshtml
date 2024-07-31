@@ -5,6 +5,9 @@
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
 }
+@{
+    var activityMasterDetails = ViewBag.ActivityMasterDetails as List<HMS.Models.ActivityMasterDetailsModel>;
+}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
 <style>
     /* Basic styling for the toggle switch */
@@ -33,25 +36,30 @@
         border-radius: 34px;
     }
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 12px;
-            width: 12px;
-            border-radius: 50%;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-        }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+    }
 
     input:checked + .slider {
         background-color: #2196F3;
     }
 
-        input:checked + .slider:before {
-            transform: translateX(14px);
-        }
+    input:checked + .slider:before {
+        transform: translateX(14px);
+    }
+
+    .scrollable {
+        overflow-y: auto;
+        max-height: 450px;
+    }
 </style>
 @* <style>
     .pricing-table:hover > .panel > .panel-body-landing > .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
@@ -460,14 +468,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-6 product">
-                    <canvas id="TotalPatientChart" class="h-230 "></canvas>
-                </div>
-            </div>
-       @*  </div> *@
-        
-    <!-- row closed -->
-    <div class="col-lg-6 col-md-12 product">
+        @* <div class="col-xl-6 product">
+            <canvas id="TotalPatientChart" class="h-230 "></canvas>
+           </div>*@
+       
+        <div class="col-lg-6 col-md-12 product">
             <div class="card">
                 <div class="card-header d-flex">
                     <h3 class="card-title">Total Collection</h3>
@@ -481,11 +486,17 @@
                 </div>
             </div>
         </div>
+        
+    </div>
+       @*  </div> *@
+        
+    <!-- row closed -->
+  
 
    @*  </div> *@
     <div class="row">
         <div class="col-xl-4 col-lg-6 col-md-12">
-            <div class="card overflow-hidden">
+            <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Activity</h3>
                     <div class="card-options ">
@@ -495,18 +506,67 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="latest-timeline-1 activity-scroll mh-300">
-                        <ul class="timeline-1 mb-0">
+                    <div class="scrollable">
+                        <div class="latest-timeline-1 activity-scroll mh-310">
+                        @foreach (var item in activityMasterDetails)
+                        {
+                            <ul class="timeline-1 mb-0">
+                                 <li class="mt-0">
+                                    @if (item.ActivityName.Contains("Insert"))
+                                     {
+                                        <i class="fe fe-check bg-success text-white product-icon success-dropshadow"></i>
+                                     }
+                                    else if (item.ActivityName.Contains("Update"))
+                                            {
+                                        <i class="fe fe-check bg-primary text-white product-icon primary-dropshadow"></i>
+                                     }
+                                            else if (item.ActivityName.Contains("Delete"))
+                                    {
+                                        <i class="fe fe-alert-triangle bg-danger text-white product-icon danger-dropshadow"></i>
+                                    }
+
+                                        <a @* target="_blank" href="#"  *@class="font-weight-semibold mb-4 fs-15">@item.Description</a>
+                                    <a @* href="#" *@ class="float-right fs-12 text-muted">@item.ActivityDate.Value.ToString("dd MMMM,yyyy")</a>
+                                    <p class="mb-0 mt-2 text-muted"><span class="text-primary font-weight-semibold">@item.FirstName</span>  finished task on :<br /> <a @* href="#" *@ class="text-info font-weight-semibold">@item.FirstName @item.ActivityName On @item.Fname</a></p>
+                                       @*  <div class="mt-2">
+                                            <span class="badge badge-success-light">Bootstrap</span>
+                                            <span class="badge badge-danger-light">HTML</span>
+                                            <span class="badge badge-warning-light">Css</span>
+                                        </div> *@
+                                 </li>
+                             </ul>
+                        }
+                    @* <table>
+                  
+                        <thead>
+                            <tr>                                
+                                <th>ActivityName</th>
+                                <th>Activity By</th>
+                                <th>Activity For</th>
+                                <th>Activity Date</th>
+                                <th>Description</th>                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in activityMasterDetails)
+                            {
+                                <tr>                                    
+                                    <td>@item.ActivityName</td>
+                                    <td>@item.ActivityBy</td>
+                                    <td>@item.ActivityFor</td>
+                                    <td>@item.ActivityDate</td>
+                                    <td>@item.Description</td>                                    
+                                </tr>
+                            }
+                        </tbody>
+                    </table> *@
+                        @*<ul class="timeline-1 mb-0">
                             <li class="mt-0">
                                 <i class="fe fe-check bg-primary text-white product-icon primary-dropshadow"></i>
                                 <a target="_blank" href="#" class="font-weight-semibold mb-4 fs-15">Task finished</a>
                                 <a href="#" class="float-right fs-12 text-muted">01 Jun, 2019</a>
-                                <p class="mb-0 mt-2 text-muted"><span class="text-primary font-weight-semibold">Adam	Berry</span>  finished task on<a href="#" class="text-info font-weight-semibold"> Project Management</a></p>
-                                <div class="mt-2">
-                                    <span class="badge badge-success-light">Bootstrap</span>
-                                    <span class="badge badge-danger-light">HTML</span>
-                                    <span class="badge badge-warning-light">Css</span>
-                                </div>
+                                <p class="mb-0 mt-2 text-muted"><span class="text-primary font-weight-semibold">Adam	Berry</span>  finished task on :<a href="#" class="text-info font-weight-semibold"> Project Management</a></p>
+                                
                             </li>
                             <li class="mt-0">
                                 <i class="fe fe-message-square bg-secondary text-white product-icon secondary-dropshadow"></i>
@@ -553,7 +613,8 @@
                                 <a href="#" class="float-right fs-12 text-muted">01 Jun, 2019</a>
                                 <p class="mb-0 mt-2"><span class="text-primary font-weight-semibold">Adam	Berry</span> commented on task <a href="#" class="text-info font-weight-semibold"> AngularJS Template</a></p>
                             </li>
-                        </ul>
+                    </ul>  *@
+                    </div>
                     </div>
                 </div>
             </div>

@@ -21,6 +21,7 @@ namespace HMS.Services
             var dbparams = new DynamicParameters();
             dbparams.Add("@Id", Id, DbType.Int32);
             dbparams.Add("@Deleted_By", DeletedBy, DbType.Int32);
+            dbparams.Add("@currentUser ", DeletedBy, DbType.Int32);
             return _dapper.Update<PatientMasterModel>(CommonSp.deleteByIdPatientMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring); ;
 
         }
@@ -167,8 +168,8 @@ namespace HMS.Services
             dbparams.Add("@Area   ", model.Area, DbType.String);
             dbparams.Add("@Active ", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete ", model.IsDelete, DbType.Boolean);
-            dbparams.Add("@UpdatedBy", model.UpdatedBy, DbType.Int32);           
-
+            dbparams.Add("@UpdatedBy", model.UpdatedBy, DbType.Int32);
+            dbparams.Add("@currentUser ", model.UpdatedBy, DbType.Int32);
             return _dapper.Insert<PatientMasterModel>(CommonSp.updatePatientMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
         }

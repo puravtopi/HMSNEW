@@ -2,12 +2,14 @@
 using HMS.Interface;
 using HMS.Models;
 using HMS.Services;
+using iTextSharp.text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Net.NetworkInformation;
 using System.Reflection;
@@ -26,6 +28,7 @@ namespace HMS.Controllers
         private readonly IUserMasterServices _userMasterServices;
         private readonly IConsultantServices _consultantServices;
         private readonly IReceptionistMasterServices _receptionistMasterServices;
+        private readonly IActivityMasterDetailsServices _activityMasterDetailsServices;
         ConsultantDashboardModel consultantDashboard = new ConsultantDashboardModel();
 
         public ConsultantDashboardController(
@@ -34,7 +37,7 @@ namespace HMS.Controllers
           IPatientGeneralDetailMasterServices patientGeneralDetailMasterServices,
           ICommonService commonService, IRevisitDetailMasterServices revisitDetailMasterServices,
           IPatientConsultantMasterServices patientConsultantMasterServices, IUserMasterServices userMasterServices,
-          IReceptionistMasterServices receptionistMasterServices
+          IReceptionistMasterServices receptionistMasterServices,IActivityMasterDetailsServices activityMasterDetailsServices
           )
         {
             _patientGeneralDetailMasterServices = patientGeneralDetailMasterServices;
@@ -45,10 +48,11 @@ namespace HMS.Controllers
             _userMasterServices = userMasterServices;
             _consultantServices = consultantServices;
             _receptionistMasterServices = receptionistMasterServices;
+            _activityMasterDetailsServices = activityMasterDetailsServices;
         }
 
 
-        public IActionResult Index(bool AllCountBit)
+        public IActionResult Index(bool AllCountBit, int currentPage = 1, string searchString = "", int pageSize = 10, string sortCol = "Id", string sortOrder = "DESC")
         {
             int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
             int SessionClinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
@@ -174,6 +178,18 @@ namespace HMS.Controllers
                 AvrageCount.ServicePercentageChange = ServiceCount / 10;
             }
             ViewBag.ServicePercentageChange = AvrageCount.ServicePercentageChange;
+
+            // Fetch and display activity master details
+            int TotalCount = 0;
+            List<ActivityMasterDetailsModel> activityMasterDetails = _activityMasterDetailsServices.GetAll(ref TotalCount, currentPage, searchString, pageSize, sortCol, sortOrder);
+
+            ViewBag.ActivityMasterDetails = activityMasterDetails;
+            ViewBag.TotalCount = TotalCount;
+            ViewBag.PageSize = pageSize;
+            ViewBag.CurrentPage = currentPage;
+            ViewBag.SearchString = searchString;
+            ViewBag.SortCol = sortCol;
+            ViewBag.SortOrder = sortOrder;
 
             return View();
         }
