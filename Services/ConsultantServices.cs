@@ -48,11 +48,11 @@ namespace HMS.Services
             {
             try
             {
-                if (AllBitCount == true)
-                {
-                    FDate = null;
-                    TDate = null;
-                }
+                //if (AllBitCount == true)
+                //{
+                //    FDate = null;
+                //    TDate = null;
+                //}
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@UserId", UserId, DbType.Int32);
                 dbparams.Add("@FDate", FDate, DbType.DateTime);
@@ -83,11 +83,11 @@ namespace HMS.Services
         {
             try
             {
-                if (AllBitCount == true)
-                {
-                    FDate = null;
-                    TDate = null;
-                }
+                //if (AllBitCount == true)
+                //{
+                //    FDate = null;
+                //    TDate = null;
+                //}
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@UserId", UserId, DbType.Int32);
                 dbparams.Add("@FDate", FDate, DbType.DateTime);
@@ -106,12 +106,7 @@ namespace HMS.Services
         public List<TotalPatientPending> ConsultantTotalPatientPending(int UserId, DateTime? FDate, DateTime? TDate,bool AllBitCount)
         {
             try
-            {
-                if (AllBitCount == true)
-                {
-                    FDate = null;
-                    TDate = null;
-                }
+            {                
                 var dbparams = new DynamicParameters();
                 dbparams.Add("@UserId", UserId, DbType.Int32);
                 dbparams.Add("@FDate", FDate, DbType.DateTime);
