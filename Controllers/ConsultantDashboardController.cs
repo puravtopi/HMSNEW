@@ -76,6 +76,9 @@ namespace HMS.Controllers
             string LastMonth = String.Format("{0:MMMM}", DateTime.Now.AddMonths(-1));
 
             string months = string.Empty;
+            decimal currentMonthTotal = 0;
+            decimal lastMonthTotal = 0;
+
             for (int i = 0; i < ChartCount.Count; i++)
             {
                 if (ChartCount[i].RevisitCount > 0)
@@ -86,10 +89,12 @@ namespace HMS.Controllers
                 if (ChartCount[i].Months == CurrentMonth)
                 {
                     ViewBag.MonthlyCollection = ChartCount[i].SumOfTotalAmount;
+                    currentMonthTotal = ChartCount[i].SumOfTotalAmount;
                 }
                 if (ChartCount[i].Months == LastMonth)
                 {
                     ViewBag.LastMonthlyCollection = ChartCount[i].SumOfTotalAmount;
+                    //lastMonthTotal = ChartCount[i].SumOfTotalAmount;
                 }
                 months = ChartCount[i].Months.Substring(0, 3);
 
@@ -105,6 +110,9 @@ namespace HMS.Controllers
                 }
                 ChartCount[i].Months = months;
             }
+
+            //ViewBag.LastMonthAveragePercentage = lastMonthTotal != 0 ? (currentMonthTotal - lastMonthTotal) / lastMonthTotal * 100 : 0;
+            ViewBag.CurrentMonthAveragePercentage = currentMonthTotal != 0 ? (currentMonthTotal - lastMonthTotal) / currentMonthTotal * 100 : 0;
 
             DateTime tDate = DateTime.Now;
             DateTime fDate = tDate.AddDays(-7);
@@ -137,7 +145,7 @@ namespace HMS.Controllers
 
             // Fetch Pending Patient data
             decimal totalPendingPatientCount = 0;
-            List<TotalPatientPending> pendingPatient = _consultantServices.ConsultantTotalPatientPending(SessionUser, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate),AllCountBit);
+            List<TotalPatientPending> pendingPatient = _consultantServices.ConsultantTotalPatientPending(SessionUser, Convert.ToDateTime(fromdate), Convert.ToDateTime(todate), AllCountBit);
             for (int i = 0; i < pendingPatient.Count; i++)
             {
                 ViewBag.TotalPatientData += "'" + pendingPatient[i].PatientIsCheckedPendingCount + "',";

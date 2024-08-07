@@ -32,7 +32,7 @@ namespace HMS.Models
         [Display(Name = "General Advice")]
         public string GeneralAdvice { get; set; }
         [Display(Name = "Revisit Date")]
-        public string RevisitDate { get; set; }
+        public DateTime RevisitDate { get; set; }
         [Display(Name = "Revisit Charges")]
         public float RevisitCharges { get; set; }
         [Display(Name = "Receipt No")]

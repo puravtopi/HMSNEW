@@ -633,9 +633,8 @@
                         <div class="d-flex  align-items-center">
                             <h2 class="">@ViewBag.MonthlyCollection<span class="font-weight-normal text-muted fs-13">/ per month</span></h2>
                         </div>
-                        <span class="text-success ml-auto"><i class="fe fe-arrow-up mr-2"></i>24.05%</span>
+                        <span class="text-success ml-auto"><i class="fe fe-arrow-up mr-2"></i>@ViewBag.CurrentMonthAveragePercentage%</span>
                     </div>
-
                 </div>
                 <div class="chart-wrapper">
                     <canvas id="earning12" class="earning chart-dropshadow-primary mb-3 mt-2 h-50"></canvas>
@@ -655,6 +654,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-xl-4 col-lg-12 col-md-12">
 
             <div class="card">

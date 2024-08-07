@@ -498,7 +498,7 @@ namespace HMS.Controllers
                     num = r.Next(_min, _max);
                     revisitDetailModel.UHID = patientId;
 
-                    revisitDetailModel.RevisitDate = DateTime.Now.ToString("MM/dd/yyyy");
+                    revisitDetailModel.RevisitDate = DateTime.Now;
                     revisitDetailModel.RefReceiptNo = "REF" + num.ToString();
                 }
                 return PartialView("_RevisitDetail", revisitDetailModel);
@@ -517,21 +517,21 @@ namespace HMS.Controllers
                 int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
                 if (ModelState.IsValid)
                 {
-                    bool SpecifyRevisitDay = true;
+                    int SpecifyRevisitDay = model.SpecifyRevisitDay;
                     bool IsCheckNewConsultant = true;
                     patientMasterModel = _patientMasterServices.GetById(model.Patient_Id);
 
                     if (patientMasterModel != null)
                     {
                         DateTime dtPtientvisit = patientMasterModel.CreatedDate.Value;
-                        string dtRevisit = model.RevisitDate;
+                        DateTime dtRevisit = model.RevisitDate;
                         DateTime dtrevisitdate = Convert.ToDateTime(dtRevisit);
                         int noOfDay = model.SpecifyRevisitDay;
-                        double dSpecifyRevisitDay = (dtrevisitdate.Date - dtPtientvisit.Date).TotalDays;
-                        if (dSpecifyRevisitDay > noOfDay)
-                        {
-                            SpecifyRevisitDay = false;
-                        }
+                        //double dSpecifyRevisitDay = (dtrevisitdate.Date - dtPtientvisit.Date).TotalDays;
+                        //if (dSpecifyRevisitDay > noOfDay)
+                        //{
+                        //    SpecifyRevisitDay = false;
+                        //}
                     }
                     var getTopOneRevisitDetail = _revisitDetailMasterServices.GetTopOneRevisitDetail();
                     if (getTopOneRevisitDetail != null)
@@ -546,7 +546,7 @@ namespace HMS.Controllers
                             }
                         }
                     }
-                    if (SpecifyRevisitDay)
+                    if (SpecifyRevisitDay !=0)
                     {
                         if (IsCheckNewConsultant)
                         {
@@ -564,7 +564,7 @@ namespace HMS.Controllers
                                 }
                                 if (model.RevisitDate == null)
                                 {
-                                    model.RevisitDate = DateTime.Now.ToString();
+                                    model.RevisitDate = DateTime.Now;
                                 }
                                 model.CreatedBy = SessionUser;
                                 var res = _revisitDetailMasterServices.Insert(model);

@@ -463,12 +463,14 @@ namespace HMS.Controllers
 
         public IActionResult Delete(string deleteId)
         {
+            int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
             int dId = 0;
             if (deleteId != null)
                 dId = Convert.ToInt32(encryptDecrypt.DecryptString(deleteId));
             if (dId != 0)
             {
-                int Deleted_By = 1;
+                int Deleted_By = SessionUser;
+                //int Deleted_By = 1;
                 var res = _patientMasterServices.DeleteById(dId, Deleted_By);
                 if (res.DbCode == 1)
                 {
@@ -481,7 +483,7 @@ namespace HMS.Controllers
             }
             return RedirectToAction("Index");
         }
-
+       
         public ActionResult RevisitDetail(int patientId, int Id)
         {
             try
@@ -531,7 +533,7 @@ namespace HMS.Controllers
                     num = r.Next(_min, _max);
                     revisitDetailModel.UHID = patientId;
 
-                    revisitDetailModel.RevisitDate = DateTime.Now.ToString("MM/dd/yyyy");
+                    revisitDetailModel.RevisitDate = DateTime.Now;
                     revisitDetailModel.RefReceiptNo = "REF" + num.ToString();
                 }
                 return PartialView("_RevisitDetail", revisitDetailModel);
@@ -556,7 +558,7 @@ namespace HMS.Controllers
                     if (patientMasterModel != null)
                     {
                         DateTime dtPtientvisit = patientMasterModel.CreatedDate.Value;
-                        string dtRevisit = model.RevisitDate;
+                        DateTime dtRevisit = model.RevisitDate;
                         DateTime dtrevisitdate = Convert.ToDateTime(dtRevisit);
                         int noOfDay = model.SpecifyRevisitDay;
                         double dSpecifyRevisitDay = (dtrevisitdate.Date - dtPtientvisit.Date).TotalDays;
@@ -596,7 +598,7 @@ namespace HMS.Controllers
                                 }
                                 if (model.RevisitDate == null)
                                 {
-                                    model.RevisitDate = DateTime.Now.ToString();
+                                    model.RevisitDate = DateTime.Now;
                                 }
                                 model.CreatedDate = DateTime.Now;
                                 model.UpdatedDate = DateTime.Now;
