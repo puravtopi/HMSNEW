@@ -130,6 +130,12 @@
                                                     </td>
 
                                                 </tr>
+                                                <tr>
+                                                    <td>ReVisit Charge</td>
+                                                    <td>
+                                                        @Html.TextBoxFor(Model => Model.Revisit_Charge, new { @class = "form-control", @id = "ReVisit_Charge", @oninput = "this.value = this.value.replace(/[^0-9]/g, '')" })
+                                                    </td>
+                                                </tr>
 
                                                 <tr>
                                                     <td>Specify Revisit(In Day):</td>

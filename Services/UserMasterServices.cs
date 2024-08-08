@@ -123,7 +123,7 @@ namespace HMS.Services
             dbparams.Add("@Night_Charge", model.Night_Charge, DbType.String);
             dbparams.Add("@Emergency_Charge", model.Emergency_Charge, DbType.String);
             dbparams.Add("@SpecifyRevisit", model.SpecifyRevisit, DbType.String);
-
+            dbparams.Add("@Revisit_Charge",model.Revisit_Charge, DbType.String);
 
             return _dapper.Update<UserMasterModel>(CommonSp.saveUserMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
@@ -146,6 +146,7 @@ namespace HMS.Services
             dbparams.Add("@SpecifyRevisit", model.SpecifyRevisit, DbType.String);
             dbparams.Add("@Dept_Id", model.Dept_id, DbType.Int32);
             dbparams.Add("@Desig_Id", model.Desig_Id, DbType.Int32);
+            dbparams.Add("@Revisit_Charge", model.Revisit_Charge, DbType.String);
 
             return _dapper.Insert<UserMasterModel>(CommonSp.updateUserMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 

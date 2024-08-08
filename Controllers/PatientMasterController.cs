@@ -480,8 +480,20 @@ namespace HMS.Controllers
                 revisitDetailModel.ConsultantId = user.Id;
                 revisitDetailModel.Patient_Id = patientId;
                 revisitDetailModel.OPDCharges = user.OPD_Charge;
-                revisitDetailModel.RevisitCharges = user.SpecifyRevisit;
+                revisitDetailModel.SpecifyRevisitDay = (int)user.SpecifyRevisit;  // Assuming user.SpecifyRevisit is float
+                revisitDetailModel.SpecifyRevisitDay = (int)user.SpecifyRevisit;
+                //revisitDetailModel.RevisitCharges = user.SpecifyRevisit;
                 //revisitDetailModel.SpecifyRevisitDay = user.SpecifyRevisit;
+                if (float.TryParse(user.Revisit_Charge, out float revisitCharge))
+                {
+                    revisitDetailModel.RevisitCharges = revisitCharge;
+                }
+                else
+                {
+                    // Handle parsing error, you can set a default value or throw an exception
+                    revisitDetailModel.RevisitCharges = 0;  // Default value if parsing fails
+                                                            // Optionally, you can log the error or notify the user
+                }
                 if (Id > 0)
                 {
                     var getAllRevisitData = _revisitDetailMasterServices.GetAllById(Id);

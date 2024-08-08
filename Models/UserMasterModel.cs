@@ -51,5 +51,6 @@ namespace HMS.Models
         public string Night_Charge { get; set; }
         public string Emergency_Charge { get; set; }
         public float SpecifyRevisit { get; set; }
+        public string Revisit_Charge { get; set; }
     }
 }

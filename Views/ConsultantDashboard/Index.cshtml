@@ -643,13 +643,37 @@
                     <div class="col-6 text-center border-right">
                         <div class="text-muted fs-14">Daily Profit</div>
                         <div class="h3 mt-1 mb-0">@ViewBag.TodayTotalAmount</div>
+                        @if (@ViewBag.RevenueChangeDirection == "Increase")
+                        {
+                            <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.RevenuePercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.RevenueChangeDirection</p>
+                        }
+                        else if (@ViewBag.RevenueChangeDirection == "Decrease")
+                        {
+                            <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                        }
+                        else
+                        {
+                            <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                        }
 
-                        <span class="text-muted mb-0 fs-14"><span class="text-success mr-1"><i class="fe fe-arrow-up ml-1"></i>@ViewBag.RevenuePercentageChange%</span>@ViewBag.RevenueChangeDirection</span>
+                       @*  <span class="text-muted mb-0 fs-14"><span class="text-success mr-1"><i class="fe fe-arrow-up ml-1"></i>@ViewBag.RevenuePercentageChange%</span>@ViewBag.RevenueChangeDirection</span> *@
                     </div>
                     <div class="col-6 text-center">
                         <div class="text-muted fs-14">Last Month Profit</div>
                         <div class="h3 mt-1 mb-0">@ViewBag.LastMonthlyCollection</div>
-                        <span class="text-muted mb-0 fs-14"><span class="text-danger mr-1"><i class="fe fe-arrow-down ml-1"></i>@ViewBag.RevenuePercentageChange%</span>@ViewBag.RevenueChangeDirection</span>
+                        @if (@ViewBag.RevenueChangeDirection == "Increase")
+                        {
+                            <p class="mb-0 text-muted"><span class="text-success">(@ViewBag.RevenuePercentageChange%)<i class="fe fe-arrow-up text-success"></i></span>@ViewBag.RevenueChangeDirection</p>
+                        }
+                        else if (@ViewBag.RevenueChangeDirection == "Decrease")
+                        {
+                            <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                        }
+                        else
+                        {
+                            <p class="mb-0 text-muted"><span class="text-danger">(@ViewBag.RevenuePercentageChange%)</span><i class="fe fe-arrow-down text-danger"></i>@ViewBag.RevenueChangeDirection</p>
+                        }
+                        @* <span class="text-muted mb-0 fs-14"><span class="text-danger mr-1"><i class="fe fe-arrow-down ml-1"></i>@ViewBag.RevenuePercentageChange%</span>@ViewBag.RevenueChangeDirection</span> *@
                     </div>
                 </div>
             </div>

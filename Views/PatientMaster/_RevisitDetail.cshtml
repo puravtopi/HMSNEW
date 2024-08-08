@@ -197,11 +197,11 @@
                                                             @Html.LabelFor(Model => Model.RevisitCharges, "Revisit Charges", new { @class = "form-label" })
                                                             @if (Model.Id > 0)
                                                             {
-                                                                @Html.TextBoxFor(Model => Model.RevisitCharges, new { @class = "form-control", @id = "RevisitCharges", onchange = "GetCharges()", @readonly = "readonly" })
+                                                                @Html.TextBoxFor(Model => Model.RevisitCharges, new { @class = "form-control", @id = "RevisitCharges", @readonly = "readonly" })
                                                             }
                                                             else
                                                             {
-                                                                @Html.TextBoxFor(Model => Model.RevisitCharges, new { @class = "form-control", @id = "RevisitCharges", onchange = "GetCharges()" })
+                                                                @Html.TextBoxFor(Model => Model.RevisitCharges, new { @class = "form-control", @id = "RevisitCharges" })
                                                             }
                                                 
                                                         </div>
@@ -219,8 +219,8 @@
                                                             }
 
                                                         </div>
-                                                    </div>
-                                                   
+                                                    </div>                                                   
+                                                    
                                                     
                                                     <div class="col-lg-4">
                                                         <div class="form-group">
@@ -277,6 +277,7 @@
             var disCharge=$("#Discount").val();
             // var netCharge=$("#NetAmount").val();
             var revisitCharges = $("#RevisitCharges").val();
+            var specifyRevisitDays = $("#SpecifyRevisitDay").val();
             var oPDCharges = $("#OPDCharges").val();
             
                 
@@ -314,15 +315,13 @@
                 type: 'GET',
                 data: { User_Id: userId },
                 success: function (data) {
-                    debugger
-
-
-                    $("#OPDCharges").val(data.opD_Charge)
-                    $("#NetAmount").val(data.opD_Charge)
-                    $("#SpecifyRevisitDay").val(data.SpecifyRevisit)
+                    $("#OPDCharges").val(data.opD_Charge);
+                    $("#NetAmount").val(data.opD_Charge);
+                    $("#SpecifyRevisitDay").val(data.specifyRevisitDays);
                     var selectedText = data.firstName + " " + data.lastName;
                     $("#ConsultantNameTest").val(selectedText);
                     $("#ConsultantName").val(selectedText);
+                    $("#RevisitCharges").val(data.revisitCharges);
                 },
                 error: function (xhr, status, error) {
                     // Handle errors
