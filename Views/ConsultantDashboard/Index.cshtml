@@ -525,9 +525,10 @@
                                         <i class="fe fe-alert-triangle bg-danger text-white product-icon danger-dropshadow"></i>
                                     }
 
-                                        <a @* target="_blank" href="#"  *@class="font-weight-semibold mb-4 fs-15">@item.Description</a>
-                                    <a @* href="#" *@ class="float-right fs-12 text-muted">@item.ActivityDate.Value.ToString("dd MMMM,yyyy")</a>
-                                    <p class="mb-0 mt-2 text-muted"><span class="text-primary font-weight-semibold">@item.FirstName</span>  finished task on :<br /> <a @* href="#" *@ class="text-info font-weight-semibold">@item.FirstName @item.ActivityName On @item.Fname</a></p>
+                                    <a class="font-weight-semibold mb-4 fs-15">@item.Description</a>
+                                    <a class="float-right fs-12 text-muted">@item.ActivityDate.Value.ToString("dd MMMM,yyyy")</a>
+                                    <p class="mb-0 mt-2 text-muted"><span class="text-primary font-weight-semibold">@item.FirstName</span>  finished task on :<br /> 
+                                    <a class="text-info font-weight-semibold"> @item.ActivityName On @item.Fname</a></p>
                                        @*  <div class="mt-2">
                                             <span class="badge badge-success-light">Bootstrap</span>
                                             <span class="badge badge-danger-light">HTML</span>

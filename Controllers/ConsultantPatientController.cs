@@ -102,8 +102,8 @@ namespace HMS.Controllers
 
 
 
-            string qcnd = " and CI.IsChecked = 0 OR CI.IsChecked IS NULL and CI.id in (select Patient_Id  from  PatientConsultantMaster where User_Id=" + SessionUser.ToString() + ")";
-
+            string qcnd = " and CI.id in (select Patient_Id  from  PatientConsultantMaster where User_Id=" + SessionUser.ToString() + ")";
+                                    /*CI.IsChecked = 0 OR CI.IsChecked IS NULL and*/
             var res = _patientMasterServices.GetByClinicIdWisePatient(ref TotalCount,SessionUser,SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder, qcnd);
             patientMasterModel.lstPageSizeDdl = _commonService.GetPageSizeDDL();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
