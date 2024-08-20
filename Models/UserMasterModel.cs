@@ -24,6 +24,7 @@ namespace HMS.Models
         [Display(Name = "Password")]
         //[Required(ErrorMessage = "This field is required.")]
         public string Password { get; set; }
+        public string Number { get; set; }
         public int? Clinic_Id { get; set; }
         public int? Desig_Id { get; set; }
         public int? Dept_id { get; set; }

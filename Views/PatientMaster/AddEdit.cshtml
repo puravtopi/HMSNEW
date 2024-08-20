@@ -34,7 +34,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="main-content-label mg-b-5">
-                        Patient
+                        <h4>Patient</h4>
                     </div>
                     <p class="mg-b-20"></p>
                     <div class="row row-sm">
@@ -156,13 +156,17 @@
                                 @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Occupation)</p> *@
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
-                                @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+                        @if(Model.Id != 0)
+                        {
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
+                                    @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
 
+                                </div>
                             </div>
-                        </div>
+                        }
+                        
                     </div>                   
                 </div>
             </div>
@@ -170,7 +174,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="main-content-label mg-b-5">
-                        Address Details
+                        <h4>Address Details</h4>
                     </div>
                     <div class="row row-sm">
                         <div class="col-lg-4">
@@ -240,7 +244,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="main-content-label mg-b-5">
-                        Patient General Details
+                        <h4>Patient General Details</h4>
                     </div>
                     <div class="row row-sm">
                         <div class="col-lg-4">
@@ -293,7 +297,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="main-content-label mg-b-5">
-                        Patient Consultantion Details
+                        <h4>Patient Consultantion Details</h4>
                     </div>
                     <div class="row row-sm">
                         <div class="col-lg-4">

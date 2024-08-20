@@ -4,6 +4,10 @@
     HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
+
+    int pageSize = ViewBag.PageSizeId != null ? (int)ViewBag.PageSizeId : 10;
+    int currentPage = ViewBag.CurrentPage != null ? (int)ViewBag.CurrentPage : 1;
+    //int rowNumber = ((currentPage - 1) * pageSize) + 1;
 }
 <div class="page-header">
     <div class="page-leftheader">
@@ -69,8 +73,13 @@
                         <tbody>
                             @if (Model != null && Model.activityMastersList != null && Model.activityMastersList.Count > 0)
                             {
+                              @*   int pageSize = ViewBag.PageSize != null ? (int)ViewBag.PageSize : 10;
+                                int currentPage = ViewBag.CurrentPage != null ? (int)ViewBag.CurrentPage : 1;
+                                int rowNumber = ((currentPage - 1) * pageSize) + 1; *@
+
                                 for (int i = 0; i < Model.activityMastersList.Count; i++)
                                 {
+                                    var ronum = (currentPage - 1) * pageSize + i + 1;
                                     var id = "deleteDesignation" + @Model.activityMastersList[i].Id;
                                     var hrefid = "#deleteDesignation" + @Model.activityMastersList[i].Id;
                                     var closeId = "exampleModalLabel" + @Model.activityMastersList[i].Id;
@@ -80,10 +89,12 @@
                                             <a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target=@hrefid><i class="fa fa-trash-o"></i></a>
                                             
                                         </td>
-                                        <td>@Model.activityMastersList[i].RowNum</td>
+                                       @*  <td>@Model.activityMastersList[i].RowNum</td>  *@
+                                        <td>@ronum</td>
                                         <td>@Model.activityMastersList[i].ActivityName</td>
-                                        <td>@Model.activityMastersList[i].Active</td>
+                                        <td>@(Model.activityMastersList[i].Active ? "Yes" : "No")</td>
                                         @*<td>@(Model.activityMastersList[i].IsDelete? "Yes" : "No")</td>*@
+
                                     </tr>
 
                                     <!-- Modal -->
@@ -110,7 +121,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>                                    
                                 }
                             }
                             else

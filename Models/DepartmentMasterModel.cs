@@ -16,6 +16,11 @@ namespace HMS.Models
         public DateTime? UpdatedDate { get; set; }
         public int? UpdatedBy { get; set; }
         public bool Active { get; set; }
+        //public List<SelectListItem> lstStatus { get; set; } = new List<SelectListItem>
+        //{
+        //    new SelectListItem {  Value = "true",Text = "Yes" },
+        //    new SelectListItem { Value = "false",Text = "No" }
+        //};
         public bool IsDelete { get; set; }
         public int? DeletedBy { get; set; }
         public DateTime? DeletedDate { get; set; }

@@ -57,9 +57,7 @@ namespace HMS.Controllers
             {
                 searchString = searchString.Trim();
             }
-            var res = _activityMasterDetailsServices.GetAll(ref TotalCount, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
-                 
-                       
+            var res = _activityMasterDetailsServices.GetAll(ref TotalCount, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);                  
 
             if (res[0].DbCode == -1)
             {

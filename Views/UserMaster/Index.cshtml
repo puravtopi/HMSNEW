@@ -4,6 +4,10 @@
     HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
+    int pageIndex = ViewBag.PageIndex ?? 1;
+
+    int pageSize = ViewBag.PageSizeId != null ? (int)ViewBag.PageSizeId : 10;
+    int currentPage = ViewBag.CurrentPage != null ? (int)ViewBag.CurrentPage : 1;
 }
 
 
@@ -83,16 +87,21 @@
                             {
                                 for (int i = 0; i < Model.userMasterList.Count; i++)
                                 {
+                                    var ronum = (currentPage - 1) * pageSize + i + 1;
+                                   @*  var id = "deleteUser" + @Model.userMasterList[i].Id;
+                                    var hrefid = "#deleteUser" + @Model.userMasterList[i].Id;
+                                    var closeId = "DepartmentModalLabel" + @Model.userMasterList[i].Id; *@
                                     <tr>
                                         <td class="btn-icon-list">
                                             <a href="@Url.Action("AddEdit","UserMaster",new { Userid = encDecr.EncryptString(@Model.userMasterList[i].Id.ToString()) })"><i class="fa fa-edit iconspacing"></i></a>
                                             <a href="@Url.Action("Delete","UserMaster",new { deleteId = encDecr.EncryptString(@Model.userMasterList[i].Id.ToString()) })" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-trash"></i></a>
                                         </td>
-                                        <td>@Model.userMasterList[i].RowNum</td>
+                                        @* <td>@Model.userMasterList[i].RowNum</td> *@
+                                        <td>@ronum</td>
                                         <td>@Model.userMasterList[i].FirstName</td>
                                         <td>@Model.userMasterList[i].LastName</td>
                                         <td>@Model.userMasterList[i].Email</td>
-                                        <td>@Model.userMasterList[i].Active</td>
+                                        <td>@(Model.userMasterList[i].Active ? "Yes" : "No")</td>                                        
                                         @*<td>@(Model.userMasterList[i].IsDelete? "Yes" : "No")</td>*@
                                     </tr>
                                 }

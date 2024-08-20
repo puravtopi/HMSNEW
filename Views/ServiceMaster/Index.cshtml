@@ -86,7 +86,7 @@
                                         <td>@Model.serviceMasterList[i].ServiceName</td>
                                         <td>@Model.serviceMasterList[i].Charges</td>
                                         <td>@Model.serviceMasterList[i].Lab_Legend</td>
-                                        <td>@Model.serviceMasterList[i].Active</td>
+                                        <td>@(Model.serviceMasterList[i].Active ? "Yes" : "No")</td>                                        
                                         @*<td>@(Model.serviceMasterList[i].IsDelete? "Yes" : "No")</td>*@
                                     </tr>
 

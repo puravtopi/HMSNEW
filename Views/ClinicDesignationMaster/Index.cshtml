@@ -4,6 +4,8 @@
     HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
+    int pageSize = ViewBag.PageSizeId != null ? (int)ViewBag.PageSizeId : 10;
+    int currentPage = ViewBag.CurrentPage != null ? (int)ViewBag.CurrentPage : 1;
 }
 
 
@@ -48,6 +50,11 @@
                             </a>
                         </div><!-- col -->
                     </div>
+                    <div class="card-options ">
+                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                        <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                    </div>
                 </div>
             }           
             <div class="card-body">
@@ -69,6 +76,7 @@
                             {
                                 for (int i = 0; i < Model.designationMasterList.Count; i++)
                                 {
+                                    var ronum = (currentPage - 1) * pageSize + i + 1;
                                     var id = "deleteDesignation" + @Model.designationMasterList[i].Id;
                                     var hrefid = "#deleteDesignation" + @Model.designationMasterList[i].Id;
                                     var closeId = "exampleModalLabel" + @Model.designationMasterList[i].Id;
@@ -79,10 +87,10 @@
                                             @* <a href="@Url.Action("AddEdit","ClinicDesignationMaster",new { Designationid = encDecr.EncryptString(@Model.designationMasterList[i].Id.ToString()) })"><i class="fa fa-edit iconspacing"></i></a>
                                     <a href="@Url.Action("Delete","ClinicDesignationMaster",new { deleteId = encDecr.EncryptString(@Model.designationMasterList[i].Id.ToString()) })" onclick="return confirm('Are you sure you want to delete?')"><i class="fa fa-trash"></i></a> *@
                                         </td>
-                                        <td>@Model.designationMasterList[i].RowNum</td>
+                                        <td>@ronum</td>
                                         <td>@Model.designationMasterList[i].DesignationCode</td>
-                                        <td>@Model.designationMasterList[i].DesignationName</td>
-                                        <td>@Model.designationMasterList[i].Active</td>
+                                        <td>@Model.designationMasterList[i].DesignationName</td>                                        
+                                        <td>@(Model.designationMasterList[i].Active ? "Yes" : "No")</td>
                                         @*<td>@(Model.designationMasterList[i].IsDelete? "Yes" : "No")</td>*@
                                     </tr>
 

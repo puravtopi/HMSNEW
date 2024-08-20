@@ -32,10 +32,16 @@
         <div class="col-md-12 col-xl-12 col-xs-12 col-sm-12">
             <!--div-->
             <div class="card">
-                <div class="card-body">
-                    <div class="main-content-label mg-b-5">
-                        Services
+
+                <div class="card-header">
+                    <div class="card-options ">
+                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                        <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
                     </div>
+                </div>
+                <div class="card-body">
+                    
                     <p class="mg-b-20"></p>
                     <div class="row row-sm">
                         @Html.HiddenFor(Model => Model.Id)
@@ -47,13 +53,16 @@
                                 <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.ActivityName)</p>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
-                                @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation " })
+                        @if (Model.Id != 0)
+                        {
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
+                                    @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation " })
 
+                                </div>
                             </div>
-                        </div>
+                        }
                     </div>
                     <div class="row row-sm">
                         <div class="col-lg-12 justify-content-center">

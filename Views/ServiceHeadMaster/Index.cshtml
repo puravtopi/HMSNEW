@@ -99,7 +99,8 @@
                                         <td>@Model.serviceHeadsList[i].RowNum</td>
                                         <td>@Model.serviceHeadsList[i].ServiceHeadName</td>
                                         <td>@Model.serviceHeadsList[i].DepartmentName</td>
-                                        <td>@Model.serviceHeadsList[i].Active</td>
+                                        <td>@(Model.serviceHeadsList[i].Active ? "Yes" : "No")</td>
+
 
                                     </tr>
                                     <!-- Modal -->

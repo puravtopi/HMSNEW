@@ -90,7 +90,7 @@
                                         <td>@Model.activityMasterDetailsList[i].ActivityFor</td>
                                         <td>@Model.activityMasterDetailsList[i].ActivityDate</td>
                                         <td>@Model.activityMasterDetailsList[i].Description</td>
-                                        <td>@Model.activityMasterDetailsList[i].Active</td>
+                                        <td>@(Model.activityMasterDetailsList[i].Active==true ? "Yes" : "No")</td>      
                                         @*<td>@(Model.activityMasterDetailsList[i].IsDelete? "Yes" : "No")</td>*@
                                     </tr>
 

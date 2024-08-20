@@ -115,6 +115,7 @@ namespace HMS.Services
             dbparams.Add("@CreatedBy", model.CreatedBy, DbType.Int32);
             dbparams.Add("@Email", model.Email, DbType.String);
             dbparams.Add("@Password", model.Password, DbType.String);
+            dbparams.Add("@Number", model.Number, DbType.String);
             dbparams.Add("@Dept_Id", model.Dept_id, DbType.Int16);
             dbparams.Add("@Desig_Id", model.Desig_Id, DbType.Int16);
             dbparams.Add("@Active", model.Active, DbType.Boolean);
@@ -137,6 +138,7 @@ namespace HMS.Services
             dbparams.Add("@FirstName ", model.FirstName, DbType.String);
             dbparams.Add("@LastName ", model.LastName, DbType.String);
             dbparams.Add("@Email ", model.Email, DbType.String);
+            dbparams.Add("@Number", model.Number, DbType.String);
             dbparams.Add("@Clinic_Id", model.Clinic_Id, DbType.Int32);
             dbparams.Add("@Active ", model.Active, DbType.String);
             dbparams.Add("@UpdatedBy", model.CreatedBy, DbType.Int32);

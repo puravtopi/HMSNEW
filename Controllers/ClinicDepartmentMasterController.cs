@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using HMS.Services;
 using Microsoft.AspNetCore.Http;
+using iTextSharp.text;
 
 namespace HMS.Controllers
 {
@@ -50,6 +51,8 @@ namespace HMS.Controllers
             }
 
             ViewBag.searchString = searchString;
+            ViewBag.CurrentPage = currentPage; 
+            ViewBag.PageSizeId = PageSizeId;
             int count;
             int TotalCount = 0;
             if (searchString != null)
