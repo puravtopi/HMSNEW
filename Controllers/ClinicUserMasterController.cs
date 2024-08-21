@@ -88,40 +88,41 @@ namespace HMS.Controllers
             return View(UserMasterModel);
         }
 
-        public IActionResult AddEdit(string Userid)
+        public IActionResult AddEdit(string Userid, int? departmentId, int? designationId)
         {
             var breadcrumbs = new List<Breadcrumb>
                 {
                     new Breadcrumb { Text = "HMS", Url = null },
                     new Breadcrumb { Text = "Master", Url = null },
                     new Breadcrumb { Text = "Clinic User Master", Url = Url.Action("Index","ClinicUserMaster") },
-                     new Breadcrumb { Text = "Add/Edit", Url = null },
+                    new Breadcrumb { Text = "Add/Edit", Url = null },            
+            };
 
-                };
-
-            // Set the Breadcrumbs collection in the ViewBag
             ViewBag.Breadcrumbs = breadcrumbs;
+
             int dId = 0;
             if (Userid != null)
                 dId = Convert.ToInt32(encryptDecrypt.DecryptString(Userid));
-            //Get Session Data            
+            // Get Session Data            
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             if (dId != 0)
             {
                 userMasterModel = _UserMasterServices.GetById(dId);
                 userMasterModel.Departments = userMasterModel.Dept_id.ToString();
                 userMasterModel.Designations = userMasterModel.Desig_Id.ToString();
-
             }
             else
             {
-                userMasterModel.Active = true;
+                userMasterModel = new UserMasterModel
+                {
+                    Active = true,
+                    Departments = departmentId?.ToString(),
+                    Designations = designationId?.ToString(), // Set departmentId if provided
+                };
             }
             userMasterModel.lstStatus = _commonService.GetStatusList();
             userMasterModel.designationList = _commonService.GetDesignationList(SclinicId);
             userMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
-
-
             return View(userMasterModel);
         }
 

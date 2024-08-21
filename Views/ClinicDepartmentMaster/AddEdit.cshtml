@@ -67,7 +67,11 @@
                             <div class="col-lg-12 justify-content-center">
                                 <a href="@Url.Action("Index","ClinicDepartmentMaster")" class="btn btn-info" id="btnBack" value="Reset">Back</a>
                                 <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
-                            <button class="btn btn-primary notices" id="btnSubmit" value="Submit">Save</button>
+                                <button class="btn btn-primary notices" id="btnSubmit" value="Submit">Save</button>
+                            @if(Model.Id == 0)
+                            {
+                                <a href="#" id="addUserBtn" class="btn btn-success btn-icon-text"><i class="fa fa-plus "></i>AddUser</a>
+                            }                    
                             </div>
                         </div>
                     }                   
@@ -94,6 +98,34 @@
         $(".text-danger").text("");
 
 
+    });
+    $(document).ready(function () {
+        $('#addUserBtn').click(function (e) {
+            e.preventDefault();
+
+            var departmentName = $('#DepartmentName').val().trim();
+
+            if (departmentName === '') {
+                alert('Please enter a department name before adding a user.');
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("SaveDepartmentAndAddUser", "ClinicDepartmentMaster")',
+                type: 'POST',
+                data: { departmentName: departmentName },
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '@Url.Action("AddEdit", "ClinicUserMaster")' + '?departmentId=' + response.departmentId;
+                    } else {
+                        alert('Failed to save department. Please try again.');
+                    }
+                },
+                error: function () {
+                    alert('Error occurred while saving the department.');
+                }
+            });
+        });
     });
 
 

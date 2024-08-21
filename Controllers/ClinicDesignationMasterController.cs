@@ -83,7 +83,7 @@ namespace HMS.Controllers
             return View(DesignationMasterModel);
         }
 
-        public IActionResult AddEdit(string Designationid)
+        public IActionResult AddEdit(string Designationid,string designationName = null)
         {
             var breadcrumbs = new List<Breadcrumb>
                 {
@@ -105,7 +105,12 @@ namespace HMS.Controllers
             }
             else
             {
-                DesignationMasterModel.Active = true;
+                //DesignationMasterModel.Active = true;
+               DesignationMasterModel = new DesignationMasterModel
+               {
+                    Active = true,
+                    DesignationName = designationName // Set the Designatiopn name if passed
+                };
             }
             DesignationMasterModel.lstStatus = _commonService.GetStatusList();
 
@@ -138,7 +143,8 @@ namespace HMS.Controllers
                     if (res.DbCode == 1)
                     {
                         TempData[Temp_Message.Success] = res.DbMsg;
-                        return RedirectToAction("Index");
+                        // return RedirectToAction("Index");
+                        return RedirectToAction("AddEdit", new { designationId = encryptDecrypt.EncryptString(model.Id.ToString()), designationName = model.DesignationName });
                     }
                     else
                     {
@@ -163,7 +169,8 @@ namespace HMS.Controllers
                     if (res.DbCode == 1)
                     {
                         TempData[Temp_Message.Success] = res.DbMsg;
-                        return RedirectToAction("Index");
+                        //return RedirectToAction("Index");
+                        return RedirectToAction("AddEdit", new { designationId = encryptDecrypt.EncryptString(model.Id.ToString()), designationName = model.DesignationName });
                     }
                     else
                     {
@@ -202,6 +209,34 @@ namespace HMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult SaveDesignationAndAddUser(string designationName)
+        {
+            if (string.IsNullOrEmpty(designationName))
+            {
+                return Json(new { success = false });
+            }
+
+            var designation = new DesignationMasterModel
+            {
+                DesignationName = designationName,
+                Active = true,
+                CreatedBy = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID),
+                Clinic_Id = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID)
+            };
+
+            var res = _DesignationMasterServices.Insert(designation);
+
+            if (res.DbCode == 1)
+            {
+                return Json(new { success = true, designationId = res.Id });
+            }
+            else
+            {
+                return Json(new { success = false });
+            }
         }
     }
 }

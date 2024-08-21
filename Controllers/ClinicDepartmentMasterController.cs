@@ -89,7 +89,7 @@ namespace HMS.Controllers
             return View(DepartmentMasterModel);
         }
 
-        public IActionResult AddEdit(string departmentid)
+        public IActionResult AddEdit(string departmentid, string departmentName = null)
         {
             var breadcrumbs = new List<Breadcrumb>
                 {
@@ -111,13 +111,17 @@ namespace HMS.Controllers
             }
             else
             {
-                DepartmentMasterModel.Active = true;
+                //DepartmentMasterModel.Active = true;
+                DepartmentMasterModel = new DepartmentMasterModel
+                {
+                    Active = true,
+                    DepartmentName = departmentName // Set the department name if passed
+                };
             }
             DepartmentMasterModel.lstStatus = _commonService.GetStatusList();
 
             return View(DepartmentMasterModel);
         }
-
         [HttpPost]
         public IActionResult AddEdit(DepartmentMasterModel model)
         {
@@ -144,9 +148,10 @@ namespace HMS.Controllers
                     if (res.DbCode == 1)
                     {
                         TempData[Temp_Message.Success] = res.DbMsg;
-                        return RedirectToAction("Index");
-
-                    }
+                        // return RedirectToAction("Index");
+                        // Redirect to AddEdit action, passing the department ID and name
+                        return RedirectToAction("AddEdit", new { departmentid = encryptDecrypt.EncryptString(model.Id.ToString()), departmentName = model.DepartmentName });
+                        }
                     else
                     {
                         TempData[Temp_Message.Error] = res.DbMsg;
@@ -175,7 +180,8 @@ namespace HMS.Controllers
                     else
                     {
                         TempData[Temp_Message.Error] = res.DbMsg;
-                        return RedirectToAction("AddEdit");
+                        //return RedirectToAction("AddEdit");
+                        return RedirectToAction("AddEdit", new { departmentid = encryptDecrypt.EncryptString(model.Id.ToString()), departmentName = model.DepartmentName });
                     }
                 }
             }
@@ -209,6 +215,34 @@ namespace HMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult SaveDepartmentAndAddUser(string departmentName)
+        {
+            if (string.IsNullOrEmpty(departmentName))
+            {
+                return Json(new { success = false });
+            }
+
+            var department = new DepartmentMasterModel
+            {
+                DepartmentName = departmentName,
+                Active = true,
+                CreatedBy = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID),
+                Clinic_Id = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID)
+            };
+
+            var res = _DepartmentMasterServices.Insert(department);
+
+            if (res.DbCode == 1)
+            {
+                return Json(new { success = true, departmentId = res.Id });
+            }
+            else
+            {
+                return Json(new { success = false });
+            }
         }
     }
 }

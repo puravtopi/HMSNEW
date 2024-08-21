@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\assets\images\photos\login.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="wwwroot\assets\iconfonts\bootstrap-icons\icons\.github\preview.png" />
   </ItemGroup>
 
@@ -34,6 +38,10 @@
   <ItemGroup>
     <Folder Include="DownloadPDF\" />
     <Folder Include="DownloadPDF\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="wwwroot\assets\images\photos\login.jpg" />
   </ItemGroup>
 
 </Project>

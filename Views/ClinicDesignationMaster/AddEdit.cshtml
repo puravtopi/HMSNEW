@@ -79,6 +79,10 @@
                             <a href="#" class="btn btn-secondary" id="btnReset" value="Reset">Reset</a>
 
                             <button class="btn btn-primary" id="btnSubmit" value="Submit">Save</button>
+                            @if (Model.Id == 0)
+                            {
+                                <a href="#" id="addUserBtn" class="btn btn-success btn-icon-text"><i class="fa fa-plus "></i>AddUser</a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -103,20 +107,49 @@
 
 
     });
-        document.getElementById('btnSubmit').addEventListener('click', function (event) {
-            var designationCode = document.getElementById('DesignationCode').value.trim();
-        if (designationCode === '') {
-                    document.getElementById('designationCodeError').style.display = 'block';
-                    event.preventDefault(); // Prevent form submission
-            } else {
-                document.getElementById('designationCodeError').style.display = 'none';
+    $(document).ready(function () {
+        $('#addUserBtn').click(function (e) {
+            e.preventDefault();
+
+            var designationName = $('#DesignationName').val().trim();
+
+            if (designationName === '') {
+                alert('Please enter a designationName name before adding a user.');
+                return;
             }
-            var designationName = document.getElementById('DesignationName').value.trim();
-        if (designationName === '') {
-                document.getElementById('designationNameError').style.display = 'block';
-                event.preventDefault(); // Prevent form submission
-            } else {
-                document.getElementById('designationNameError').style.display = 'none';
-            }
+
+            $.ajax({
+                url: '@Url.Action("SaveDesignationAndAddUser", "ClinicDesignationMaster")',
+                type: 'POST',
+                data: { designationName: designationName },
+                success: function (response) {
+                    if (response.success) {
+                        window.location.href = '@Url.Action("AddEdit", "ClinicUserMaster")' + '?designationId=' + response.designationId;
+                    } else {
+                        alert('Failed to save designation. Please try again.');
+                    }
+                },
+                error: function () {
+                    alert('Error occurred while saving the designation.');
+                }
+            });
         });
+    });
+
+    document.getElementById('btnSubmit').addEventListener('click', function (event) {
+        var designationCode = document.getElementById('DesignationCode').value.trim();
+    if (designationCode === '') {
+                document.getElementById('designationCodeError').style.display = 'block';
+                event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('designationCodeError').style.display = 'none';
+        }
+        var designationName = document.getElementById('DesignationName').value.trim();
+    if (designationName === '') {
+            document.getElementById('designationNameError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+            document.getElementById('designationNameError').style.display = 'none';
+        }
+    });
 </script>

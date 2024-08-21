@@ -78,6 +78,7 @@
                                 <th>Action</th>
                                 <th>Sr No.</th>
                                 <th>@Html.ActionLink("Department Name", "Index", "ClinicDepartmentMaster", new { sortField = "DepartmentName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                <th>@Html.ActionLink("User", "Index", "ClinicDepartmentMaster", new { sortField = "User", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th>@Html.ActionLink("Status", "Index", "ClinicDepartmentMaster", new { sortField = "Active", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                             </tr>
                         </thead>
@@ -98,6 +99,7 @@
                                        @* <td>@Model.departmentMasterList[i].RowNum</td> *@
                                         <td>@ronum</td>
                                        <td>@Model.departmentMasterList[i].DepartmentName</td>
+                                               <td>@Model.departmentMasterList[i].DeptWiseUserCount</td>
                                         <td>@(Model.departmentMasterList[i].Active ? "Yes" : "No")</td>
                                         @*<td>@(Model.departmentMasterList[i].IsDelete? "Yes" : "No")</td>*@
                                     </tr>

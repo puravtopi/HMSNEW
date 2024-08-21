@@ -109,12 +109,16 @@
                                 @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Mobile)</p> *@
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
-                                @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })                               
+                        @if(Model.Id != 0)
+                        {
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(Model => Model.Active, new { @class = "form-label" })
+                                    @Html.DropDownListFor(Model => Model.Active, new SelectList(Model.lstStatus, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
+                                </div>
                             </div>
-                        </div>
+                        }
+                        
                        @*  <div class="col-lg-4">
                             <div class="form-group">
                                 @Html.LabelFor(Model => Model.Logo,"Logo", new { @class = "form-label" })

@@ -25,6 +25,7 @@ namespace HMS.Models
         public DateTime? DeletedDate { get; set; }
         public bool IsChecked { get; set; }
         public int? Clinic_Id { get; set; }
+        public int DesigWiseUserCount { get; set; }
         public List<SelectListItem> lstStatus { get; set; }
 
         public List<DesignationMasterModel> designationMasterList { get; set; }
