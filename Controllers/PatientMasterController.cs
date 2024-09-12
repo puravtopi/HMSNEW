@@ -307,6 +307,7 @@ namespace HMS.Controllers
 
                     model.DOB = model.DOB.Date;
                     model.CreatedBy = SessionUser;
+                    model.Active = true;
                     if (model.Active == true)
                     {
                         model.IsDelete = false;
@@ -316,7 +317,7 @@ namespace HMS.Controllers
                         model.IsDelete = true;
                     }
                     model.Clinic_Id = SclinicId;
-                    //model.Active = true;
+                    
                     if (!string.IsNullOrEmpty(model.EntryDateTime))
                     {
 

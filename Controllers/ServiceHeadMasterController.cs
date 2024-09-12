@@ -130,7 +130,6 @@ namespace HMS.Controllers
 
         [HttpPost]
         public IActionResult AddEdit(ServiceHeadMasterModel model)
-
         {
             try
             {
@@ -144,6 +143,7 @@ namespace HMS.Controllers
                     if (model.Id == 0)
                     {
                         model.CreatedBy = SclinicId ;
+                        model.Active = true;
                         if (model.Active == true)
                         {
                             model.IsDelete = false;

@@ -288,6 +288,7 @@ namespace HMS.Controllers
 
 
                     model.DOB = model.DOB.Date;
+                    model.Active= true;
                     model.CreatedBy = SclinicId;
                     if (model.Active == true)
                     {
@@ -547,6 +548,7 @@ namespace HMS.Controllers
 
                     model.DOB = model.DOB.Date;
                     model.CreatedBy = SclinicId;
+                    model.Active = true;
                     if (model.Active == true)
                     {
                         model.IsDelete = false;

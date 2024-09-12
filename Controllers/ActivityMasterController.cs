@@ -130,6 +130,7 @@ namespace HMS.Controllers
                     if (model.Id == 0)
                     {
                         model.CreatedBy = SessionUser;
+                        model.Active = true;
                         if (model.Active == true)
                         {
                             model.IsDelete = false;

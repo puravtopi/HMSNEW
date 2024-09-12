@@ -149,6 +149,7 @@ namespace HMS.Controllers
                     if (model.Id == 0)
                     {
                         model.CreatedBy = 1;
+                        model.Active = true;
                         if (model.Active == true)
                         {
                             model.IsDelete = false;

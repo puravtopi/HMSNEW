@@ -105,7 +105,7 @@ namespace HMS.Controllers
             }
             else
             {
-                //DesignationMasterModel.Active = true;
+                DesignationMasterModel.Active = true;
                DesignationMasterModel = new DesignationMasterModel
                {
                     Active = true,
@@ -129,6 +129,7 @@ namespace HMS.Controllers
                 {
 
                     model.CreatedBy = 1;
+                    model.Active = true;
                     if (model.Active == true)
                     {
                         model.IsDelete = false;
@@ -138,13 +139,13 @@ namespace HMS.Controllers
                         model.IsDelete = true;
                     }
                     model.Clinic_Id = SclinicId;
-                    //model.Active = true;
+                    
                     var res = _DesignationMasterServices.Insert(model);
                     if (res.DbCode == 1)
                     {
                         TempData[Temp_Message.Success] = res.DbMsg;
                         // return RedirectToAction("Index");
-                        return RedirectToAction("AddEdit", new { designationId = encryptDecrypt.EncryptString(model.Id.ToString()), designationName = model.DesignationName });
+                        return RedirectToAction("Index", new { designationId = encryptDecrypt.EncryptString(model.Id.ToString()), designationName = model.DesignationName });
                     }
                     else
                     {
@@ -170,7 +171,7 @@ namespace HMS.Controllers
                     {
                         TempData[Temp_Message.Success] = res.DbMsg;
                         //return RedirectToAction("Index");
-                        return RedirectToAction("AddEdit", new { designationId = encryptDecrypt.EncryptString(model.Id.ToString()), designationName = model.DesignationName });
+                        return RedirectToAction("Index", new { designationId = encryptDecrypt.EncryptString(model.Id.ToString()), designationName = model.DesignationName });
                     }
                     else
                     {

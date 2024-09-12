@@ -134,6 +134,7 @@ namespace HMS.Controllers
                 {
 
                     model.CreatedBy = SclinicId;
+                    model.Active = true;
                     if (model.Active == true)
                     {
                         model.IsDelete = false;
@@ -143,14 +144,14 @@ namespace HMS.Controllers
                         model.IsDelete = true;
                     }
                     model.Clinic_Id = SclinicId;
-                    //model.Active = true;
+                    
                     var res = _DepartmentMasterServices.Insert(model);
                     if (res.DbCode == 1)
                     {
                         TempData[Temp_Message.Success] = res.DbMsg;
                         // return RedirectToAction("Index");
                         // Redirect to AddEdit action, passing the department ID and name
-                        return RedirectToAction("AddEdit", new { departmentid = encryptDecrypt.EncryptString(model.Id.ToString()), departmentName = model.DepartmentName });
+                        return RedirectToAction("Index", new { departmentid = encryptDecrypt.EncryptString(model.Id.ToString()), departmentName = model.DepartmentName });
                         }
                     else
                     {
