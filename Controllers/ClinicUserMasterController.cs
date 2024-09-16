@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using HMS.Services;
+using Dapper;
+using System.Data;
 
 namespace HMS.Controllers
 {
@@ -28,7 +30,7 @@ namespace HMS.Controllers
             _DesignationMasterServices = designationMasterServices;
         }
 
-        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "Id")
+        public IActionResult Index(int currentPage = 1, string searchString = "", int PageSizeId = 10, string sortOrder = "Desc", string sortField = "Id", int DeptId=0, int DesigId=0)
         {
             var breadcrumbs = new List<Breadcrumb>
                 {
@@ -61,7 +63,7 @@ namespace HMS.Controllers
                 searchString = searchString.Trim();
             }
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
-            var res = _UserMasterServices.GetByClinicIdWiseUser(ref TotalCount, SclinicId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
+            var res = _UserMasterServices.GetByClinicIdWiseUser(ref TotalCount, SclinicId,DeptId,DesigId, currentPage, searchString, PageSizeId, sortField, ViewBag.SortOrder);
             UserMasterModel.lstPageSizeDdl = _commonService.GetPageSizeDDL();
             userMasterModel.designationList = _commonService.GetDesignationList(SclinicId);
             userMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
@@ -230,6 +232,6 @@ namespace HMS.Controllers
             }
             return RedirectToAction("Index");
         }
-       
+
     }
 }

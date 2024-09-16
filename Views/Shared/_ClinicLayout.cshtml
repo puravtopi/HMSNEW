@@ -86,6 +86,19 @@
         .form-control::after {
             color: black;
         }
+
+        /* Ensure the submenu is visible by default */
+        .side-menu .slide.is-expand .slide-menu {
+            display: block;
+            /* Optionally adjust other properties like padding or margin */
+        }
+
+        /* Additional styles for .slide-menu, if needed */
+        .slide-menu {
+            display: block; /* Ensure submenu is displayed */
+            /* Adjust styles as needed for visibility */
+        }
+
     </style>
 </head>
 <body class="app sidebar-mini">
@@ -122,9 +135,9 @@
             <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
             <aside class="app-sidebar toggle-sidebar">
                 <div class="app-sidebar__user">
-                    <div class="user-body">
+                   @*  <div class="user-body">
                         <img src="data:image/png;base64,@_httpContextAccessor.HttpContext.Session.GetString("userphoto")" alt="profile-img" class="rounded-circle w-25">
-                    </div>
+                    </div> *@
                     <div class="user-info">
                         <a href="#" class="">
                             <span class="app-sidebar__user-name font-weight-semibold"> @_httpContextAccessor.HttpContext.Session.GetString("username")</span><br>
@@ -134,21 +147,27 @@
                     </div>
                 </div>
                 <ul class="side-menu toggle-menu">
-                    <li class="slide">
-                        <a class="side-menu__item" data-toggle="slide" href="#"><span class="icon-menu-img"><img src="../assets/images/svgs/homepage.svg" class="side_menu_img svg-1" alt="image"></span><span class="side-menu__label">CRM</span><i class="angle fa fa-angle-right"></i></a>
+                    <li class="slide is-expand">
+                        <a class="side-menu__item" data-toggle="slide" href="#">
+                            <span class="icon-menu-img">
+                                <img src="../assets/images/svgs/homepage.svg" class="side_menu_img svg-1" alt="image">
+                            </span>
+                            <span class="side-menu__label">CRM</span>
+                            <i class="angle fa fa-angle-right"></i>
+                        </a>
                         <ul class="slide-menu">
-                            <li><a class="slide-item" href="@Url.Action("Index","ClinicDashboard"@* , new { area = "Clinic" } *@)"><span>Dashboard</span></a></li>
+                            <li><a class="slide-item" href="@Url.Action("Index","ClinicDashboard")"><span>Dashboard</span></a></li>
                             <li><a class="slide-item" href="@Url.Action("Index","ClinicDepartmentMaster")"><span>Department</span></a></li>
                             <li><a class="slide-item" href="@Url.Action("Index","ClinicDesignationMaster")"><span>Designation</span></a></li>
                             <li><a class="slide-item" href="@Url.Action("Index","ClinicUserMaster")"><span>User</span></a></li>
                             <li><a class="slide-item" href="@Url.Action("Index","PatientMaster")"><span>Patient</span></a></li>
                             <li><a class="slide-item" href="@Url.Action("Index","ServiceHeadMaster")"><span>Service Head</span></a></li>
                             <li><a class="slide-item" href="@Url.Action("Index","ServiceMaster")"><span>Services</span></a></li>
-                            <li><a class="slide-item" href="@Url.Action("Index","ActivityMaster")"><span>Activity</span></a></li>
                             <li><a class="slide-item" href="@Url.Action("Index","ActivityMasterDetails")"><span>Activity Details</span></a></li>
                         </ul>
-                    </li>                  
+                    </li>
                 </ul>
+
             </aside>
 
           
@@ -935,7 +954,7 @@
         function compare(a, b) {
             return $(a).text().localeCompare($(b).text());
         }
-
+       
     </script>
 
     <script>
@@ -955,6 +974,17 @@
                 }
             });
         });
+        // Example JavaScript to ensure the submenu is expanded on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            var expandedItems = document.querySelectorAll('.side-menu .slide.is-expand');
+            expandedItems.forEach(function (item) {
+                var submenu = item.querySelector('.slide-menu');
+                if (submenu) {
+                    submenu.style.display = 'block'; // Ensure it's visible
+                }
+            });
+        });
+
     </script>
 
     @*@await RenderSectionAsync("Scripts", required: false)*@

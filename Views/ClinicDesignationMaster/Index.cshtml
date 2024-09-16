@@ -91,7 +91,12 @@
                                         <td>@ronum</td>
                                         <td>@Model.designationMasterList[i].DesignationCode</td>
                                         <td>@Model.designationMasterList[i].DesignationName</td>       
-                                        <td>@Model.designationMasterList[i].DesigWiseUserCount</td>
+                                        @* <td>@Model.designationMasterList[i].DesigWiseUserCount</td> *@
+                                        <td>
+                                            <a href="@Url.Action("Index", "ClinicUserMaster", new { DesigId = @Model.designationMasterList[i].Id, ClinicId = @Model.designationMasterList[i].Clinic_Id })">
+                                                @Model.designationMasterList[i].DesigWiseUserCount
+                                            </a>
+                                        </td>
                                         <td>@(Model.designationMasterList[i].Active ? "Yes" : "No")</td>
                                         @*<td>@(Model.designationMasterList[i].IsDelete? "Yes" : "No")</td>*@
                                     </tr>

@@ -47,10 +47,12 @@ namespace HMS.Services
             return res;
         }
 
-        public List<UserMasterModel> GetByClinicIdWiseUser(ref int TotalCount, int ClinicId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
+        public List<UserMasterModel> GetByClinicIdWiseUser(ref int TotalCount, int ClinicId, int DeptId,int DesigId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null)
         {
             var dbparams = new DynamicParameters();
             dbparams.Add("@ClinicId", ClinicId, DbType.Int32);
+            dbparams.Add("@DeptId", DeptId, DbType.Int32);
+            dbparams.Add("@DesigId", DesigId, DbType.Int32);
             dbparams.Add("@currentPage", currentPage, DbType.String);
             //searchString = "%" + searchString + "%";
             dbparams.Add("@searchString", searchString, DbType.String);

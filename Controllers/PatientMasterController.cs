@@ -219,9 +219,6 @@ namespace HMS.Controllers
                     patientMasterModel.PaymentMode = dataConsultant.PaymentMode;
                     patientMasterModel.Patient_Charges = dataConsultant.Patient_Charges;
 
-
-
-
                     if (patientMasterModel.User_id != null && patientMasterModel.User_id != 0)
                     {
                         var dataConsultantMst = _userMasterServices.GetById(patientMasterModel.User_id.Value);
@@ -242,13 +239,13 @@ namespace HMS.Controllers
                 patientMasterModel.User_DesignationList = _commonService.GetUserDepartmentList(0);
             }
 
-
             patientMasterModel.lstStatus = _commonService.GetStatusList();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
             patientMasterModel.GenderList = _commonService.GetGenderList();
             patientMasterModel.BloodGroupList = _commonService.GetBloodgroupList();
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
-            patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
+            //patientMasterModel.departmentList = _commonService.GetDepartmentList(SclinicId);
+            patientMasterModel.departmentList = _commonService.GetConsultantDept(SclinicId);
             patientMasterModel.PaymentModeList = _commonService.GetPaymentModeList();
 
             return View(patientMasterModel);

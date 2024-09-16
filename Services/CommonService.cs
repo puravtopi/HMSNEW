@@ -118,6 +118,27 @@ namespace HMS.Services
             return departmentList;
         }
 
+        public List<SelectListItem> GetConsultantDept(int ClinicId) 
+        {
+            var res = _departmentMasterServices.GetConsultantWiseDept(ClinicId);
+            var departmentList = new List<SelectListItem>();
+            departmentList.Add(new SelectListItem
+            {
+                Text = "Select",
+                Value = "0"
+            });
+            foreach (var item in res)
+            {
+
+                departmentList.Add(new SelectListItem
+                {
+                    Text = item.DepartmentName,
+                    Value = item.Id.ToString()
+                });
+            }
+            return departmentList;
+        }
+
         public List<SelectListItem> GetConsultantList(int Department_Id)
         {
             var res = _consultantMasterServices.GetBYDepartmentIdWiseConsultant(Department_Id);

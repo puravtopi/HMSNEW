@@ -12,5 +12,8 @@ namespace HMS.Interface
         public DepartmentMasterModel DeleteById(int Id, int DeletedBy);
         public List<DepartmentMasterModel> GetByClinicIdWiseDept(ref int TotalCount, int ClinicId, int currentPage, string searchString, int pageSize, string sortCol, string sortOrder, string qcnd = null);
         public List<DepartmentMasterModel> GetByClinicIdWiseDeptList(int ClinicId);
+        public List<DepartmentMasterModel> GetConsultantWiseDept(int ClinicId);
+        //public List<DepartmentMasterModel> GetDepatmentByUser(int DeptId,int ClinicId);
+
     }
 }

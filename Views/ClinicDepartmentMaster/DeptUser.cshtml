@@ -1,4 +1,4 @@
-﻿@model HMS.Models.DepartmentMasterModel
+﻿model HMS.Models.DepartmentMasterModel
 @using HMS.Common;
 @using Microsoft.AspNetCore.Http;
 @using Newtonsoft.Json;
@@ -9,67 +9,17 @@
     HMS.Common.EncryptDecrypt encDecr = new HMS.Common.EncryptDecrypt();
     string Action = ViewContext.RouteData.Values["action"].ToString();
     string Controller = ViewContext.RouteData.Values["controller"].ToString();
-    int pageIndex = ViewBag.PageIndex ?? 1; 
-    
-    int pageSize = ViewBag.PageSizeId != null ? (int)ViewBag.PageSizeId : 10;
-    int currentPage = ViewBag.CurrentPage != null ? (int)ViewBag.CurrentPage : 1;
-    //int rowNumber = ((currentPage - 1) * pageSize) + 1; //  ((1 - 1) * 10) + 1 = 1 
- }
+  
 
-<!DOCTYPE html>
+   
+}
 
+<h2>DeptUser</h2>
 
-
-<div class="page-header">
-    <div class="page-leftheader">
-        <h4 class="page-title mb-0">Department List</h4>
-    </div>
-    <div class="page-rightheader">
-        <div class="ml-3 ml-auto d-flex">
-            <div class="d-flex align-items-center flex-wrap text-nowrap">
-                <a href="@Url.Action("AddEdit","ClinicDepartmentMaster")" class="btn btn-primary btn-icon-text mb-2 mb-md-0">
-                    <i class="fa fa-plus "></i>
-                    Add New
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="row">
     <div class="col-xl-12">
-        <div class="card">
-           
-            @using (Html.BeginForm(Action, Controller, null, FormMethod.Post))
-            {
-                <div class="card-header">
-                   
-                    <div class="row row-sm pd-20">
-                        <div class="col-lg-2">
-                            @Html.DropDownListFor(Model => Model.PageSizeId, new SelectList(Model.lstPageSizeDdl, "PageSizeId", "PageSizeValue"), new { @class = "form-control select2-list", @onchange = @"form.submit();", style = "width: 100px;" })
-                        </div><!-- col -->
-                        <div class="col-lg-5">
-                            <div class="input-group">
-                                @Html.TextBoxFor(Model => Model.SearchString, new { @class = "form-control select2-no-search clearsearch", @placeholder = "Search...", style = "width: 600px;" })
-                            </div>
-                        </div><!-- col -->
-                        <div class="col-lg-5">
-                            <button id="btnSearch" class="btn btn-primary ">
-                                Search
-                            </button>
-                            &nbsp;
-                            <a href="@Url.Action("Index","ClinicDepartmentMaster")" class="btn btn-secondary">
-                                Clear
-                            </a>
-                        </div><!-- col -->
-                    </div>
-                    <div class="card-options ">
-                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
-                        <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
-                        <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
-                    </div>
-                </div>
-            }
-            
+        <div class="card">         
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table id="example1" class="table card-table table-striped text-nowrap table-bordered border-top" role="grid">
@@ -87,7 +37,7 @@
                             {
                                 for (int i = 0; i < Model.departmentMasterList.Count; i++)
                                 {
-                                    var ronum = (currentPage - 1) * pageSize + i + 1;
+                                   
                                     var id = "deleteDepartment" + @Model.departmentMasterList[i].Id;
                                     var hrefid = "#deleteDepartment" + @Model.departmentMasterList[i].Id;
                                     var closeId = "DepartmentModalLabel" + @Model.departmentMasterList[i].Id;
@@ -95,17 +45,16 @@
                                         <td class="btn-icon-list">
                                             <a class="btn btn-info btn-sm text-white" href="@Url.Action("AddEdit","ClinicDepartmentMaster",new { departmentid = encDecr.EncryptString(@Model.departmentMasterList[i].Id.ToString()) })"><i class="fa fa-edit"></i></a>
                                             <a class="btn btn-danger btn-sm text-white" data-toggle="modal" data-target=@hrefid><i class="fa fa-trash-o"></i></a>
-                                        </td>                      
-                                         @* <td>@Model.departmentMasterList[i].RowNum</td> *@
-                                        <td>@ronum</td>
-                                       <td>@Model.departmentMasterList[i].DepartmentName</td>
+                                        </td>
+                                        @* <td>@Model.departmentMasterList[i].RowNum</td> *@
+                                       
+                                        <td>@Model.departmentMasterList[i].DepartmentName</td>
                                         @*  <td>@Model.departmentMasterList[i].DeptWiseUserCount</td> *@
                                         <td>
-                                            <a href="@Url.Action("Index", "ClinicUserMaster", new { DeptId = @Model.departmentMasterList[i].Id, ClinicId = @Model.departmentMasterList[i].Clinic_Id })">
+                                            <a href="@Url.Action("DeptUser", "ClinicDepartmentMaster", new { DeptId = @Model.departmentMasterList[i].Id, ClinicId =  @Model.departmentMasterList[i].Clinic_Id})">
                                                 @Model.departmentMasterList[i].DeptWiseUserCount
                                             </a>
                                         </td>
-
 
                                         <td>@(Model.departmentMasterList[i].Active ? "Yes" : "No")</td>
                                         @*<td>@(Model.departmentMasterList[i].IsDelete? "Yes" : "No")</td>*@
@@ -146,9 +95,9 @@
                         </tbody>
                     </table>
                 </div>
-                @Html.Partial("_Pagination", Model)
+               
             </div>
         </div>
     </div>
-   
+
 </div>

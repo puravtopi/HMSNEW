@@ -72,7 +72,7 @@ namespace HMS.Services
             dbparams.Add("@Clinic_Id", ClinicId, DbType.Int32);
             var res = _dapper.GetAll<DepartmentMasterModel>(CommonSp.getByClinicIdWiseDEPTList, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
             return res;
-        }
+        }        
 
         //public List<DepartmentMasterModel> GetAllClinicDepartment()
         //{
@@ -114,6 +114,14 @@ namespace HMS.Services
 
             return _dapper.Insert<DepartmentMasterModel>(CommonSp.updateDepartmentMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
 
+        }
+
+        public List<DepartmentMasterModel> GetConsultantWiseDept(int ClinicId)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@Clinic_Id", ClinicId, DbType.Int32);
+            var res = _dapper.GetAll<DepartmentMasterModel>(CommonSp.getConsultantWiseDept, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+            return res;
         }
     }
 }
