@@ -39,7 +39,7 @@
                             </div>
                             <p class="mg-b-20"></p>
                             <div class="row row-sm">
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         @Html.HiddenFor(Model => Model.Id)
                                         @Html.HiddenFor(Model => Model.Consultant_Id)
@@ -50,7 +50,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                       
                                         @Html.LabelFor(Model => Model.PatientName, "Patient Name", new { @class = "form-label required-label" })
@@ -58,7 +58,7 @@
                                         <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.PatientName)</p>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
                                     <div class="form-group">
                                         @Html.LabelFor(Model => Model.ConsultantName, "Consultant Name", new { @class = "form-label required-label" })
                                         @Html.TextBoxFor(Model => Model.ConsultantName, new { @class = "form-control", @id = "ConsultantName", @readonly = "readonly" })
@@ -66,6 +66,14 @@
                                     </div>
                                 </div>
 
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.ReceiptNo, "Receipt No.", new { @class = "form-label required-label" })
+                                @Html.TextBoxFor(Model => Model.ReceiptNo, new { @class = "form-control", @id = "ReceiptNo", @readonly = "readonly" })
+                                <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.ReceiptNo)</p>
+                            </div>
+                        </div>
+                               
 
                             </div>
                             <div class="row row-sm">

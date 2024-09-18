@@ -779,11 +779,13 @@ namespace HMS.Controllers
                     patientServiceMaster.Department = patientServiceMaster.Department_Id.ToString();
                     patientServiceMaster.ServiceHeadName = patientServiceMaster.ServiceHead_Id.ToString();
                     patientServiceMaster.ServiceName = patientServiceMaster.Service_Id.ToString();
+                    patientServiceMaster.ReceiptNo = patientMasterModel.ReceiptNo;
 
                 }
                 patientServiceMaster.ConsultantName = user.FirstName + " " + user.LastName;
                 patientServiceMaster.Patient_Id = Patient_Id;
                 patientServiceMaster.Consultant_Id = user.Id;
+               
                 HttpContext.Session.SetInt32(SessionHelper.SessionPatient_Id, Patient_Id);
 
                 int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);

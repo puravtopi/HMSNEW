@@ -24,7 +24,7 @@ namespace HMS.Models
         [Display(Name = "ContactNo")]
         [Required(ErrorMessage = "This field is required.")]
         public string ContactNo { get; set; }
-        [Display(Name = "Lname")]
+        //[Display(Name = "Lname")]
         [Required(ErrorMessage = "This field is required.")]
         public DateTime DOB { get; set; }
         public string Age { get; set; }
@@ -42,8 +42,8 @@ namespace HMS.Models
         public List<SelectListItem?>? lstStatus { get; set; }
 
         public List<PatientMasterModel> patientMastersList { get; set; }
-        [Display(Name = "Father/Husband Name")]
-
+        [Required(ErrorMessage ="This feild is required.")]
+        [Display(Name = "Guardian Name")]
         public string Father_HusbandName { get; set; }
         [Display(Name = "Mother Name")]
 
