@@ -88,8 +88,8 @@ namespace HMS.Services
             dbparams.Add("@Fname ", model.Fname, DbType.String);
             dbparams.Add("@Lname ", model.Lname, DbType.String);
             dbparams.Add("@Address ", model.Address, DbType.String);
-            dbparams.Add("@City ", model.City, DbType.String);
-            dbparams.Add("@State ", model.State, DbType.String);
+            dbparams.Add("@CityId ", model.CityId, DbType.Int32);
+            dbparams.Add("@StateId", model.StateId, DbType.Int32);
             dbparams.Add("@Pincode ", model.Pincode, DbType.String);
             dbparams.Add("@Email", model.Email, DbType.String);
             dbparams.Add("@ContactNo", model.ContactNo, DbType.String);
@@ -148,8 +148,8 @@ namespace HMS.Services
             dbparams.Add("@Fname ", model.Fname, DbType.String);
             dbparams.Add("@Lname ", model.Lname, DbType.String);
             dbparams.Add("@Address ", model.Address, DbType.String);
-            dbparams.Add("@City ", model.City, DbType.String);
-            dbparams.Add("@State ", model.State, DbType.String);
+            dbparams.Add("@CityId ", model.CityId, DbType.Int32);
+            dbparams.Add("@StateId", model.StateId, DbType.Int32);
             dbparams.Add("@Pincode ", model.Pincode, DbType.String);
             dbparams.Add("@Email", model.Email, DbType.String);
             dbparams.Add("@ContactNo", model.ContactNo, DbType.String);

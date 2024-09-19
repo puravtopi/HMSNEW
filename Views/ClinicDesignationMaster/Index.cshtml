@@ -67,7 +67,7 @@
                                 <th class="wd-lg-25p">@Html.ActionLink("Designation Code", "Index", "ClinicDesignationMaster", new { sortField = "DesignationCode", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Designation Name", "Index", "ClinicDesignationMaster", new { sortField = "DesignationName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("User", "Index", "ClinicDesignationMaster", new { sortField = "User", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th class="wd-lg-25p">@Html.ActionLink("Status", "Index", "ClinicDesignationMaster", new { sortField = "Active", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                @* <th class="wd-lg-25p">@Html.ActionLink("Status", "Index", "ClinicDesignationMaster", new { sortField = "Active", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th> *@
                                 @*<th class="wd-lg-25p">Is Deleted </th>*@
 
                             </tr>
@@ -97,7 +97,7 @@
                                                 @Model.designationMasterList[i].DesigWiseUserCount
                                             </a>
                                         </td>
-                                        <td>@(Model.designationMasterList[i].Active ? "Yes" : "No")</td>
+                                        @* <td>@(Model.designationMasterList[i].Active ? "Yes" : "No")</td> *@
                                         @*<td>@(Model.designationMasterList[i].IsDelete? "Yes" : "No")</td>*@
                                     </tr>
 

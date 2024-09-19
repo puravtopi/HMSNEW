@@ -123,5 +123,26 @@ namespace HMS.Services
             var res = _dapper.GetAll<DepartmentMasterModel>(CommonSp.getConsultantWiseDept, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
             return res;
         }
+        public List<StateMasterModel> GetState()
+        {
+            var dbparams = new DynamicParameters();
+            //dbparams.Add("@Id", Id, DbType.Int32);
+            var res = _dapper.GetAll<StateMasterModel>(CommonSp.getState, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+            return res;
+        }
+        public StateMasterModel GetByStateId(int Id)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@Id", Id, DbType.Int32);
+            return _dapper.Get<StateMasterModel>(CommonSp.getCityWiseState, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+
+        }
+        public List<CityMasterModel> GetCityWiseState(int stateId)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@StateId", stateId, DbType.Int32);
+            var res = _dapper.GetAll<CityMasterModel>(CommonSp.getCityWiseState, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
+            return res;
+        }
     }
 }

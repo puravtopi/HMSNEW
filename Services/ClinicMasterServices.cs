@@ -93,8 +93,8 @@ namespace HMS.Services
             dbparams.Add("@CreatedBy", model.CreatedBy, DbType.Int32);
             dbparams.Add("@Active", model.Active, DbType.Boolean);
             dbparams.Add("@IsDelete", model.IsDelete, DbType.Boolean);
-            dbparams.Add("@CityName", model.CityName, DbType.String);
-            dbparams.Add("@StateName", model.StateName, DbType.String);
+            dbparams.Add("@CityId", model.CityId, DbType.Int32);
+            dbparams.Add("@StateId", model.StateId, DbType.Int32);
             dbparams.Add("@Pincode", model.Pincode, DbType.String);
             dbparams.Add("@password", model.Password, DbType.String);
             return _dapper.Update<ClinicMasterModel>(CommonSp.saveClinicMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);
@@ -112,8 +112,8 @@ namespace HMS.Services
             dbparams.Add("@Mobile ", model.Mobile, DbType.String);
             dbparams.Add("@EmailId", model.EmailId, DbType.String);
             dbparams.Add("@UpdatedBy", model.CreatedBy, DbType.Int32);
-            dbparams.Add("@CityName", model.CityName, DbType.String);
-            dbparams.Add("@StateName", model.StateName, DbType.String);
+            dbparams.Add("@CityId", model.CityId, DbType.Int32);
+            dbparams.Add("@StateId", model.StateId, DbType.Int32);
             dbparams.Add("@Pincode", model.Pincode, DbType.String);
 
             return _dapper.Insert<ClinicMasterModel>(CommonSp.updateClinicMaster, dbparams, commandType: CommandType.StoredProcedure, ConnStrings.HMSConnectionstring);

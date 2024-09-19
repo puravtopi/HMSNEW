@@ -34,6 +34,8 @@ namespace HMS.Common
         public const string deleteByIdDepartmentMaster = "usp_DepartmentMaster_DeleteById";
         public const string getByIdDepartmentMaster = "usp_DepartmentMaster_GetById";
         public const string getConsultantWiseDept = "usp_ConsultantWiseDept";
+        public const string getState = "usp_StateMaster_List";
+        public const string getCityWiseState = "usp_StateWiseCity_List";
 
         //Designation Master
         public const string getAllDesignationMaster = "usp_DesignationMaster_GetAll";

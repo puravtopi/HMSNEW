@@ -14,6 +14,9 @@ namespace HMS.Interface
         public List<DepartmentMasterModel> GetByClinicIdWiseDeptList(int ClinicId);
         public List<DepartmentMasterModel> GetConsultantWiseDept(int ClinicId);
         //public List<DepartmentMasterModel> GetDepatmentByUser(int DeptId,int ClinicId);
+        public List<StateMasterModel> GetState();
+        public StateMasterModel GetByStateId(int Id);
+        public List<CityMasterModel> GetCityWiseState(int StateId);
 
     }
 }

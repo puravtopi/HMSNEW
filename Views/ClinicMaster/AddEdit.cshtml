@@ -68,7 +68,7 @@
                                
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        @* <div class="col-lg-4">
                             <div class="form-group">
 
                                 @Html.LabelFor(Model => Model.CityName, "City", new { @class = "form-label" })
@@ -83,7 +83,19 @@
                                 @Html.TextBoxFor(Model => Model.StateName, new { @class = "form-control" })
 
                             </div>
-                        </div>
+                        </div> *@                        
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(Model => Model.StateId, "State", new { @class = "form-label" })
+                                    @Html.DropDownListFor(Model => Model.StateId, new SelectList(Model.StateList, "Value", "Text"), "Select State", new { @class = "form-control", id = "StateId" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(Model => Model.CityId, "City", new { @class = "form-label" })
+                                    @Html.DropDownList("CityId", new List<SelectListItem>(), "Select City", new { @class = "form-control", id = "CityId" })
+                                </div>
+                            </div>
                         <div class="col-lg-4">
                             <div class="form-group">
 
@@ -204,7 +216,34 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
-<script>
+<script>   
+        $(document).ready(function () {
+            $('#StateId').change(function () {
+                var stateId = $(this).val();
+                console.log("Selected State ID: " + stateId);
+
+                $.ajax({
+                    url: '@Url.Action("GetCities", "ClinicMaster")',
+                    type: 'GET',
+                    data: { stateId: stateId },
+                    success: function (data) {
+                        populateCityDropdown(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching cities:", status, error);
+                    }
+                });
+            });
+
+            function populateCityDropdown(cities) {
+                var cityDropdown = $('#CityId');
+                cityDropdown.empty();
+                cityDropdown.append('<option value="">Select City</option>');
+                $.each(cities, function (index, city) {
+                    cityDropdown.append('<option value="' + city.value + '">' + city.text + '</option>');
+                });
+            }
+        });
     $("#btnReset").click(function () {
         // Reset the form fields
         document.getElementById("AddEditForm").reset();
@@ -216,29 +255,30 @@
     });
 
    
-        document.getElementById('btnSubmit').addEventListener('click', function (event) {
-            var ClinicName = document.getElementById('ClinicName').value.trim();
-            if (ClinicName === '') {
-                document.getElementById('ClinicNameError').style.display = 'block';
-                    event.preventDefault(); // Prevent form submission
-                } else {
-                document.getElementById('ClinicNameError').style.display = 'none';
-                }
+    document.getElementById('btnSubmit').addEventListener('click', function (event) {
+        var ClinicName = document.getElementById('ClinicName').value.trim();
+        if (ClinicName === '') {
+            document.getElementById('ClinicNameError').style.display = 'block';
+                event.preventDefault(); // Prevent form submission
+            } else {
+            document.getElementById('ClinicNameError').style.display = 'none';
+            }
 
-            var OwnerName = document.getElementById('OwnerNameName').value.trim();
-            if (OwnerName === '') {
-                 document.getElementById('OwnerNameError').style.display = 'block';
-                event.preventDefault(); // Prevent form submission
-            } else {
-                 document.getElementById('OwnerNameError').style.display = 'none';
-            }
-        var EmailId = document.getElementById('EmailId').value.trim();
-        if (EmailId === '') {
-            document.getElementById('EmailIdError').style.display = 'block';
-                event.preventDefault(); // Prevent form submission
-            } else {
-            document.getElementById('EmailIdError').style.display = 'none';
-            }
-        });
+        var OwnerName = document.getElementById('OwnerNameName').value.trim();
+        if (OwnerName === '') {
+                document.getElementById('OwnerNameError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+                document.getElementById('OwnerNameError').style.display = 'none';
+        }
+    var EmailId = document.getElementById('EmailId').value.trim();
+    if (EmailId === '') {
+        document.getElementById('EmailIdError').style.display = 'block';
+            event.preventDefault(); // Prevent form submission
+        } else {
+        document.getElementById('EmailIdError').style.display = 'none';
+        }
+    });
+
 </script>
 

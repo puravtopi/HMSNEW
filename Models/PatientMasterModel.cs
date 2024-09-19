@@ -135,5 +135,9 @@ namespace HMS.Models
         public int ServiceId { get; set; }
         public string Service { get; set; }
         public List<ServiceMasterModel> serviceMasterLists { get; set; }
+        public int? CityId { get; set; }
+        public int? StateId { get; set; }
+        public List<SelectListItem> StateList { get; set; }
+        public List<SelectListItem> CityList { get; set; }
     }
 }

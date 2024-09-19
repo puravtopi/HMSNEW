@@ -79,7 +79,7 @@
                                 <th>Sr No.</th>
                                 <th>@Html.ActionLink("Department Name", "Index", "ClinicDepartmentMaster", new { sortField = "DepartmentName", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th>@Html.ActionLink("User", "Index", "ClinicDepartmentMaster", new { sortField = "User", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
-                                <th>@Html.ActionLink("Status", "Index", "ClinicDepartmentMaster", new { sortField = "Active", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
+                                @* <th>@Html.ActionLink("Status", "Index", "ClinicDepartmentMaster", new { sortField = "Active", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th> *@
                             </tr>
                         </thead>
                         <tbody>

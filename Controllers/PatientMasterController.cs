@@ -226,10 +226,10 @@ namespace HMS.Controllers
                         patientMasterModel.Department_id = dataConsultantMst.Dept_id;
                        
                             //ViewBag.Consultant_Code = dataConsultantMst.Consultant_Code;
-                            patientMasterModel.User_DesignationList = _commonService.GetUserDepartmentList((int)dataConsultantMst.Dept_id);
-                       
+                        patientMasterModel.User_DesignationList = _commonService.GetUserDepartmentList((int)dataConsultantMst.Dept_id);                      
                         
                     }
+
                 }
 
             }
@@ -238,6 +238,7 @@ namespace HMS.Controllers
                 patientMasterModel.Active = true;
                 patientMasterModel.User_DesignationList = _commonService.GetUserDepartmentList(0);
             }
+            patientMasterModel.StateList = _commonService.GetState();
 
             patientMasterModel.lstStatus = _commonService.GetStatusList();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
@@ -258,6 +259,9 @@ namespace HMS.Controllers
             int SclinicId = (int)HttpContext.Session.GetInt32(SessionHelper.SessionClinicID);
             int SessionUser = (int)HttpContext.Session.GetInt32(SessionHelper.SessionUserId);
 
+            patientMasterModel.StateList = _commonService.GetState();
+           
+          //  patientMasterModel.CityList = _commonService.GetCitiesByStateId(stateId);
             patientMasterModel.lstStatus = _commonService.GetStatusList();
             patientMasterModel.MaritalStatusList = _commonService.GetMaritalStatusList();
             model.MaritalStatusList = _commonService.GetMaritalStatusList();
@@ -1043,6 +1047,18 @@ namespace HMS.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+        public IActionResult GetCities(int stateId)
+        {
+            var cities = _departmentMasterServices.GetCityWiseState(stateId);
+
+            var cityList = cities.Select(c => new
+            {
+                value = c.Id,
+                text = c.Name
+            }).ToList();
+
+            return Json(cityList);
         }
 
     }

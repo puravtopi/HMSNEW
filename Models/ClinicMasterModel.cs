@@ -51,5 +51,9 @@ namespace HMS.Models
         public string Password { get; set; }
         public List<DepartmentMasterModel> departmentList { get; set; }
         public List<DesignationMasterModel> designationList { get; set; }
+        public int StateId { get; set; }
+        public int CityId { get; set; }
+        public List<SelectListItem> StateList { get; set; }
+        public List<SelectListItem> CityList { get; set; }
     }
 }

@@ -30,5 +30,8 @@ namespace HMS.Interface
         public List<SelectListItem> GetServiceHeadwiseServiceList(int ServiceHead_Id);
         public List<SelectListItem> GetConsultantDept(int ClinicId);
 
+        public List<SelectListItem> GetState();
+        public List<SelectListItem> GetCitiesByStateId(int stateId);
+
     }
 }

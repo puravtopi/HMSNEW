@@ -5,6 +5,10 @@ using HMS.Common;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
 using System.Security.Cryptography;
+using HMS.Models;
+using System.Data;
+using System.Linq;
+using Dapper;
 
 
 namespace HMS.Services
@@ -155,6 +159,7 @@ namespace HMS.Services
             }
             return lst;
         }
+
         public List<SelectListItem> GetUserDepartmentList(int Department_Id)
         {
             var res = _userMasterServices.GetByDepartmentIdWiseUserList(Department_Id);
@@ -172,6 +177,7 @@ namespace HMS.Services
             }
             return lst;
         }
+
         public List<SelectListItem> GetMaritalStatusList()
         {
             try
@@ -291,7 +297,9 @@ namespace HMS.Services
                 List<SelectListItem> listItems = new List<SelectListItem>();
                 listItems.Add(new SelectListItem { Text = "Select" });
                 listItems.Add(new SelectListItem { Value = "Cash", Text = "Cash" });
-                listItems.Add(new SelectListItem { Value = "Online-Payment", Text = "Online Payment" });
+                listItems.Add(new SelectListItem { Value = "Debit Card", Text = "Debit Card" });
+                listItems.Add(new SelectListItem { Value = "Credit Card", Text = "Credit Card" });
+                listItems.Add(new SelectListItem { Value = "UPI", Text = "UPI" });
                 listItems.Add(new SelectListItem { Value = "Due", Text = "Due" });
 
                 //listItems.Insert(0, new SelectListItem() { Value = null, Text = "Select" });
@@ -362,6 +370,28 @@ namespace HMS.Services
                 });
             }
             return serviceHeadList;
+        }
+        public List<SelectListItem> GetState()
+        {
+            var states = _departmentMasterServices.GetState();
+            return states.Select(state => new SelectListItem
+            {
+                Text = state.Name,
+                Value = state.Id.ToString()
+            }).ToList();
+        }
+
+        public List<SelectListItem> GetCitiesByStateId(int stateId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@StateId", stateId);
+
+            var city = _departmentMasterServices.GetCityWiseState(stateId);
+            return city.Select(city => new SelectListItem
+            {
+                Text = city.Name,
+                Value = city.Id.ToString()
+            }).ToList();
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using HMS.Common;
 using HMS.Interface;
 using HMS.Models;
+using HMS.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -111,7 +113,18 @@ namespace HMS.Controllers
             {
                 clinicMasterModel.Active = true;
             }
-            //Depatment Wise List
+            //state list
+            clinicMasterModel.StateList = _commonService.GetState();
+
+            if (clinicMasterModel.StateId > 0)
+            {
+                clinicMasterModel.CityList = _DepartmentMasterServices.GetCityWiseState(clinicMasterModel.StateId).Select(city => new SelectListItem
+                {
+                    Text = city.Name,
+                    Value = city.Id.ToString()
+                }).ToList();
+            }
+
             var Dept = _DepartmentMasterServices.GetByClinicIdWiseDeptList(dId);
             if (Dept != null)
             {
@@ -142,6 +155,7 @@ namespace HMS.Controllers
                     if (model.Id == 0)
                     {
                         model.CreatedBy = 1;
+                        model.Active = true;
                         if (model.Active == true)
                         {
                             model.IsDelete = false;
@@ -246,5 +260,21 @@ namespace HMS.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public IActionResult GetCities(int stateId)
+        {
+            var cities = _DepartmentMasterServices.GetCityWiseState(stateId);
+
+            // Convert cities to a list of SelectListItem
+            var cityList = cities.Select(c => new
+            {
+                value = c.Id,
+                text = c.Name
+            }).ToList();
+
+            return Json(cityList);
+        }
+
+
     }
 }

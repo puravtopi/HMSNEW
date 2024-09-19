@@ -198,20 +198,33 @@
                                 @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.Area)</p> *@
                             </div>
                         </div>
-                        <div class="col-lg-4">
+
+                     @*    <div class="col-lg-4">
                             <div class="form-group">
                                 @Html.LabelFor(Model => Model.City, new { @class = "form-label" })
                                 @Html.TextBoxFor(Model => Model.City, new { @class = "form-control", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
-                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.City)</p> *@
+                                 <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.City)</p> 
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
                                 @Html.LabelFor(Model => Model.State, new { @class = "form-label" })
                                 @Html.TextBoxFor(Model => Model.State, new { @class = "form-control", @oninput = "this.value = this.value.replace(/[^A-Za-z]/g, '')" })
-                                @* <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.State)</p> *@
+                                 <p class="text-danger margin-bottom-0"> @Html.ValidationMessageFor(Model => Model.State)</p> 
                             </div>
-                        </div>
+                        </div> *@
+                        <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(Model => Model.StateId, "State", new { @class = "form-label" })
+                                    @Html.DropDownListFor(Model => Model.StateId, new SelectList(Model.StateList, "Value", "Text"), "Select State", new { @class = "form-control", id = "StateId" })
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    @Html.LabelFor(Model => Model.CityId, "City", new { @class = "form-label" })
+                                    @Html.DropDownList("CityId", new List<SelectListItem>(), "Select City", new { @class = "form-control", id = "CityId" })
+                                </div>
+                            </div
 
                         <div class="col-lg-4">
                             <div class="form-group">
@@ -408,6 +421,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
   
     <script>
+         $(document).ready(function () {
+            $('#StateId').change(function () {
+                var stateId = $(this).val();
+                console.log("Selected State ID: " + stateId);
+
+                $.ajax({
+                    url: '@Url.Action("GetCities", "PatientMaster")',
+                    type: 'GET',
+                    data: { stateId: stateId },
+                    success: function (data) {
+                        populateCityDropdown(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error fetching cities:", status, error);
+                    }
+                });
+            });
+
+            function populateCityDropdown(cities) {
+                var cityDropdown = $('#CityId');
+                cityDropdown.empty();
+                cityDropdown.append('<option value="">Select City</option>');
+                $.each(cities, function (index, city) {
+                    cityDropdown.append('<option value="' + city.value + '">' + city.text + '</option>');
+                });
+            }
+        });
     $("#btnReset").click(function () {
         // Reset the form fields
         document.getElementById("AddEditForm").reset();
@@ -537,17 +577,43 @@
     }
 
     @* Age Count Function *@
+        // function calculateAge() {
+        //     var dob = document.getElementById('DOB').value;
+        //     var today = new Date();
+        //     var birthDate = new Date(dob);
+        //     var age = today.getFullYear() - birthDate.getFullYear();
+        //     var m = today.getMonth() - birthDate.getMonth();
+        //     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        //         age--;
+        //     }
+        //     document.getElementById('Age').value = age;
+        // }
         function calculateAge() {
             var dob = document.getElementById('DOB').value;
             var today = new Date();
             var birthDate = new Date(dob);
-            var age = today.getFullYear() - birthDate.getFullYear();
-            var m = today.getMonth() - birthDate.getMonth();
-            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
+
+            var years = today.getFullYear() - birthDate.getFullYear();
+            var months = today.getMonth() - birthDate.getMonth();
+            var days = today.getDate() - birthDate.getDate();
+
+            if (days < 0) {
+                months--;
+                days += new Date(today.getFullYear(), today.getMonth(), 0).getDate(); 
             }
-            document.getElementById('Age').value = age;
-        }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            if (years < 1) {
+                document.getElementById('Age').value = `0 Yr ${months} Mon ${days} Days`;
+            } else {
+                document.getElementById('Age').value = `${years} Yr ${months} Mon ${days} Days`;
+            }
+}
+
     @* Discount Amount Count Function *@
         function calculateAmounts() {
             debugger;
