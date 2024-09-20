@@ -90,7 +90,7 @@
                         <thead>
                             <tr>
                                 <th class="wd-lg-10p">Action</th>
-                                <th class="wd-lg-10p"></th>
+                                @* <th class="wd-lg-10p"></th> *@
                                 <th class="wd-lg-25p">@Html.ActionLink("Receipt No", "Index", "ReceiptNo", new { sortField = "ReceiptNo", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
                                 <th class="wd-lg-10p">UHID.</th>
                                 <th class="wd-lg-25p">@Html.ActionLink("Patient Is Check ", "Index", "PatientMaster", new { sortField = "", sortCol = ViewBag.SortField, sortOrder = ViewBag.SortOrder == "Asc" ? "Desc" : "Asc", searchString = ViewBag.searchString, PageSizeId = ViewBag.PageSizeId })</th>
@@ -147,20 +147,24 @@
 
                                             <a onclick="ShowPopupQP(0, @Model.patientMastersList[i].Id.ToString())"
                                                class="btn btn-warning btn-sm text-white mr-2"
-                                               @* data-toggle="tooltip" data-placement="top" title="Service" *@>
+                                               @* data-placement="top" title="Service" *@>
                                                 <i class="fa fa-wheelchair"></i>
                                             </a>
 
                                             <a href="@Url.Action("AddEditPatientServiceDetails", "PatientMaster", new { patientId = encDecr.EncryptString(@Model.patientMastersList[i].Id.ToString()) })"
                                                class="btn btn-secondary btn-sm text-white mr-2"
-                                              @*  data-toggle="tooltip" data-placement="top" title="ReVisit" *@>
+                                              @*data-placement="top" title="ReVisit" *@>
                                                 <i class="fa fa-stethoscope"></i>
-                                            </a>
-
+                                            </a>                                           
+                                            <a href="@Url.Action("CreatePDFDocument","PatientMaster", new { patientId = @Model.patientMastersList[i].Id.ToString() })"
+                                               class="btn btn-success btn-sm text-white mr-2"
+                                               data-placement="top" title="Print">
+                                               <i class="fa fa-print"></i>
+                                           </a>
                                         </td>
-                                        <td>
+                                       @*  <td>
                                             <a href="@Url.Action("CreatePDFDocument","PatientMaster",new { patientId = @Model.patientMastersList[i].Id.ToString() })"><i class="fas fa-arrow-alt-circle-down"></i></a>
-                                        </td>
+                                        </td> *@
 
                                         <td>@Model.patientMastersList[i].ReceiptNo</td>
                                         <td>@Model.patientMastersList[i].UHID</td>

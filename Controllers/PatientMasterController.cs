@@ -692,15 +692,15 @@ namespace HMS.Controllers
             //Open the PDF document  
             doc.Open();
 
-            doc.SetMargins(30, 30, 40, 40);
-
+            doc.SetMargins(40, 40, 45, 45);
+            Font boldUpperCaseFont = new Font(Font.FontFamily.HELVETICA, 18, Font.NORMAL, BaseColor.BLACK);
             var clinicname_lb = clinicMaster.ClinicName != null ? clinicMaster.ClinicName : "";
-            Paragraph Clinicname = new Paragraph(clinicname_lb);
+            Paragraph Clinicname = new Paragraph(clinicname_lb.ToUpper(), boldUpperCaseFont);
             Clinicname.Alignment = Element.ALIGN_CENTER;
             doc.Add(Clinicname);
 
             var add = clinicMaster.Address != null ? clinicMaster.Address : "";
-            Paragraph address = new Paragraph("Address :" + add);
+            Paragraph address = new Paragraph(/*" :" + */add);
             address.Alignment = Element.ALIGN_CENTER;
             doc.Add(address);
 
@@ -709,20 +709,33 @@ namespace HMS.Controllers
             phone.Alignment = Element.ALIGN_CENTER;
             doc.Add(phone);
 
-            Paragraph Heading = new Paragraph("Collection Of Receipt", new Font(Font.NORMAL, 13, 2, new iTextSharp.text.BaseColor(Color.Black)));
+            // Create a font with bold style and size 13
+            //Paragraph Heading = new Paragraph("Collection Of Receipt", new Font(Font.NORMAL, 13, 2, new iTextSharp.text.BaseColor(Color.Black)));
+            Font boldUnderlineFont = new Font(Font.FontFamily.HELVETICA, 13, Font.BOLD | Font.UNDERLINE, BaseColor.BLACK);
+            // Create a paragraph with the bold and underlined text
+            Paragraph Heading = new Paragraph("Collection Of Receipt", boldUnderlineFont);
             Heading.Alignment = Element.ALIGN_CENTER;
             doc.Add(Heading);
+            // Add some space after the heading and add text original copy
+            //doc.Add(new Paragraph("\n\n"));            
+            Paragraph originalCopy = new Paragraph();
+            originalCopy.Add(Chunk.TABBING);  // First tab
+            originalCopy.Add(Chunk.TABBING);  // Second tab
+            originalCopy.Add(new Chunk("Original Copy", new Font(Font.FontFamily.HELVETICA, 12, Font.NORMAL, BaseColor.BLACK)));     
+            originalCopy.Alignment = Element.ALIGN_RIGHT;             
+            doc.Add(originalCopy);
+            doc.Add(new Paragraph("\n"));
 
-            //doc.Add(new Phrase("Collection Of Receipt", new Font(Font.NORMAL, 13, 1, new iTextSharp.text.BaseColor(Color.Black))));            
-            Paragraph Partline = new Paragraph("=================================================================");
-            Partline.Alignment = Element.ALIGN_CENTER;
-            doc.Add(Partline);
+            ////doc.Add(new Phrase("Collection Of Receipt", new Font(Font.NORMAL, 13, 1, new iTextSharp.text.BaseColor(Color.Black))));            
+            //Paragraph Partline = new Paragraph("=================================================================");
+            //Partline.Alignment = Element.ALIGN_CENTER;
+            //doc.Add(Partline);
 
-            var firstname = userMaster.FirstName != null ? userMaster.FirstName : "";
-            var lastname = userMaster.LastName != null ? userMaster.LastName : "";
-            Paragraph ConsultantName = new Paragraph("Consultant Name :" + firstname + " " + lastname);
-            ConsultantName.Alignment = Element.ALIGN_CENTER;
-            doc.Add(ConsultantName);
+            //var firstname = userMaster.FirstName != null ? userMaster.FirstName : "";
+            //var lastname = userMaster.LastName != null ? userMaster.LastName : "";
+            //Paragraph ConsultantName = new Paragraph("Consultant Name :" + firstname + " " + lastname);
+            //ConsultantName.Alignment = Element.ALIGN_CENTER;
+            //doc.Add(ConsultantName);
 
 
             doc.Add(new Paragraph("\n\n"));
@@ -735,25 +748,91 @@ namespace HMS.Controllers
             doc.Add(date);
 
             doc.Add(new Paragraph("\n\n"));
+            var consultantfname = userMaster.FirstName != null ? userMaster.FirstName : "";
+            var consultantlname = userMaster.LastName != null ? userMaster.LastName : "";
+            Paragraph Consultant = new Paragraph(consultantfname + " " + consultantlname);
             var fname = model.Fname != null ? model.Fname : "";
             var lname = model.Lname != null ? model.Lname : "";
             var age = model.Age != null ? model.Age : "";
             var gender = model.Gender != null ? model.Gender : "";
             var totalamount = patientConsultant.TotalAmount != null ? patientConsultant.TotalAmount : "";
-            doc.Add(new Paragraph("Received With thanks from  " + fname + " " + lname + " " + "(Age:" + age + "-" + gender + ") The Sum Of " + " "));
-            doc.Add(new Paragraph("Rupees " + totalamount + " " + " By cash on account Of Services Charges." + " "));
-            doc.Add(new Paragraph("\n\n\n"));
 
-            doc.Add(new Paragraph("RS." + totalamount));
+            //Chunk underlinedText = new Chunk("           "+fname + " " + lname + " (Age:" + age + "-" + gender + ")" + "             ");
+            //underlinedText.Font.SetStyle(Font.UNDERLINE);
+            //Paragraph underlinedParagraph = new Paragraph(underlinedText);
+            //doc.Add(underlinedParagraph);
+            
+            // Convert the total amount to words
+            //string totalAmountInWords = NumberToWordsConverter.ConvertAmountToWords(totalamount);
+            //doc.Add(new Paragraph("Received With thanks from  " + fname + " " + lname + " " + "(Age:" + age + "-" + gender + ") The Sum Of " + " "));
+            //doc.Add(new Paragraph("Rupees " + totalAmountInWords + " (" + totalamount + " Rs.) " + " By cash on account Of Services Charges. " + " (" + Consultant + ")"));
+            ////doc.Add(new Paragraph("Rupees " + totalamount + " " + " By cash on account Of Services Charges." + " "+"("+ Consultant+ ")"));
+            //doc.Add(new Paragraph("\n\n\n"));
+            //doc.Add(new Paragraph("RS." + totalamount));
+            string totalAmountStr = patientConsultant.TotalAmount; // Assuming this is a string
+            decimal totalAmount;
 
-            var updatedate = userMaster.UpdatedDate != null ? userMaster.UpdatedDate.ToString() : "";
-            Paragraph data = new Paragraph("Login:" + firstname.ToUpper() + "-" + updatedate);
-            data.Alignment = Element.ALIGN_CENTER;
-            doc.Add(data);
+            if (decimal.TryParse(totalAmountStr, out totalAmount))
+            {
+                // Proceed with using totalAmount as a decimal
+                // Convert the total amount to words
+                string totalAmountInWords = NumberToWordsConverter.ConvertAmountToWords(totalAmount);
+                doc.Add(new Paragraph("Received With thanks from  " + fname + " " + lname + " " + "(Age:" + age + "-" + gender + ") The Sum Of " + "Rupees "));
+                doc.Add(new Paragraph(totalAmountInWords + " (" + totalAmount + " Rs.) " + " By cash on account Of Services Charges. (" + Consultant + ")"));
+                doc.Add(new Paragraph("\n\n\n"));
+                //doc.Add(new Paragraph("RS." + totalAmount));
+                Paragraph totalAmountParagraph = new Paragraph("RS." + totalAmount);
+
+               // Font textboxFont = new Font(Font.FontFamily.HELVETICA, 6, Font.NORMAL, BaseColor.BLACK);
+
+                PdfPCell cell = new PdfPCell(totalAmountParagraph)
+                {
+                    BorderColor = BaseColor.BLACK, 
+                    Padding = 2f, 
+                    HorizontalAlignment = Element.ALIGN_RIGHT,
+                    BackgroundColor = new BaseColor(240, 240, 240) 
+                };
+                PdfPTable table = new PdfPTable(1)
+                {
+                    WidthPercentage = 20 // Set the table to take the full width
+                };
+                table.AddCell(cell);
+                doc.Add(table);
+            }
+            else
+            {                
+                doc.Add(new Paragraph("Error: Invalid total amount."));
+            }
+
+            //var updatedate = userMaster.UpdatedDate != null ? userMaster.UpdatedDate.ToString() : "";
+            //Paragraph data = new Paragraph("Login:" + firstname.ToUpper() + "-" + updatedate);
+            //data.Alignment = Element.ALIGN_CENTER;
+            //doc.Add(data);
 
             Paragraph authorisedSignatory = new Paragraph("Authorised Signatory");
             authorisedSignatory.Alignment = Element.ALIGN_RIGHT;
             doc.Add(authorisedSignatory);
+
+            Font smallFont = new Font(Font.FontFamily.HELVETICA, 9, Font.NORMAL, BaseColor.WHITE);
+            string noteText = "Please note that records is valid in that hospital premises and it should be deposited in the accounts section at the time of billing.";
+            PdfPCell noteCell = new PdfPCell(new Phrase(noteText, smallFont))
+            {
+                BackgroundColor = new BaseColor(0, 0, 0),
+                Border = PdfPCell.NO_BORDER,
+                Padding = 5
+            };
+            PdfPTable noteTable = new PdfPTable(1)
+            {
+                WidthPercentage = 100 
+            };
+            noteTable.AddCell(noteCell);           
+            noteTable.HorizontalAlignment = Element.ALIGN_CENTER;
+            doc.Add(noteTable);
+
+            Font smallColorFont = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
+            Paragraph note1 = new Paragraph(DateTime.Now + "            *This is computer generated receipt and no need to signature.", smallColorFont);
+            note1.Alignment = Element.ALIGN_CENTER;
+            doc.Add(note1);
 
             //File(stream, contentType, fileName);
             doc.Close();
@@ -1059,6 +1138,81 @@ namespace HMS.Controllers
             }).ToList();
 
             return Json(cityList);
+        }
+
+        public IActionResult PrintPatientDetails()
+        {
+            return View();
+        }
+
+        public static class NumberToWordsConverter
+        {
+            private static readonly string[] unitsMap = { "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+                                                  "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen",
+                                                  "Eighteen", "Nineteen" };
+            private static readonly string[] tensMap = { "Zero", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty",
+                                                 "Ninety" };
+
+            public static string NumberToWords(int number)
+            {
+                if (number == 0)
+                    return "Zero";
+
+                if (number < 0)
+                    return "Minus " + NumberToWords(Math.Abs(number));
+
+                string words = "";
+
+                if ((number / 1000000) > 0)
+                {
+                    words += NumberToWords(number / 1000000) + " Million ";
+                    number %= 1000000;
+                }
+
+                if ((number / 1000) > 0)
+                {
+                    words += NumberToWords(number / 1000) + " Thousand ";
+                    number %= 1000;
+                }
+
+                if ((number / 100) > 0)
+                {
+                    words += NumberToWords(number / 100) + " Hundred ";
+                    number %= 100;
+                }
+
+                if (number > 0)
+                {
+                    if (words != "")
+                        words += "and ";
+
+                    if (number < 20)
+                        words += unitsMap[number];
+                    else
+                    {
+                        words += tensMap[number / 10];
+                        if ((number % 10) > 0)
+                            words += "-" + unitsMap[number % 10];
+                    }
+                }
+
+                return words;
+            }
+
+            public static string ConvertAmountToWords(decimal amount)
+            {
+                int intPart = (int)amount;
+                int decimalPart = (int)((amount - intPart) * 100);
+
+                string words = NumberToWords(intPart);
+
+                if (decimalPart > 0)
+                {
+                    words += " and " + NumberToWords(decimalPart) + " Cents";
+                }
+
+                return words + " Only";
+            }
         }
 
     }

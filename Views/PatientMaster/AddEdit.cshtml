@@ -383,14 +383,21 @@
                                 @Html.DropDownListFor(Model => Model.PaymentMode, new SelectList(Model.PaymentModeList, "Value", "Text"), new { @class = "form-control select2-list dropdown-validation" })
                             </div>
                         </div>
-                        @* <div class="col-lg-4">
+                        <div class="col-md-2">
+                             <div class="form-group">
+                                @Html.RadioButtonFor(Model => Model.Patient_Charges, false, new { @id = "Patient_Charges", @name = "OPD Charges", onclick = " getOpdCharges()" }) OPD Charges
+                            </div>
+                         </div>
+                        <div class="col-md-2">
                             <div class="form-group">
                                 @Html.RadioButtonFor(Model => Model.Patient_Charges, true, new { @id = "Patient_Charges", @name = "Emergency Charges", onclick = "getEmergencyCharges()" }) Emergency Charges
                             </div>
+                             </div>
+                        <div class="col-md-2">
                             <div class="form-group">
-                                @Html.RadioButtonFor(Model => Model.Patient_Charges, false, new { @id = "Patient_Charges", @name = "Night Charges", onclick = "getNightCharges()" }) Night Charges
+                                @Html.RadioButtonFor(Model => Model.Patient_Charges, true, new { @id = "Patient_Charges", @name = "Night Charges", onclick = "getNightCharges()" }) Night Charges
                             </div>
-                        </div> *@
+                        </div>                        
                     </div>
                     <div class="row row-sm">
                         
@@ -523,7 +530,6 @@
 
     $(document).ready(function () {
         $('#DepartmentDropdwon').change(function () {
-
             
             var Department_Id = $(this).val();
             console.log("Selected department ID: " + Department_Id);
@@ -669,6 +675,22 @@
             success: function (data) {
                 debugger
                 $("#Consultant_Charges").val(data.night_Charge);
+                $("#EmergencyAdminssion").val(true);
+                $("#FileChargesApplicable").val(false);
+                calculateAmounts();
+            },
+            error: function (xhr, status, error) { }
+        });
+    }
+     function getOpdCharges() {
+        var userId = $("#userdropdown").val();
+        $.ajax({
+            url: '/UserMaster/GetChargesByUserId',
+            type: 'GET',
+            data: { User_Id: userId },
+            success: function (data) {
+                debugger
+                $("#Consultant_Charges").val(data.opD_Charge);
                 $("#EmergencyAdminssion").val(true);
                 $("#FileChargesApplicable").val(false);
                 calculateAmounts();
